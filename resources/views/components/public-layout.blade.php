@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     @else
-                        <a href="{{ route('customer.login') }}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Login</a>
+                        <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Login</a>
                         <a href="{{ route('customer.register') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">Register</a>
                     @endauth
                 </div>
@@ -98,7 +98,7 @@
                     </div>
                 @else
                     <div class="border-t pt-2 mt-2">
-                        <a href="{{ route('customer.login') }}" class="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium">Login</a>
+                        <a href="{{ route('login') }}" class="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium">Login</a>
                         <a href="{{ route('customer.register') }}" class="block px-3 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 mx-3">Register</a>
                     </div>
                 @endauth
@@ -106,10 +106,20 @@
         </div>
     </nav>
 
+    <!-- Customer Sidebar (Mobile Only - for authenticated customers) -->
+    @auth('customer')
+        <livewire:layout.customer-sidebar />
+    @endauth
+
     <!-- Main Content -->
-    <main>
+    <main class="pb-20 lg:pb-0">
         {{ $slot }}
     </main>
+
+    <!-- Customer Bottom Navigation (Mobile Only - for authenticated customers) -->
+    @auth('customer')
+        <livewire:layout.customer-bottom-nav />
+    @endauth
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white">

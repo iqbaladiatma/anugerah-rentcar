@@ -36,18 +36,30 @@
 
                         <!-- Navigation Links -->
                         <div class="hidden md:ml-10 md:flex md:space-x-8">
-                            <a href="{{ route('home') }}" class="text-blue-600 hover:text-blue-800 px-3 py-2 text-sm font-medium transition-colors">
-                                Beranda
-                            </a>
-                            <a href="{{ route('vehicles.catalog') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
-                                Kendaraan
-                            </a>
-                            <a href="#about" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
-                                Tentang Kami
-                            </a>
-                            <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
-                                Kontak
-                            </a>
+                            @auth('customer')
+                                <a href="{{ route('customer.dashboard') }}" class="{{ request()->routeIs('customer.dashboard') ? 'text-blue-600' : 'text-gray-700' }} hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                    Dashboard
+                                </a>
+                                <a href="{{ route('customer.bookings') }}" class="{{ request()->routeIs('customer.bookings*') ? 'text-blue-600' : 'text-gray-700' }} hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                    Pemesanan Saya
+                                </a>
+                                <a href="{{ route('vehicles.catalog') }}" class="{{ request()->routeIs('vehicles.*') ? 'text-blue-600' : 'text-gray-700' }} hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                    Kendaraan
+                                </a>
+                            @else
+                                <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'text-blue-600' : 'text-gray-700' }} hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                    Beranda
+                                </a>
+                                <a href="{{ route('vehicles.catalog') }}" class="{{ request()->routeIs('vehicles.*') ? 'text-blue-600' : 'text-gray-700' }} hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                    Kendaraan
+                                </a>
+                                <a href="{{ route('home') }}#about" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                    Tentang Kami
+                                </a>
+                                <a href="{{ route('home') }}#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                    Kontak
+                                </a>
+                            @endauth
                         </div>
                     </div>
 
@@ -84,7 +96,7 @@
                             </div>
                         @else
                             <!-- Customer is not logged in -->
-                            <a href="{{ route('customer.login') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                            <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
                                 Masuk
                             </a>
                             <a href="{{ route('customer.register') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
@@ -93,6 +105,7 @@
                         @endauth
 
                         <!-- Mobile menu button -->
+                        @guest('customer')
                         <div class="md:hidden">
                             <button type="button" class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" x-data="{ open: false }" @click="open = !open">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -100,6 +113,7 @@
                                 </svg>
                             </button>
                         </div>
+                        @endguest
                     </div>
                 </div>
             </div>
@@ -192,7 +206,14 @@
             </div>
         </footer>
 
+        <x-customer-bottom-nav-test />
+        
+        @guest('customer')
+            <x-guest-bottom-nav />
+        @endguest
+
         @livewireScripts
         <script src="//unpkg.com/alpinejs" defer></script>
+        @stack('scripts')
     </body>
 </html>

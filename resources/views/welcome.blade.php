@@ -59,10 +59,7 @@
                                 </a>
                             @else
                                 <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
-                                    Login Admin
-                                </a>
-                                <a href="{{ route('customer.login') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
-                                    Login Customer
+                                    Login
                                 </a>
                                 <a href="{{ route('customer.register') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                                     Daftar

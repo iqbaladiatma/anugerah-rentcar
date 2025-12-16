@@ -1,10 +1,10 @@
 <x-public-layout>
     <div class="bg-white">
         <!-- Header -->
-        <div class="bg-blue-600 text-white">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h1 class="text-3xl font-bold">Welcome back, {{ auth('customer')->user()->name }}!</h1>
-                <p class="mt-2 text-blue-100">Manage your bookings and account information</p>
+                <h1 class="text-3xl font-bold">Selamat datang kembali, {{ auth('customer')->user()->name }}!</h1>
+                <p class="mt-2 text-blue-100">Kelola pemesanan dan informasi akun Anda</p>
             </div>
         </div>
 
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Total Bookings</p>
+                            <p class="text-sm font-medium text-gray-500">Total Pemesanan</p>
                             <p class="text-2xl font-semibold text-gray-900">{{ $stats['total_bookings'] }}</p>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Active Bookings</p>
+                            <p class="text-sm font-medium text-gray-500">Pemesanan Aktif</p>
                             <p class="text-2xl font-semibold text-gray-900">{{ $stats['active_bookings'] }}</p>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Completed</p>
+                            <p class="text-sm font-medium text-gray-500">Selesai</p>
                             <p class="text-2xl font-semibold text-gray-900">{{ $stats['completed_bookings'] }}</p>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Total Spent</p>
+                            <p class="text-sm font-medium text-gray-500">Total Pengeluaran</p>
                             <p class="text-2xl font-semibold text-gray-900">Rp {{ number_format($stats['total_spent'], 0, ',', '.') }}</p>
                         </div>
                     </div>

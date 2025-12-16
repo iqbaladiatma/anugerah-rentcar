@@ -56,29 +56,28 @@ class AuthController extends Controller
      */
     public function register(Request $request): RedirectResponse
     {
+        // Stage 1: Only validate name, email, password
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:customers'],
-            'phone' => ['required', 'string', 'max:20'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'nik' => ['required', 'string', 'size:16', 'unique:customers'],
-            'address' => ['required', 'string'],
         ]);
 
+        // Create customer with minimal info
         $customer = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
-            'phone' => $request->phone,
             'password' => Hash::make($request->password),
-            'nik' => $request->nik,
-            'address' => $request->address,
+            'profile_completed' => false, // Mark as incomplete
         ]);
 
         event(new Registered($customer));
 
         Auth::guard('customer')->login($customer);
 
-        return redirect(route('customer.dashboard'));
+        // Redirect to complete profile instead of dashboard
+        return redirect()->route('customer.complete-profile')
+            ->with('success', 'Account created! Please complete your profile to continue.');
     }
 
     /**

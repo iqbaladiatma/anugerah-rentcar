@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {
-    Volt::route('register', 'pages.auth.register')
-        ->name('register');
+    // NOTE: Login route is handled by UnifiedLoginController in web.php
+    // This allows both admin and customer login through single endpoint /login
 
-    Volt::route('login', 'pages.auth.login')
-        ->name('login');
+    Volt::route('register', 'pages.auth.register')
+        ->name('register.admin');
 
     Volt::route('forgot-password', 'pages.auth.forgot-password')
         ->name('password.request');

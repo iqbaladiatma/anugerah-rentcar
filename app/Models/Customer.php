@@ -30,6 +30,7 @@ class Customer extends Authenticatable
         'is_blacklisted',
         'blacklist_reason',
         'email_verified_at',
+        'profile_completed',
     ];
 
     /**
@@ -53,6 +54,7 @@ class Customer extends Authenticatable
         'is_blacklisted' => 'boolean',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'profile_completed' => 'boolean',
     ];
 
     /**

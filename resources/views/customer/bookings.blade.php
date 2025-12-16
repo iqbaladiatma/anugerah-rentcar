@@ -3,7 +3,7 @@
         <!-- Header -->
         <div class="bg-gray-50 border-b">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h1 class="text-3xl font-bold text-gray-900">My Bookings</h1>
+                <h1 class="text-3xl font-bold text-gray-900">My Orders</h1>
                 <p class="mt-2 text-gray-600">View and manage your rental bookings</p>
             </div>
         </div>
@@ -157,7 +157,7 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No bookings yet</h3>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">No orders yet</h3>
                     <p class="mt-1 text-sm text-gray-500">Start by booking your first vehicle.</p>
                     <div class="mt-6">
                         <a href="{{ route('vehicles.catalog') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">

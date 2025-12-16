@@ -1,22 +1,37 @@
-<div>
+<div x-data="{ 
+        sidebarOpen: @entangle('sidebarOpen'),
+        isDesktop: window.innerWidth >= 1024
+    }" 
+    x-init="
+        // Watch for window resize
+        window.addEventListener('resize', () => {
+            isDesktop = window.innerWidth >= 1024;
+        });
+    "
+    @toggle-sidebar.window="sidebarOpen = !sidebarOpen">
+    
     <!-- Mobile sidebar overlay -->
-    <div x-data="{ open: @entangle('sidebarOpen') }" 
-         x-show="open" 
-         x-transition:enter="transition-opacity ease-linear duration-300"
+    <div x-show="sidebarOpen && !isDesktop" 
+         x-transition:enter="transition-opacity ease-linear duration-200"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
-         x-transition:leave="transition-opacity ease-linear duration-300"
+         x-transition:leave="transition-opacity ease-linear duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          class="fixed inset-0 z-50 bg-gray-900/80 lg:hidden"
-         @click="$wire.closeSidebar()">
+         @click="sidebarOpen = false">
     </div>
 
     <!-- Sidebar -->
-    <div x-data="{ open: @entangle('sidebarOpen') }"
-         class="fixed inset-y-0 z-50 flex w-64 flex-col lg:z-auto transform transition-transform duration-300 ease-in-out lg:translate-x-0"
-         :class="{ 'translate-x-0': open, '-translate-x-full': !open }"
-         class="lg:translate-x-0">
+    <div x-show="isDesktop || sidebarOpen"
+         x-transition:enter="transition-transform ease-out duration-200 lg:transition-none"
+         x-transition:enter-start="-translate-x-full lg:translate-x-0"
+         x-transition:enter-end="translate-x-0"
+         x-transition:leave="transition-transform ease-in duration-200 lg:transition-none"
+         x-transition:leave-start="translate-x-0 lg:translate-x-0"
+         x-transition:leave-end="-translate-x-full lg:translate-x-0"
+         class="fixed inset-y-0 z-50 flex w-64 flex-col lg:z-auto"
+         :class="{ 'lg:translate-x-0': true }">
         
         <!-- Sidebar content -->
         <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4 shadow-xl lg:shadow-none border-r border-gray-200">
@@ -43,7 +58,17 @@
                             @foreach($menuItems as $item)
                                 @if(isset($item['children']))
                                     <!-- Menu item with children -->
-                                    <li x-data="{ open: {{ request()->routeIs(collect($item['children'])->pluck('route')->map(fn($route) => $route . '*')->implode('|')) ? 'true' : 'false' }} }">
+                                    @php
+                                        // Check if any child route is currently active
+                                        $isActive = false;
+                                        foreach($item['children'] as $child) {
+                                            if(request()->routeIs($child['route'] . '*')) {
+                                                $isActive = true;
+                                                break;
+                                            }
+                                        }
+                                    @endphp
+                                    <li x-data="{ open: {{ $isActive ? 'true' : 'false' }} }">
                                         <button @click="open = !open" 
                                                 class="group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-medium leading-6 text-gray-700 hover:bg-gray-50 hover:text-blue-600"
                                                 :class="{ 'bg-gray-50 text-blue-600': open }">

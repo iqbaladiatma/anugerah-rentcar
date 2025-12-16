@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'enhanced.upload' => \App\Http\Middleware\EnhancedFileUploadSecurity::class,
             'error.handling' => \App\Http\Middleware\ErrorHandlingMiddleware::class,
             'performance' => \App\Http\Middleware\PerformanceMonitoringMiddleware::class,
+            'profile.complete' => \App\Http\Middleware\EnsureProfileCompleted::class,
         ]);
         
         // Add error handling middleware to web group

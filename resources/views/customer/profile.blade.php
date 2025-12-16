@@ -214,6 +214,26 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Logout Section -->
+            <div class="mt-8 bg-white shadow rounded-lg mb-24">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-red-600">Danger Zone</h3>
+                </div>
+                <div class="p-6">
+                    <p class="text-sm text-gray-500 mb-4">Once you log out, you will need to log in again to access your account.</p>
+                    <form method="POST" action="{{ route('customer.logout') }}">
+                        @csrf
+                        <button type="submit" 
+                                class="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                            Log Out
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </x-public-layout>

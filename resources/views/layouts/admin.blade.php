@@ -28,7 +28,7 @@
                 <livewire:layout.admin-header />
                 
                 <!-- Page Content -->
-                <main class="py-6">
+                <main class="py-6 pb-20 lg:pb-6">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <!-- Page Heading -->
                         @if (isset($header))
@@ -42,6 +42,9 @@
                     </div>
                 </main>
             </div>
+
+            <!-- Mobile Bottom Navigation -->
+            <livewire:layout.mobile-bottom-nav />
         </div>
         
         <!-- Livewire Scripts -->

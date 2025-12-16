@@ -14,6 +14,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            padding: {
+                'safe': 'env(safe-area-inset-bottom)',
+            },
         },
     },
 

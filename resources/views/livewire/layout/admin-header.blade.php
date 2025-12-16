@@ -22,7 +22,7 @@
                     </svg>
                 </div>
                 <input type="text" 
-                       placeholder="Search customers, vehicles, bookings..." 
+                       placeholder="Cari pelanggan, kendaraan, pemesanan..." 
                        class="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
             </div>
         </div>
@@ -80,14 +80,14 @@
                     <a href="{{ route('profile') }}" 
                        wire:navigate
                        class="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50">
-                        Your profile
+                        Profil Anda
                     </a>
                     
                     <div class="border-t border-gray-200 my-1"></div>
                     
                     <button wire:click="logout" 
                             class="block w-full text-left px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50">
-                        Sign out
+                        Keluar
                     </button>
                 </div>
             </div>

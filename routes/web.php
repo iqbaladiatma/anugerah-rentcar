@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicVehicleController;
+use App\Http\Controllers\Auth\UnifiedLoginController;
 
 // Public routes
 Route::view('/', 'public.home')->name('home');
@@ -10,22 +11,40 @@ Route::get('/vehicles/{car}', [PublicVehicleController::class, 'show'])->name('v
 Route::post('/vehicles/search', [PublicVehicleController::class, 'search'])->name('vehicles.search');
 Route::post('/vehicles/check-availability', [PublicVehicleController::class, 'checkAvailability'])->name('vehicles.check-availability');
 
+// Unified Authentication Routes
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [UnifiedLoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [UnifiedLoginController::class, 'login']);
+});
+
+Route::post('/logout', [UnifiedLoginController::class, 'logout'])->name('logout')->middleware('auth');
+
 // Booking wizard routes
 Route::get('/booking/wizard', [\App\Http\Controllers\BookingWizardController::class, 'start'])->name('booking.wizard');
 Route::post('/booking/complete', [\App\Http\Controllers\BookingWizardController::class, 'complete'])->name('booking.complete');
 Route::get('/booking/{booking}/confirmation', [\App\Http\Controllers\BookingWizardController::class, 'confirmation'])->name('booking.confirmation');
 
-// Customer authentication routes
+// Customer routes (now using unified auth)
 Route::prefix('customer')->name('customer.')->group(function () {
-    Route::middleware('guest:customer')->group(function () {
-        Route::get('/login', [\App\Http\Controllers\Customer\AuthController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [\App\Http\Controllers\Customer\AuthController::class, 'login']);
+    Route::middleware('guest')->group(function () {
         Route::get('/register', [\App\Http\Controllers\Customer\AuthController::class, 'showRegistrationForm'])->name('register');
         Route::post('/register', [\App\Http\Controllers\Customer\AuthController::class, 'register']);
     });
 
+    // Complete profile routes (auth required, no profile.complete middleware)
     Route::middleware('auth:customer')->group(function () {
-        Route::post('/logout', [\App\Http\Controllers\Customer\AuthController::class, 'logout'])->name('logout');
+        Route::get('/complete-profile', [\App\Http\Controllers\Customer\CompleteProfileController::class, 'show'])
+            ->name('complete-profile');
+        Route::post('/complete-profile', [\App\Http\Controllers\Customer\CompleteProfileController::class, 'update'])
+            ->name('complete-profile.update');
+        
+        // Logout route (accessible to all authenticated customers)
+        Route::post('/logout', [\App\Http\Controllers\Customer\AuthController::class, 'logout'])
+            ->name('logout');
+    });
+
+    // Protected customer routes (require completed profile)
+    Route::middleware(['auth:customer', 'profile.complete'])->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Customer\DashboardController::class, 'index'])->name('dashboard');
         Route::get('/bookings', [\App\Http\Controllers\Customer\DashboardController::class, 'bookings'])->name('bookings');
         Route::get('/bookings/{booking}', [\App\Http\Controllers\Customer\DashboardController::class, 'showBooking'])->name('bookings.show');

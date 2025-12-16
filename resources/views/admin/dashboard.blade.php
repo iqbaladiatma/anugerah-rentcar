@@ -6,12 +6,12 @@
                     Dashboard
                 </h1>
                 <p class="mt-1 text-sm text-gray-500">
-                    Welcome back, {{ auth()->user()->name }}! Here's what's happening with your rental business today.
+                    Selamat datang kembali, {{ auth()->user()->name }}! Berikut adalah aktivitas bisnis rental Anda hari ini.
                 </p>
             </div>
             <div class="flex items-center space-x-3">
                 <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                    {{ now()->format('l, F j, Y') }}
+                    {{ now()->locale('id')->isoFormat('dddd, D MMMM Y') }}
                 </span>
             </div>
         </div>
