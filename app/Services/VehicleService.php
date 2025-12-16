@@ -7,9 +7,15 @@ use App\Models\Booking;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class VehicleService
 {
+    /**
+     * Cache TTL constants (in seconds)
+     */
+    const CACHE_TTL_SHORT = 60;      // 1 minute
+    const CACHE_TTL_MEDIUM = 300;    // 5 minutes
     /**
      * Get available vehicles for a date range.
      */
@@ -110,29 +116,39 @@ class VehicleService
     }
 
     /**
-     * Get maintenance notifications for all vehicles.
+     * Get maintenance notifications for all vehicles with caching.
      */
     public function getMaintenanceNotifications(): array
     {
-        $notifications = [];
-        $vehicles = $this->getVehiclesRequiringMaintenance();
+        return Cache::remember('anugerah_rentcar:fleet:maintenance_notifications', self::CACHE_TTL_MEDIUM, function () {
+            $notifications = [];
+            $vehicles = $this->getVehiclesRequiringMaintenance();
 
-        foreach ($vehicles as $vehicle) {
-            $vehicleNotifications = $vehicle->getMaintenanceNotifications();
-            foreach ($vehicleNotifications as $notification) {
-                $notification['vehicle_id'] = $vehicle->id;
-                $notification['license_plate'] = $vehicle->license_plate;
-                $notifications[] = $notification;
+            foreach ($vehicles as $vehicle) {
+                $vehicleNotifications = $vehicle->getMaintenanceNotifications();
+                foreach ($vehicleNotifications as $notification) {
+                    $notification['vehicle_id'] = $vehicle->id;
+                    $notification['license_plate'] = $vehicle->license_plate;
+                    $notifications[] = $notification;
+                }
             }
-        }
 
-        // Sort by priority (high first)
-        usort($notifications, function ($a, $b) {
-            $priorityOrder = ['high' => 3, 'medium' => 2, 'low' => 1];
-            return ($priorityOrder[$b['priority']] ?? 0) - ($priorityOrder[$a['priority']] ?? 0);
+            // Sort by priority (high first)
+            usort($notifications, function ($a, $b) {
+                $priorityOrder = ['high' => 3, 'medium' => 2, 'low' => 1];
+                return ($priorityOrder[$b['priority']] ?? 0) - ($priorityOrder[$a['priority']] ?? 0);
+            });
+
+            return $notifications;
         });
+    }
 
-        return $notifications;
+    /**
+     * Clear maintenance notifications cache.
+     */
+    public function clearMaintenanceNotificationsCache(): void
+    {
+        Cache::forget('anugerah_rentcar:fleet:maintenance_notifications');
     }
 
     /**
@@ -152,24 +168,34 @@ class VehicleService
     }
 
     /**
-     * Get fleet statistics.
+     * Get fleet statistics with caching.
      */
     public function getFleetStatistics(): array
     {
-        $totalVehicles = Car::count();
-        $availableVehicles = Car::where('status', Car::STATUS_AVAILABLE)->count();
-        $rentedVehicles = Car::where('status', Car::STATUS_RENTED)->count();
-        $maintenanceVehicles = Car::where('status', Car::STATUS_MAINTENANCE)->count();
-        $inactiveVehicles = Car::where('status', Car::STATUS_INACTIVE)->count();
+        return Cache::remember('anugerah_rentcar:fleet:statistics', self::CACHE_TTL_MEDIUM, function () {
+            $totalVehicles = Car::count();
+            $availableVehicles = Car::where('status', Car::STATUS_AVAILABLE)->count();
+            $rentedVehicles = Car::where('status', Car::STATUS_RENTED)->count();
+            $maintenanceVehicles = Car::where('status', Car::STATUS_MAINTENANCE)->count();
+            $inactiveVehicles = Car::where('status', Car::STATUS_INACTIVE)->count();
 
-        return [
-            'total' => $totalVehicles,
-            'available' => $availableVehicles,
-            'rented' => $rentedVehicles,
-            'maintenance' => $maintenanceVehicles,
-            'inactive' => $inactiveVehicles,
-            'utilization_rate' => $totalVehicles > 0 ? ($rentedVehicles / $totalVehicles) * 100 : 0
-        ];
+            return [
+                'total' => $totalVehicles,
+                'available' => $availableVehicles,
+                'rented' => $rentedVehicles,
+                'maintenance' => $maintenanceVehicles,
+                'inactive' => $inactiveVehicles,
+                'utilization_rate' => $totalVehicles > 0 ? ($rentedVehicles / $totalVehicles) * 100 : 0
+            ];
+        });
+    }
+
+    /**
+     * Clear fleet statistics cache.
+     */
+    public function clearFleetStatisticsCache(): void
+    {
+        Cache::forget('anugerah_rentcar:fleet:statistics');
     }
 
     /**

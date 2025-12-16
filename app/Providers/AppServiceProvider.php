@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Register error handling services
+        $this->app->singleton(\App\Services\ApplicationLoggerService::class);
+        $this->app->singleton(\App\Services\ErrorNotificationService::class);
+        $this->app->singleton(\App\Services\ErrorRecoveryService::class);
     }
 
     /**

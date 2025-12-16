@@ -127,6 +127,79 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        // Custom channels for comprehensive logging
+        'activity' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/activity.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => env('LOG_ACTIVITY_DAYS', 30),
+            'replace_placeholders' => true,
+        ],
+
+        'business' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/business.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => env('LOG_BUSINESS_DAYS', 90),
+            'replace_placeholders' => true,
+        ],
+
+        'security' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/security.log'),
+            'level' => env('LOG_LEVEL', 'warning'),
+            'days' => env('LOG_SECURITY_DAYS', 365),
+            'replace_placeholders' => true,
+        ],
+
+        'performance' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/performance.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => env('LOG_PERFORMANCE_DAYS', 7),
+            'replace_placeholders' => true,
+        ],
+
+        'database' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/database.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => env('LOG_DATABASE_DAYS', 30),
+            'replace_placeholders' => true,
+        ],
+
+        'api' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/api.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => env('LOG_API_DAYS', 14),
+            'replace_placeholders' => true,
+        ],
+
+        'files' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/files.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => env('LOG_FILES_DAYS', 30),
+            'replace_placeholders' => true,
+        ],
+
+        'configuration' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/configuration.log'),
+            'level' => env('LOG_LEVEL', 'warning'),
+            'days' => env('LOG_CONFIG_DAYS', 365),
+            'replace_placeholders' => true,
+        ],
+
+        'critical' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/critical.log'),
+            'level' => 'emergency',
+            'days' => env('LOG_CRITICAL_DAYS', 365),
+            'replace_placeholders' => true,
+        ],
+
     ],
 
 ];

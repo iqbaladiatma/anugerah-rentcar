@@ -54,7 +54,7 @@ class BookingFactory extends Factory
             'member_discount' => $memberDiscount,
             'late_penalty' => 0,
             'total_amount' => $baseAmount + $driverFee + $outOfTownFee - $memberDiscount,
-            'deposit_amount' => $this->faker->randomFloat(2, 500000, 2000000),
+            'deposit_amount' => $this->faker->randomFloat(2, 100000, 500000),
             'payment_status' => $this->faker->randomElement(['pending', 'partial', 'paid']),
             'booking_status' => $this->faker->randomElement(['pending', 'confirmed', 'active']),
             'notes' => $this->faker->optional()->sentence(),

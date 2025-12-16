@@ -8,12 +8,19 @@ use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Maintenance;
 use App\Models\Expense;
+use App\Services\CacheService;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class DashboardStats extends Component
 {
     public $refreshInterval = 30000; // 30 seconds
+
+    /**
+     * Cache TTL for dashboard stats (in seconds)
+     */
+    const CACHE_TTL = 60;
 
     public function mount()
     {
@@ -22,14 +29,16 @@ class DashboardStats extends Component
 
     public function getStatsProperty(): array
     {
-        return [
-            'total_vehicles' => Car::count(),
-            'available_vehicles' => Car::where('status', Car::STATUS_AVAILABLE)->count(),
-            'active_bookings' => Booking::where('booking_status', Booking::STATUS_ACTIVE)->count(),
-            'monthly_revenue' => $this->getMonthlyRevenue(),
-            'pending_bookings' => Booking::where('booking_status', Booking::STATUS_PENDING)->count(),
-            'overdue_bookings' => Booking::overdue()->count(),
-        ];
+        return Cache::remember('anugerah_rentcar:dashboard:stats', self::CACHE_TTL, function () {
+            return [
+                'total_vehicles' => Car::count(),
+                'available_vehicles' => Car::where('status', Car::STATUS_AVAILABLE)->count(),
+                'active_bookings' => Booking::where('booking_status', Booking::STATUS_ACTIVE)->count(),
+                'monthly_revenue' => $this->getMonthlyRevenue(),
+                'pending_bookings' => Booking::where('booking_status', Booking::STATUS_PENDING)->count(),
+                'overdue_bookings' => Booking::overdue()->count(),
+            ];
+        });
     }
 
     public function getRecentBookingsProperty(): Collection
@@ -44,59 +53,64 @@ class DashboardStats extends Component
     public function getNotificationsProperty(): array
     {
         $notifications = [];
-
-        // Maintenance notifications
-        $maintenanceNotifications = $this->getMaintenanceNotifications();
-        $notifications = array_merge($notifications, $maintenanceNotifications);
-
-        // STNK expiry notifications
-        $stnkNotifications = $this->getStnkExpiryNotifications();
-        $notifications = array_merge($notifications, $stnkNotifications);
-
-        // Overdue payment notifications
-        $paymentNotifications = $this->getOverduePaymentNotifications();
-        $notifications = array_merge($notifications, $paymentNotifications);
-
-        // Pending confirmation notifications
-        $pendingNotifications = $this->getPendingConfirmationNotifications();
-        $notifications = array_merge($notifications, $pendingNotifications);
-
-        // Sort by priority (high, medium, low)
+        
+        // Get maintenance notifications
+        $notifications = array_merge($notifications, $this->getMaintenanceNotifications());
+        
+        // Get STNK expiry notifications
+        $notifications = array_merge($notifications, $this->getStnkExpiryNotifications());
+        
+        // Get overdue payment notifications
+        $notifications = array_merge($notifications, $this->getOverduePaymentNotifications());
+        
+        // Get pending confirmation notifications
+        $notifications = array_merge($notifications, $this->getPendingConfirmationNotifications());
+        
+        // Sort by priority and date
         usort($notifications, function ($a, $b) {
-            $priorityOrder = ['high' => 0, 'medium' => 1, 'low' => 2];
-            return $priorityOrder[$a['priority']] <=> $priorityOrder[$b['priority']];
+            $priorityOrder = ['high' => 1, 'medium' => 2, 'low' => 3];
+            $aPriority = $priorityOrder[$a['priority']] ?? 4;
+            $bPriority = $priorityOrder[$b['priority']] ?? 4;
+            
+            if ($aPriority === $bPriority) {
+                return $b['created_at']->timestamp - $a['created_at']->timestamp;
+            }
+            
+            return $aPriority - $bPriority;
         });
-
-        return array_slice($notifications, 0, 10); // Limit to 10 notifications
+        
+        return array_slice($notifications, 0, 10);
     }
 
     public function getRevenueChartDataProperty(): array
     {
-        $months = [];
-        $revenues = [];
+        return Cache::remember('anugerah_rentcar:dashboard:revenue_chart', 3600, function () {
+            $months = [];
+            $revenues = [];
 
-        // Get last 12 months data
-        for ($i = 11; $i >= 0; $i--) {
-            $date = Carbon::now()->subMonths($i);
-            $months[] = $date->format('M Y');
-            
-            $monthlyRevenue = Booking::whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
-                ->whereIn('booking_status', [Booking::STATUS_COMPLETED, Booking::STATUS_ACTIVE])
-                ->sum('total_amount');
-            
-            $revenues[] = (float) $monthlyRevenue;
-        }
+            // Get last 12 months data
+            for ($i = 11; $i >= 0; $i--) {
+                $date = Carbon::now()->subMonths($i);
+                $months[] = $date->format('M Y');
+                
+                $monthlyRevenue = Booking::whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->whereIn('booking_status', [Booking::STATUS_COMPLETED, Booking::STATUS_ACTIVE])
+                    ->sum('total_amount');
+                
+                $revenues[] = (float) $monthlyRevenue;
+            }
 
-        return [
-            'categories' => $months,
-            'series' => [
-                [
-                    'name' => 'Revenue',
-                    'data' => $revenues
+            return [
+                'categories' => $months,
+                'series' => [
+                    [
+                        'name' => 'Revenue',
+                        'data' => $revenues
+                    ]
                 ]
-            ]
-        ];
+            ];
+        });
     }
 
     private function getMonthlyRevenue(): float
@@ -215,6 +229,10 @@ class DashboardStats extends Component
 
     public function refreshStats()
     {
+        // Clear dashboard cache to force refresh
+        Cache::forget('anugerah_rentcar:dashboard:stats');
+        Cache::forget('anugerah_rentcar:dashboard:revenue_chart');
+        
         // This method will be called to refresh the component
         $this->dispatch('stats-refreshed');
     }

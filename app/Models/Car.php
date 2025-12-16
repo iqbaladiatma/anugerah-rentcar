@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Traits\OptimizedQueries;
 use Carbon\Carbon;
 
 class Car extends Model
 {
-    use HasFactory;
+    use HasFactory, OptimizedQueries;
 
     /**
      * The attributes that are mass assignable.
@@ -282,5 +283,30 @@ class Car extends Model
     public function markAsInMaintenance(): void
     {
         $this->updateStatus(self::STATUS_MAINTENANCE);
+    }
+
+    /**
+     * Get common relations to eager load.
+     */
+    protected function getCommonRelations(): array
+    {
+        return ['bookings', 'maintenances'];
+    }
+
+    /**
+     * Get essential columns for list views.
+     */
+    protected function getEssentialColumns(): array
+    {
+        return [
+            'id',
+            'license_plate',
+            'brand',
+            'model',
+            'year',
+            'status',
+            'daily_rate',
+            'photo_front',
+        ];
     }
 }

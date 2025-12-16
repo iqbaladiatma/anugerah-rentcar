@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
-class Customer extends Model
+class Customer extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +20,7 @@ class Customer extends Model
         'name',
         'phone',
         'email',
+        'password',
         'nik',
         'ktp_photo',
         'sim_photo',
@@ -27,6 +29,17 @@ class Customer extends Model
         'member_discount',
         'is_blacklisted',
         'blacklist_reason',
+        'email_verified_at',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -38,6 +51,8 @@ class Customer extends Model
         'is_member' => 'boolean',
         'member_discount' => 'decimal:2',
         'is_blacklisted' => 'boolean',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     /**

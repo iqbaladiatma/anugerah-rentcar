@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
     use HasFactory;
+
+    /**
+     * Cache key for settings.
+     */
+    const CACHE_KEY = 'anugerah_rentcar:settings:current';
+    const CACHE_TTL = 3600; // 1 hour
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +43,23 @@ class Setting extends Model
     ];
 
     /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Clear cache when settings are updated
+        static::saved(function ($setting) {
+            Cache::forget(self::CACHE_KEY);
+        });
+
+        static::deleted(function ($setting) {
+            Cache::forget(self::CACHE_KEY);
+        });
+    }
+
+    /**
      * Get the company logo URL.
      */
     public function getCompanyLogoUrlAttribute(): ?string
@@ -44,16 +68,26 @@ class Setting extends Model
     }
 
     /**
-     * Get the current system settings.
+     * Get the current system settings with caching.
      */
     public static function current(): self
     {
-        return static::first() ?? new static([
-            'company_name' => 'Anugerah Rentcar',
-            'buffer_time_hours' => 3,
-            'late_penalty_per_hour' => 50000,
-            'member_discount_percentage' => 10,
-        ]);
+        return Cache::remember(self::CACHE_KEY, self::CACHE_TTL, function () {
+            return static::first() ?? new static([
+                'company_name' => 'Anugerah Rentcar',
+                'buffer_time_hours' => 3,
+                'late_penalty_per_hour' => 50000,
+                'member_discount_percentage' => 10,
+            ]);
+        });
+    }
+
+    /**
+     * Clear the settings cache.
+     */
+    public static function clearCache(): void
+    {
+        Cache::forget(self::CACHE_KEY);
     }
 
     /**
@@ -66,8 +100,21 @@ class Setting extends Model
         if ($settings) {
             $settings->update($data);
         } else {
-            $settings = static::create($data);
+            // Merge with default values when creating new settings
+            $defaults = [
+                'company_name' => 'Anugerah Rentcar',
+                'company_address' => 'Jl. Raya No. 123, Jakarta',
+                'company_phone' => '+62-21-1234567',
+                'late_penalty_per_hour' => 50000,
+                'buffer_time_hours' => 3,
+                'member_discount_percentage' => 10,
+            ];
+            
+            $settings = static::create(array_merge($defaults, $data));
         }
+
+        // Clear cache after update
+        self::clearCache();
         
         return $settings;
     }

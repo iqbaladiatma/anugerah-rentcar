@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Rules\SecureFileUpload;
+use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -11,6 +13,12 @@ use Illuminate\Validation\Rule;
 
 class VehicleController extends Controller
 {
+    protected FileUploadService $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     /**
      * Display a listing of vehicles.
      */
@@ -46,9 +54,9 @@ class VehicleController extends Controller
             'daily_rate' => 'required|numeric|min:0',
             'weekly_rate' => 'required|numeric|min:0',
             'driver_fee_per_day' => 'required|numeric|min:0',
-            'photo_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo_side' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo_back' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo_front' => ['nullable', SecureFileUpload::vehiclePhoto()],
+            'photo_side' => ['nullable', SecureFileUpload::vehiclePhoto()],
+            'photo_back' => ['nullable', SecureFileUpload::vehiclePhoto()],
             'status' => ['required', Rule::in([Car::STATUS_AVAILABLE, Car::STATUS_MAINTENANCE, Car::STATUS_INACTIVE])],
         ]);
 
@@ -56,7 +64,26 @@ class VehicleController extends Controller
         $photoFields = ['photo_front', 'photo_side', 'photo_back'];
         foreach ($photoFields as $field) {
             if ($request->hasFile($field)) {
-                $validated[$field] = $this->storeVehiclePhoto($request->file($field), $validated['license_plate'], $field);
+                $result = $this->fileUploadService->uploadFile(
+                    $request->file($field),
+                    'vehicles',
+                    'public',
+                    [
+                        'prefix' => $this->sanitizeLicensePlate($validated['license_plate']) . '_' . $field . '_',
+                        'max_width' => 1920,
+                        'max_height' => 1080,
+                        'quality' => 85,
+                        'generate_thumbnail' => true
+                    ]
+                );
+                
+                if ($result['success']) {
+                    $validated[$field] = $result['path'];
+                } else {
+                    return redirect()->back()
+                        ->withErrors([$field => implode(', ', $result['errors'])])
+                        ->withInput();
+                }
             }
         }
 
@@ -107,9 +134,9 @@ class VehicleController extends Controller
             'daily_rate' => 'required|numeric|min:0',
             'weekly_rate' => 'required|numeric|min:0',
             'driver_fee_per_day' => 'required|numeric|min:0',
-            'photo_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo_side' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo_back' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo_front' => ['nullable', SecureFileUpload::vehiclePhoto()],
+            'photo_side' => ['nullable', SecureFileUpload::vehiclePhoto()],
+            'photo_back' => ['nullable', SecureFileUpload::vehiclePhoto()],
             'status' => ['required', Rule::in([Car::STATUS_AVAILABLE, Car::STATUS_RENTED, Car::STATUS_MAINTENANCE, Car::STATUS_INACTIVE])],
         ]);
 
@@ -119,9 +146,29 @@ class VehicleController extends Controller
             if ($request->hasFile($field)) {
                 // Delete old photo if exists
                 if ($car->$field) {
-                    Storage::disk('public')->delete($car->$field);
+                    $this->fileUploadService->deleteFile($car->$field, 'public');
                 }
-                $validated[$field] = $this->storeVehiclePhoto($request->file($field), $validated['license_plate'], $field);
+                
+                $result = $this->fileUploadService->uploadFile(
+                    $request->file($field),
+                    'vehicles',
+                    'public',
+                    [
+                        'prefix' => $this->sanitizeLicensePlate($validated['license_plate']) . '_' . $field . '_',
+                        'max_width' => 1920,
+                        'max_height' => 1080,
+                        'quality' => 85,
+                        'generate_thumbnail' => true
+                    ]
+                );
+                
+                if ($result['success']) {
+                    $validated[$field] = $result['path'];
+                } else {
+                    return redirect()->back()
+                        ->withErrors([$field => implode(', ', $result['errors'])])
+                        ->withInput();
+                }
             }
         }
 
@@ -146,7 +193,7 @@ class VehicleController extends Controller
         $photoFields = ['photo_front', 'photo_side', 'photo_back'];
         foreach ($photoFields as $field) {
             if ($car->$field) {
-                Storage::disk('public')->delete($car->$field);
+                $this->fileUploadService->deleteFile($car->$field, 'public');
             }
         }
 
@@ -185,18 +232,10 @@ class VehicleController extends Controller
     }
 
     /**
-     * Store vehicle photo with proper naming and validation.
+     * Sanitize license plate for filename
      */
-    private function storeVehiclePhoto($file, string $licensePlate, string $position): string
+    private function sanitizeLicensePlate(string $licensePlate): string
     {
-        // Sanitize license plate for filename
-        $sanitizedPlate = preg_replace('/[^A-Za-z0-9\-]/', '_', $licensePlate);
-        
-        // Generate filename with timestamp to avoid conflicts
-        $timestamp = now()->format('YmdHis');
-        $extension = $file->getClientOriginalExtension();
-        $filename = "vehicles/{$sanitizedPlate}_{$position}_{$timestamp}.{$extension}";
-        
-        return $file->storeAs('public', $filename);
+        return preg_replace('/[^A-Za-z0-9\-]/', '_', $licensePlate);
     }
 }

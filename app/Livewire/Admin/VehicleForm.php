@@ -3,6 +3,9 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Car;
+use App\Rules\SecureFileUpload;
+use App\Rules\EnhancedFileUpload;
+use App\Traits\HandlesSecureFileUploads;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -10,7 +13,7 @@ use Illuminate\Validation\Rule;
 
 class VehicleForm extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, HandlesSecureFileUploads;
 
     public ?Car $vehicle = null;
     public bool $isEditing = false;
@@ -75,9 +78,9 @@ class VehicleForm extends Component
                 Car::STATUS_INACTIVE,
                 ...$this->isEditing ? [Car::STATUS_RENTED] : []
             ])],
-            'photo_front' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo_side' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'photo_back' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo_front' => ['nullable', EnhancedFileUpload::vehiclePhoto()],
+            'photo_side' => ['nullable', EnhancedFileUpload::vehiclePhoto()],
+            'photo_back' => ['nullable', EnhancedFileUpload::vehiclePhoto()],
         ];
 
         return $rules;
@@ -187,14 +190,23 @@ class VehicleForm extends Component
             
             if ($this->$removeProperty && $this->$existingProperty) {
                 // Remove existing photo
-                Storage::disk('public')->delete($this->$existingProperty);
+                $this->deleteFileSecurely($this->$existingProperty, 'public');
                 $data[$field] = null;
             } elseif ($this->$field) {
                 // Upload new photo
                 if ($this->$existingProperty) {
-                    Storage::disk('public')->delete($this->$existingProperty);
+                    $this->deleteFileSecurely($this->$existingProperty, 'public');
                 }
-                $data[$field] = $this->storeVehiclePhoto($this->$field, $this->license_plate, str_replace('photo_', '', $field));
+                $result = $this->uploadVehiclePhoto($this->$field, $this->license_plate, str_replace('photo_', '', $field));
+                if ($result['success']) {
+                    $data[$field] = $result['path'];
+                } else {
+                    // Handle upload error
+                    foreach ($result['errors'] as $error) {
+                        $this->addError($field, $error);
+                    }
+                    return;
+                }
             } elseif ($this->isEditing && !$this->$removeProperty) {
                 // Keep existing photo
                 $data[$field] = $this->$existingProperty;
@@ -211,18 +223,7 @@ class VehicleForm extends Component
         }
     }
 
-    private function storeVehiclePhoto($file, string $licensePlate, string $position): string
-    {
-        // Sanitize license plate for filename
-        $sanitizedPlate = preg_replace('/[^A-Za-z0-9\-]/', '_', $licensePlate);
-        
-        // Generate filename with timestamp to avoid conflicts
-        $timestamp = now()->format('YmdHis');
-        $extension = $file->getClientOriginalExtension();
-        $filename = "vehicles/{$sanitizedPlate}_{$position}_{$timestamp}.{$extension}";
-        
-        return $file->storeAs('', $filename, 'public');
-    }
+
 
     public function render()
     {

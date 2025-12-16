@@ -125,8 +125,8 @@ class AdminSidebar extends Component
                         'icon' => 'chart-bar'
                     ],
                     [
-                        'name' => 'Profit Analysis',
-                        'route' => 'admin.reports.profit',
+                        'name' => 'Profitability Analysis',
+                        'route' => 'admin.reports.profitability',
                         'icon' => 'trending-up'
                     ]
                 ]

@@ -1,8 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicVehicleController;
 
-Route::view('/', 'welcome');
+// Public routes
+Route::view('/', 'public.home')->name('home');
+Route::get('/vehicles', [PublicVehicleController::class, 'catalog'])->name('vehicles.catalog');
+Route::get('/vehicles/{car}', [PublicVehicleController::class, 'show'])->name('vehicles.show');
+Route::post('/vehicles/search', [PublicVehicleController::class, 'search'])->name('vehicles.search');
+Route::post('/vehicles/check-availability', [PublicVehicleController::class, 'checkAvailability'])->name('vehicles.check-availability');
+
+// Booking wizard routes
+Route::get('/booking/wizard', [\App\Http\Controllers\BookingWizardController::class, 'start'])->name('booking.wizard');
+Route::post('/booking/complete', [\App\Http\Controllers\BookingWizardController::class, 'complete'])->name('booking.complete');
+Route::get('/booking/{booking}/confirmation', [\App\Http\Controllers\BookingWizardController::class, 'confirmation'])->name('booking.confirmation');
+
+// Customer authentication routes
+Route::prefix('customer')->name('customer.')->group(function () {
+    Route::middleware('guest:customer')->group(function () {
+        Route::get('/login', [\App\Http\Controllers\Customer\AuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [\App\Http\Controllers\Customer\AuthController::class, 'login']);
+        Route::get('/register', [\App\Http\Controllers\Customer\AuthController::class, 'showRegistrationForm'])->name('register');
+        Route::post('/register', [\App\Http\Controllers\Customer\AuthController::class, 'register']);
+    });
+
+    Route::middleware('auth:customer')->group(function () {
+        Route::post('/logout', [\App\Http\Controllers\Customer\AuthController::class, 'logout'])->name('logout');
+        Route::get('/dashboard', [\App\Http\Controllers\Customer\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/bookings', [\App\Http\Controllers\Customer\DashboardController::class, 'bookings'])->name('bookings');
+        Route::get('/bookings/{booking}', [\App\Http\Controllers\Customer\DashboardController::class, 'showBooking'])->name('bookings.show');
+        Route::get('/bookings/{booking}/edit', [\App\Http\Controllers\Customer\DashboardController::class, 'editBooking'])->name('bookings.edit');
+        Route::patch('/bookings/{booking}', [\App\Http\Controllers\Customer\DashboardController::class, 'updateBooking'])->name('bookings.update');
+        Route::delete('/bookings/{booking}', [\App\Http\Controllers\Customer\DashboardController::class, 'cancelBooking'])->name('bookings.cancel');
+        Route::get('/bookings/{booking}/ticket', [\App\Http\Controllers\Customer\DashboardController::class, 'downloadTicket'])->name('bookings.ticket');
+        Route::get('/profile', [\App\Http\Controllers\Customer\DashboardController::class, 'profile'])->name('profile');
+        Route::patch('/profile', [\App\Http\Controllers\Customer\DashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::get('/support', [\App\Http\Controllers\Customer\DashboardController::class, 'support'])->name('support');
+        Route::post('/support', [\App\Http\Controllers\Customer\DashboardController::class, 'submitSupportRequest'])->name('support.submit');
+    });
+});
 
 Route::view('dashboard', 'admin.dashboard')
     ->middleware(['auth', 'verified'])
@@ -56,12 +92,41 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/expenses/analytics/api', [\App\Http\Controllers\ExpenseController::class, 'analytics'])->name('expenses.analytics');
     Route::get('/expenses/profitability/api', [\App\Http\Controllers\ExpenseController::class, 'profitability'])->name('expenses.profitability');
     Route::get('/expenses/search/api', [\App\Http\Controllers\ExpenseController::class, 'search'])->name('expenses.search');
-    Route::get('/reports', function () { return view('admin.dashboard'); })->name('reports.index');
-    Route::get('/reports/profit', function () { return view('admin.dashboard'); })->name('reports.profit');
-    Route::get('/settings/company', function () { return view('admin.dashboard'); })->name('settings.company');
-    Route::get('/settings/users', function () { return view('admin.dashboard'); })->name('settings.users');
-    Route::get('/settings/pricing', function () { return view('admin.dashboard'); })->name('settings.pricing');
-    Route::get('/settings/system', function () { return view('admin.dashboard'); })->name('settings.system');
+    // Report Management Routes
+    Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/customer', [\App\Http\Controllers\ReportController::class, 'customerReport'])->name('reports.customer');
+    Route::get('/reports/financial', [\App\Http\Controllers\ReportController::class, 'financialReport'])->name('reports.financial');
+    Route::get('/reports/vehicle', [\App\Http\Controllers\ReportController::class, 'vehicleReport'])->name('reports.vehicle');
+    Route::get('/reports/analytics', [\App\Http\Controllers\ReportController::class, 'analyticsReport'])->name('reports.analytics');
+    Route::get('/reports/profitability', [\App\Http\Controllers\ReportController::class, 'profitabilityReport'])->name('reports.profitability');
+    Route::get('/reports/customer-ltv', [\App\Http\Controllers\ReportController::class, 'customerLTVReport'])->name('reports.customer-ltv');
+    
+    // Export Management Routes
+    Route::post('/reports/batch-export', [\App\Http\Controllers\ReportController::class, 'batchExport'])->name('reports.batch-export');
+    Route::post('/reports/schedule-export', [\App\Http\Controllers\ReportController::class, 'scheduleExport'])->name('reports.schedule-export');
+    Route::get('/reports/export-history', [\App\Http\Controllers\ReportController::class, 'exportHistory'])->name('reports.export-history');
+    // Settings Management Routes
+    Route::get('/settings/company', [\App\Http\Controllers\SettingsController::class, 'company'])->name('settings.company');
+    Route::get('/settings/users', [\App\Http\Controllers\SettingsController::class, 'users'])->name('settings.users');
+    Route::get('/settings/pricing', [\App\Http\Controllers\SettingsController::class, 'pricing'])->name('settings.pricing');
+    Route::get('/settings/system', [\App\Http\Controllers\SettingsController::class, 'system'])->name('settings.system');
+    
+    // Settings API Routes
+    Route::post('/settings/company', [\App\Http\Controllers\SettingsController::class, 'updateCompany'])->name('settings.update-company');
+    Route::post('/settings/pricing', [\App\Http\Controllers\SettingsController::class, 'updatePricing'])->name('settings.update-pricing');
+    Route::get('/settings/users/list', [\App\Http\Controllers\SettingsController::class, 'getUsersList'])->name('settings.users-list');
+    Route::post('/settings/users', [\App\Http\Controllers\SettingsController::class, 'createUser'])->name('settings.create-user');
+    Route::patch('/settings/users/{user}', [\App\Http\Controllers\SettingsController::class, 'updateUser'])->name('settings.update-user');
+    Route::delete('/settings/users/{user}', [\App\Http\Controllers\SettingsController::class, 'deleteUser'])->name('settings.delete-user');
+    Route::patch('/settings/users/{user}/toggle-status', [\App\Http\Controllers\SettingsController::class, 'toggleUserStatus'])->name('settings.toggle-user-status');
+    
+    // Notification Management Routes
+    Route::get('/notifications', function () { return view('admin.notifications.index'); })->name('notifications.index');
+    Route::get('/notifications/preferences', function () { return view('admin.notifications.preferences'); })->name('notifications.preferences');
+    Route::post('/notifications/{notification}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
+    Route::post('/notifications/mark-all-read', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+    Route::get('/notifications/unread-count', [\App\Http\Controllers\NotificationController::class, 'getUnreadCount'])->name('notifications.unread-count');
+    Route::post('/notifications/generate', [\App\Http\Controllers\NotificationController::class, 'generate'])->name('notifications.generate');
 });
 
 Route::view('profile', 'profile')

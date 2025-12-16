@@ -58,7 +58,9 @@ class ExpenseController extends Controller
      */
     public function create(): View
     {
-        return view('admin.expenses.create');
+        return view('admin.expenses.create', [
+            'categories' => Expense::getCategories(),
+        ]);
     }
 
     /**
@@ -101,7 +103,10 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense): View
     {
-        return view('admin.expenses.edit', compact('expense'));
+        return view('admin.expenses.edit', [
+            'expense' => $expense,
+            'categories' => Expense::getCategories(),
+        ]);
     }
 
     /**
@@ -205,12 +210,97 @@ class ExpenseController extends Controller
     }
 
     /**
+     * Get monthly expense summary.
+     */
+    public function monthlySummary(Request $request)
+    {
+        $year = $request->get('year', Carbon::now()->year);
+        $month = $request->get('month', Carbon::now()->month);
+
+        $summary = Expense::getMonthlySummary($year, $month);
+
+        return response()->json($summary);
+    }
+
+    /**
+     * Get yearly expense summary.
+     */
+    public function yearlySummary(Request $request)
+    {
+        $year = $request->get('year', Carbon::now()->year);
+
+        $summary = Expense::getYearlySummary($year);
+
+        return response()->json($summary);
+    }
+
+    /**
+     * Get expense comparison data.
+     */
+    public function comparison(Request $request)
+    {
+        $validated = $request->validate([
+            'start_date_1' => 'required|date',
+            'end_date_1' => 'required|date|after_or_equal:start_date_1',
+            'start_date_2' => 'required|date',
+            'end_date_2' => 'required|date|after_or_equal:start_date_2',
+        ]);
+
+        $comparison = Expense::getComparison(
+            Carbon::parse($validated['start_date_1']),
+            Carbon::parse($validated['end_date_1']),
+            Carbon::parse($validated['start_date_2']),
+            Carbon::parse($validated['end_date_2'])
+        );
+
+        return response()->json($comparison);
+    }
+
+    /**
+     * Get expense analytics data.
+     */
+    public function analytics(Request $request)
+    {
+        $year = $request->get('year', Carbon::now()->year);
+        $month = $request->get('month');
+
+        $data = [
+            'yearly_summary' => Expense::getYearlySummary($year),
+            'categories' => Expense::getCategories(),
+        ];
+
+        if ($month) {
+            $data['monthly_summary'] = Expense::getMonthlySummary($year, $month);
+        }
+
+        // Get trend data for the last 12 months
+        $trendData = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            $monthSummary = Expense::getMonthlySummary($date->year, $date->month);
+            $trendData[] = [
+                'month' => $date->format('M Y'),
+                'total' => $monthSummary['total_amount'],
+                'count' => $monthSummary['total_count'],
+            ];
+        }
+        $data['trend_data'] = $trendData;
+
+        return response()->json($data);
+    }
+
+    /**
      * Get expense data for profitability calculations.
      */
-    public function getProfitabilityData(Request $request)
+    public function profitability(Request $request)
     {
-        $startDate = Carbon::parse($request->start_date);
-        $endDate = Carbon::parse($request->end_date);
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        $startDate = Carbon::parse($validated['start_date']);
+        $endDate = Carbon::parse($validated['end_date']);
 
         $totalExpenses = Expense::getTotalOperationalExpenses($startDate, $endDate);
         
@@ -228,6 +318,55 @@ class ExpenseController extends Controller
             'period' => [
                 'start_date' => $startDate->format('Y-m-d'),
                 'end_date' => $endDate->format('Y-m-d'),
+            ],
+        ]);
+    }
+
+    /**
+     * Search expenses with filters.
+     */
+    public function search(Request $request)
+    {
+        $query = Expense::with('creator')->latest('expense_date');
+
+        // Apply filters
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        if ($request->filled('start_date')) {
+            $query->where('expense_date', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->where('expense_date', '<=', $request->end_date);
+        }
+
+        if ($request->filled('search')) {
+            $query->where('description', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('min_amount')) {
+            $query->where('amount', '>=', $request->min_amount);
+        }
+
+        if ($request->filled('max_amount')) {
+            $query->where('amount', '<=', $request->max_amount);
+        }
+
+        $expenses = $query->paginate(15);
+
+        return response()->json([
+            'expenses' => $expenses->items(),
+            'pagination' => [
+                'current_page' => $expenses->currentPage(),
+                'last_page' => $expenses->lastPage(),
+                'per_page' => $expenses->perPage(),
+                'total' => $expenses->total(),
+            ],
+            'summary' => [
+                'total_amount' => $query->sum('amount'),
+                'count' => $query->count(),
             ],
         ]);
     }
