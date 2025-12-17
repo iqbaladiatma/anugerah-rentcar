@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Vehicle Report</title>
+    <title>Laporan Kendaraan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -90,27 +90,27 @@
 <body>
     <div class="header">
         <div class="company-name">Anugerah Rentcar</div>
-        <div class="report-title">Vehicle Utilization & Revenue Report</div>
-        <div class="period">Period: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }} ({{ $reportData['period']['total_days'] }} days)</div>
+        <div class="report-title">Laporan Utilisasi & Pendapatan Kendaraan</div>
+        <div class="period">Periode: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }} ({{ $reportData['period']['total_days'] }} days)</div>
     </div>
 
     <div class="summary-box">
-        <div class="summary-title">Fleet Summary</div>
+        <div class="summary-title">Ringkasan Armada</div>
         <div class="summary-grid">
             <div class="summary-item">
-                <span>Total Vehicles:</span>
+                <span>Total Kendaraan:</span>
                 <span>{{ number_format($reportData['fleet_summary']['total_vehicles']) }}</span>
             </div>
             <div class="summary-item">
-                <span>Average Utilization:</span>
+                <span>Average Utilisasi:</span>
                 <span>{{ number_format($reportData['fleet_summary']['average_utilization'], 2) }}%</span>
             </div>
             <div class="summary-item">
-                <span>Total Fleet Revenue:</span>
+                <span>Total Pendapatan Armada:</span>
                 <span>Rp {{ number_format($reportData['fleet_summary']['total_fleet_revenue'], 0, ',', '.') }}</span>
             </div>
             <div class="summary-item">
-                <span>Total Maintenance Costs:</span>
+                <span>Total Biaya Pemeliharaan:</span>
                 <span>Rp {{ number_format($reportData['fleet_summary']['total_maintenance_costs'], 0, ',', '.') }}</span>
             </div>
         </div>
@@ -118,7 +118,7 @@
 
     @if($reportData['fleet_summary']['most_profitable_vehicle'])
     <div class="highlight-box">
-        <strong>Most Profitable Vehicle:</strong> 
+        <strong>Kendaraan yang Paling Laku:</strong> 
         {{ $reportData['fleet_summary']['most_profitable_vehicle']->license_plate }} 
         ({{ $reportData['fleet_summary']['most_profitable_vehicle']->brand }} {{ $reportData['fleet_summary']['most_profitable_vehicle']->model }})
     </div>
@@ -126,7 +126,7 @@
 
     @if($reportData['fleet_summary']['highest_utilization_vehicle'])
     <div class="highlight-box">
-        <strong>Highest Utilization Vehicle:</strong> 
+        <strong>Kendaraan dengan Utilisasi Terendah:</strong> 
         {{ $reportData['fleet_summary']['highest_utilization_vehicle']->license_plate }} 
         ({{ $reportData['fleet_summary']['highest_utilization_vehicle']->brand }} {{ $reportData['fleet_summary']['highest_utilization_vehicle']->model }})
     </div>
@@ -135,15 +135,15 @@
     <table>
         <thead>
             <tr>
-                <th>License Plate</th>
-                <th>Vehicle</th>
-                <th class="text-center">Bookings</th>
-                <th class="text-center">Days Booked</th>
-                <th class="text-center">Utilization %</th>
+                <th>Plat Kendaraan</th>
+                <th>Kendaraan</th>
+                <th class="text-center">Booking</th>
+                <th class="text-center">Hari Booked</th>
+                <th class="text-center">Utilisasi %</th>
                 <th class="text-right">Revenue</th>
-                <th class="text-right">Maintenance</th>
+                <th class="text-right">Pemeliharaan</th>
                 <th class="text-right">Net Revenue</th>
-                <th class="text-right">Rev/Day</th>
+                <th class="text-right">Rev/Hari</th>
             </tr>
         </thead>
         <tbody>
@@ -178,9 +178,9 @@
     <div style="margin-top: 30px; font-size: 10px; color: #666;">
         <p><strong>Notes:</strong></p>
         <ul>
-            <li>Utilization Rate = (Total Booked Days / Total Period Days) × 100%</li>
-            <li>Net Revenue = Total Revenue - Maintenance Costs</li>
-            <li>Revenue per Day = Total Revenue / Total Booked Days</li>
+            <li>Utilisasi Rate = (Hari Booked / Hari Total) × 100%</li>
+            <li>Net Revenue = Total Revenue - Pemeliharaan</li>
+            <li>Revenue per Day = Total Revenue / Hari Booked</li>
             <li>Color coding: Green (≥70%), Yellow (40-69%), Red (<40%)</li>
         </ul>
     </div>

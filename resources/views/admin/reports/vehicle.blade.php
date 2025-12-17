@@ -1,7 +1,7 @@
 <x-admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Vehicle Reports') }}
+            {{ __('Laporan Kendaraan') }}
         </h2>
     </x-slot>
 
@@ -10,25 +10,25 @@
             <!-- Filters -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Report Filters</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Filter Laporan</h3>
                     <form method="GET" action="{{ route('admin.reports.vehicle') }}" class="grid grid-cols-1 md:grid-cols-5 gap-4">
                         <div>
-                            <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                            <label for="start_date" class="block text-sm font-medium text-gray-700">Tanggal Mulai</label>
                             <input type="date" name="start_date" id="start_date" 
                                    value="{{ request('start_date', now()->subYear()->format('Y-m-d')) }}"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>
                         <div>
-                            <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
+                            <label for="end_date" class="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
                             <input type="date" name="end_date" id="end_date" 
                                    value="{{ request('end_date', now()->format('Y-m-d')) }}"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>
                         <div>
-                            <label for="car_id" class="block text-sm font-medium text-gray-700">Specific Vehicle</label>
+                            <label for="car_id" class="block text-sm font-medium text-gray-700">Kendaraan Spesifik</label>
                             <select name="car_id" id="car_id" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                <option value="">All Vehicles</option>
+                                <option value="">Semua Kendaraan</option>
                                 @foreach(\App\Models\Car::all() as $car)
                                     <option value="{{ $car->id }}" {{ request('car_id') == $car->id ? 'selected' : '' }}>
                                         {{ $car->license_plate }} - {{ $car->brand }} {{ $car->model }}
@@ -39,7 +39,7 @@
                         <div class="flex items-end">
                             <button type="submit" 
                                     class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                Generate Report
+                                Laporan
                             </button>
                         </div>
                         <div class="flex items-end space-x-2">
@@ -61,24 +61,24 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">
-                        Fleet Summary ({{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }} - {{ $reportData['period']['total_days'] }} days)
+                        Ringkasan Armada ({{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }} - {{ $reportData['period']['total_days'] }} hari)
                     </h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="text-center">
                             <div class="text-2xl font-bold text-blue-600">{{ number_format($reportData['fleet_summary']['total_vehicles']) }}</div>
-                            <div class="text-sm text-gray-500">Total Vehicles</div>
+                            <div class="text-sm text-gray-500">Total Kendaraan</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-green-600">{{ number_format($reportData['fleet_summary']['average_utilization'], 1) }}%</div>
-                            <div class="text-sm text-gray-500">Avg. Utilization</div>
+                            <div class="text-sm text-gray-500">Utilisasi Rata-rata</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-purple-600">Rp {{ number_format($reportData['fleet_summary']['total_fleet_revenue'], 0, ',', '.') }}</div>
-                            <div class="text-sm text-gray-500">Total Revenue</div>
+                            <div class="text-sm text-gray-500">Total Pendapatan</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-red-600">Rp {{ number_format($reportData['fleet_summary']['total_maintenance_costs'], 0, ',', '.') }}</div>
-                            <div class="text-sm text-gray-500">Maintenance Costs</div>
+                            <div class="text-sm text-gray-500">Biaya Pemeliharaan</div>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                 @if($reportData['fleet_summary']['most_profitable_vehicle'])
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        <h4 class="text-lg font-medium text-gray-900 mb-2">Most Profitable Vehicle</h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-2">Kendaraan Paling Laku</h4>
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <x-icons.trophy class="h-8 w-8 text-yellow-500" />
@@ -107,7 +107,7 @@
                 @if($reportData['fleet_summary']['highest_utilization_vehicle'])
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        <h4 class="text-lg font-medium text-gray-900 mb-2">Highest Utilization Vehicle</h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-2">Kendaraan dengan Utilisasi Terendah</h4>
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <x-icons.chart-bar class="h-8 w-8 text-green-500" />
@@ -126,18 +126,18 @@
             <!-- Vehicle Details -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Vehicle Performance Details</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Detail Performa Kendaraan</h3>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bookings</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilization</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Maintenance</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Revenue</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performance</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kendaraan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Peminjaman</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisasi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pendapatan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pemeliharaan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pendapatan Bersih</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performa</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -202,7 +202,7 @@
                                 @empty
                                 <tr>
                                     <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                        No vehicles found for the selected criteria.
+                                        Tidak ada kendaraan ditemukan untuk kriteria yang dipilih.
                                     </td>
                                 </tr>
                                 @endforelse
@@ -215,19 +215,19 @@
             <!-- Performance Notes -->
             <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg mt-6">
                 <div class="p-6">
-                    <h4 class="text-md font-medium text-gray-900 mb-3">Performance Metrics Explanation</h4>
+                    <h4 class="text-md font-medium text-gray-900 mb-3">Penjelasan Indikator Performa</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
                         <div>
-                            <strong>Utilization Rate:</strong> Percentage of days the vehicle was booked during the period<br>
-                            <strong>Revenue per Day:</strong> Total revenue divided by days actually booked<br>
-                            <strong>Net Revenue:</strong> Total revenue minus maintenance costs
+                            <strong>Utilisasi:</strong> Persentase hari yang kendaraan dipinjam selama periode<br>
+                            <strong>Revenue per Day:</strong> Total pendapatan dibagi dengan hari yang sebenarnya dipinjam<br>
+                            <strong>Net Revenue:</strong> Total pendapatan minus biaya pemeliharaan
                         </div>
                         <div>
-                            <strong>Performance Rating:</strong><br>
-                            • Excellent: ≥70% utilization + positive net revenue<br>
-                            • Good: ≥50% utilization + positive net revenue<br>
-                            • Fair: ≥30% utilization OR positive net revenue<br>
-                            • Poor: <30% utilization AND negative net revenue
+                            <strong>Performa:</strong><br>
+                            • Excelent: ≥70% Utilisasi + Pendapatan Bersih Positif<br>
+                            • Good: ≥50% Utilisasi + Pendapatan Bersih Positif<br>
+                            • Fair: ≥30% Utilisasi OR Pendapatan Bersih Positif<br>
+                            • Poor: <30% Utilisasi AND Pendapatan Bersih Negatif
                         </div>
                     </div>
                 </div>

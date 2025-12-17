@@ -27,7 +27,7 @@ class AdminSidebar extends Component
 
         // Dashboard - Available to all authenticated users
         $menuItems[] = [
-            'name' => 'Dashboard',
+            'name' => 'Dasbor',
             'route' => 'dashboard',
             'icon' => 'home',
             'permission' => true
@@ -36,21 +36,21 @@ class AdminSidebar extends Component
         // Fleet Management - Admin and Staff only
         if ($user->canManageVehicles()) {
             $menuItems[] = [
-                'name' => 'Fleet Management',
+                'name' => 'Manajemen Armada',
                 'icon' => 'truck',
                 'children' => [
                     [
-                        'name' => 'Vehicles',
+                        'name' => 'Kendaraan',
                         'route' => 'admin.vehicles.index',
                         'icon' => 'car'
                     ],
                     [
-                        'name' => 'Maintenance',
+                        'name' => 'Perawatan',
                         'route' => 'admin.maintenance.index',
                         'icon' => 'wrench'
                     ],
                     [
-                        'name' => 'Availability Timeline',
+                        'name' => 'Jadwal Ketersediaan',
                         'route' => 'admin.availability.timeline',
                         'icon' => 'calendar'
                     ]
@@ -61,21 +61,21 @@ class AdminSidebar extends Component
         // Customer Management - Admin and Staff only
         if ($user->canManageCustomers()) {
             $menuItems[] = [
-                'name' => 'Customer Management',
+                'name' => 'Manajemen Pelanggan',
                 'icon' => 'users',
                 'children' => [
                     [
-                        'name' => 'Customers',
+                        'name' => 'Pelanggan',
                         'route' => 'admin.customers.index',
                         'icon' => 'user'
                     ],
                     [
-                        'name' => 'Member Management',
+                        'name' => 'Manajemen Anggota',
                         'route' => 'admin.customers.members',
                         'icon' => 'star'
                     ],
                     [
-                        'name' => 'Blacklist',
+                        'name' => 'Daftar Hitam',
                         'route' => 'admin.customers.blacklist',
                         'icon' => 'ban'
                     ]
@@ -86,16 +86,16 @@ class AdminSidebar extends Component
         // Booking Management - Admin and Staff only
         if ($user->canManageBookings()) {
             $menuItems[] = [
-                'name' => 'Booking Management',
+                'name' => 'Manajemen Pemesanan',
                 'icon' => 'clipboard-list',
                 'children' => [
                     [
-                        'name' => 'All Bookings',
+                        'name' => 'Semua Pemesanan',
                         'route' => 'admin.bookings.index',
                         'icon' => 'list'
                     ],
                     [
-                        'name' => 'New Booking',
+                        'name' => 'Pemesanan Baru',
                         'route' => 'admin.bookings.create',
                         'icon' => 'plus'
                     ]
@@ -106,26 +106,26 @@ class AdminSidebar extends Component
         // Financial Management - Admin and Staff only
         if ($user->canViewReports()) {
             $menuItems[] = [
-                'name' => 'Financial Management',
+                'name' => 'Manajemen Keuangan',
                 'icon' => 'currency-dollar',
                 'children' => [
                     [
-                        'name' => 'Expenses',
+                        'name' => 'Pengeluaran',
                         'route' => 'admin.expenses.index',
                         'icon' => 'receipt-tax'
                     ],
                     [
-                        'name' => 'Expense Analytics',
+                        'name' => 'Analisis Pengeluaran',
                         'route' => 'admin.expenses.analytics-view',
                         'icon' => 'chart-bar'
                     ],
                     [
-                        'name' => 'Reports',
+                        'name' => 'Laporan',
                         'route' => 'admin.reports.index',
                         'icon' => 'chart-bar'
                     ],
                     [
-                        'name' => 'Profitability Analysis',
+                        'name' => 'Analisis Profitabilitas',
                         'route' => 'admin.reports.profitability',
                         'icon' => 'trending-up'
                     ]
@@ -136,26 +136,26 @@ class AdminSidebar extends Component
         // System Settings - Admin only
         if ($user->canManageSettings()) {
             $menuItems[] = [
-                'name' => 'System Settings',
+                'name' => 'Pengaturan Sistem',
                 'icon' => 'cog',
                 'children' => [
                     [
-                        'name' => 'Company Settings',
+                        'name' => 'Pengaturan Perusahaan',
                         'route' => 'admin.settings.company',
                         'icon' => 'office-building'
                     ],
                     [
-                        'name' => 'User Management',
+                        'name' => 'Manajemen Pengguna',
                         'route' => 'admin.settings.users',
                         'icon' => 'user-group'
                     ],
                     [
-                        'name' => 'Pricing Configuration',
+                        'name' => 'Konfigurasi Harga',
                         'route' => 'admin.settings.pricing',
                         'icon' => 'calculator'
                     ],
                     [
-                        'name' => 'System Configuration',
+                        'name' => 'Konfigurasi Sistem',
                         'route' => 'admin.settings.system',
                         'icon' => 'adjustments'
                     ]

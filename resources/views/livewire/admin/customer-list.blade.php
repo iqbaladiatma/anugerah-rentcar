@@ -3,16 +3,16 @@
     <div class="mb-6 bg-gray-50 p-4 rounded-lg">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="search" 
                        id="search"
-                       placeholder="Name, phone, email, or NIK..."
+                       placeholder="Nama, telepon, email, atau NIK..."
                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             
             <div>
-                <label for="memberStatus" class="block text-sm font-medium text-gray-700 mb-1">Member Status</label>
+                <label for="memberStatus" class="block text-sm font-medium text-gray-700 mb-1">Status Anggota</label>
                 <select wire:model.live="memberStatus" 
                         id="memberStatus"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -36,7 +36,7 @@
             <div class="flex items-end">
                 <button wire:click="clearFilters" 
                         class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                    Clear Filters
+                    Hapus Filter
                 </button>
             </div>
         </div>
@@ -46,13 +46,13 @@
             <button wire:click="toggleMembersOnly" 
                     class="px-3 py-1 text-sm rounded-full {{ $showMembersOnly ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700' }} hover:bg-green-600 hover:text-white">
                 <x-icons.star class="w-3 h-3 inline mr-1" />
-                Members Only
+                Hanya Anggota
             </button>
             
             <button wire:click="toggleBlacklistedOnly" 
                     class="px-3 py-1 text-sm rounded-full {{ $showBlacklistedOnly ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700' }} hover:bg-red-600 hover:text-white">
                 <x-icons.ban class="w-3 h-3 inline mr-1" />
-                Blacklisted Only
+                Hanya Daftar Hitam
             </button>
         </div>
     </div>
@@ -60,7 +60,7 @@
     <!-- Loading Indicator -->
     <div wire:loading class="mb-4">
         <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
-            Loading customers...
+            Memuat pelanggan...
         </div>
     </div>
 
@@ -73,7 +73,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                             wire:click="sortBy('name')">
                             <div class="flex items-center">
-                                Name
+                                Nama
                                 @if($sortBy === 'name')
                                     @if($sortDirection === 'asc')
                                         <x-icons.arrow-up class="w-4 h-4 ml-1" />
@@ -84,18 +84,18 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Contact
+                            Kontak
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Bookings
+                            Pemesanan
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                             wire:click="sortBy('created_at')">
                             <div class="flex items-center">
-                                Registered
+                                Terdaftar
                                 @if($sortBy === 'created_at')
                                     @if($sortDirection === 'asc')
                                         <x-icons.arrow-up class="w-4 h-4 ml-1" />
@@ -106,7 +106,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            Aksi
                         </th>
                     </tr>
                 </thead>
@@ -143,18 +143,18 @@
                                     @if($customer->is_member)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                             <x-icons.star class="w-3 h-3 mr-1" />
-                                            Member ({{ $customer->getMemberDiscountPercentage() }}%)
+                                            Anggota ({{ $customer->getMemberDiscountPercentage() }}%)
                                         </span>
                                     @endif
                                     
                                     @if($customer->is_blacklisted)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                             <x-icons.ban class="w-3 h-3 mr-1" />
-                                            Blacklisted
+                                            Daftar Hitam
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                            Active
+                                            Aktif
                                         </span>
                                     @endif
                                 </div>
@@ -165,20 +165,20 @@
                                     @php $stats = $customerStats[$customer->id] @endphp
                                     <div class="text-sm">
                                         <div>Total: {{ $stats['total_bookings'] }}</div>
-                                        <div class="text-gray-500">Active: {{ $stats['active_bookings'] }}</div>
+                                        <div class="text-gray-500">Aktif: {{ $stats['active_bookings'] }}</div>
                                     </div>
                                 @endif
                             </td>
                             
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $customer->created_at->format('M d, Y') }}
+                                {{ $customer->created_at->format('d M Y') }}
                             </td>
                             
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end space-x-2">
                                     <a href="{{ route('admin.customers.show', $customer) }}" 
                                        class="text-blue-600 hover:text-blue-900">
-                                        View
+                                        Lihat
                                     </a>
                                     
                                     <a href="{{ route('admin.customers.edit', $customer) }}" 
@@ -191,13 +191,13 @@
                                         @if($customer->is_member)
                                             <button wire:click="updateMemberStatus({{ $customer->id }}, false)"
                                                     class="text-yellow-600 hover:text-yellow-900"
-                                                    wire:confirm="Remove member status from {{ $customer->name }}?">
-                                                Remove Member
+                                                    wire:confirm="Hapus status anggota dari {{ $customer->name }}?">
+                                                Hapus Anggota
                                             </button>
                                         @else
                                             <button wire:click="updateMemberStatus({{ $customer->id }}, true, 10)"
                                                     class="text-green-600 hover:text-green-900">
-                                                Make Member
+                                                Jadikan Anggota
                                             </button>
                                         @endif
                                     @endif
@@ -206,13 +206,13 @@
                                     @if($customer->is_blacklisted)
                                         <button wire:click="updateBlacklistStatus({{ $customer->id }}, false)"
                                                 class="text-green-600 hover:text-green-900"
-                                                wire:confirm="Remove {{ $customer->name }} from blacklist?">
-                                            Unblock
+                                                wire:confirm="Hapus {{ $customer->name }} dari daftar hitam?">
+                                            Buka Blokir
                                         </button>
                                     @else
                                         <button onclick="blacklistCustomer({{ $customer->id }}, '{{ $customer->name }}')"
                                                 class="text-red-600 hover:text-red-900">
-                                            Blacklist
+                                            Daftar Hitam
                                         </button>
                                     @endif
                                 </div>
@@ -222,9 +222,9 @@
                         <tr>
                             <td colspan="6" class="px-6 py-4 text-center text-gray-500">
                                 @if($search || $memberStatus !== '' || $blacklistStatus !== '')
-                                    No customers found matching your criteria.
+                                    Tidak ada pelanggan yang ditemukan sesuai kriteria Anda.
                                 @else
-                                    No customers registered yet.
+                                    Belum ada pelanggan yang terdaftar.
                                 @endif
                             </td>
                         </tr>
@@ -267,23 +267,23 @@
                                 </div>
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <h3 class="text-lg leading-6 font-medium text-gray-900">
-                                        Blacklist Customer
+                                        Daftar Hitam Pelanggan
                                     </h3>
                                     <div class="mt-2">
                                         <p class="text-sm text-gray-500">
-                                            You are about to blacklist <strong x-text="customerName"></strong>. 
-                                            This will prevent them from making new bookings and cancel any pending bookings.
+                                            Anda akan memasukkan <strong x-text="customerName"></strong> ke daftar hitam. 
+                                            Ini akan mencegah mereka melakukan pemesanan baru dan membatalkan pemesanan yang tertunda.
                                         </p>
                                         <div class="mt-4">
                                             <label for="blacklistReason" class="block text-sm font-medium text-gray-700">
-                                                Reason for blacklisting *
+                                                Alasan daftar hitam *
                                             </label>
                                             <textarea x-ref="blacklistReason"
                                                       id="blacklistReason"
                                                       rows="3"
                                                       required
                                                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500"
-                                                      placeholder="Enter the reason for blacklisting this customer..."></textarea>
+                                                      placeholder="Masukkan alasan memasukkan pelanggan ini ke daftar hitam..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -292,12 +292,12 @@
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                             <button type="submit"
                                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                Blacklist Customer
+                                Daftar Hitam Pelanggan
                             </button>
                             <button type="button"
                                     @click="showBlacklistModal = false"
                                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                                Cancel
+                                Batal
                             </button>
                         </div>
                     </form>

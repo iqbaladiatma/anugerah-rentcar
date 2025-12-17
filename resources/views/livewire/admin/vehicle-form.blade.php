@@ -2,13 +2,13 @@
     <form wire:submit="save" class="space-y-6">
         <!-- Basic Information -->
         <div class="bg-white rounded-lg shadow-sm border p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Dasar</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- License Plate -->
                 <div>
                     <label for="license_plate" class="block text-sm font-medium text-gray-700 mb-1">
-                        License Plate <span class="text-red-500">*</span>
+                        Nomor Plat <span class="text-red-500">*</span>
                     </label>
                     <input type="text" 
                            id="license_plate"
@@ -23,7 +23,7 @@
                 <!-- STNK Number -->
                 <div>
                     <label for="stnk_number" class="block text-sm font-medium text-gray-700 mb-1">
-                        STNK Number <span class="text-red-500">*</span>
+                        Nomor STNK <span class="text-red-500">*</span>
                     </label>
                     <input type="text" 
                            id="stnk_number"
@@ -38,7 +38,7 @@
                 <!-- Brand -->
                 <div>
                     <label for="brand" class="block text-sm font-medium text-gray-700 mb-1">
-                        Brand <span class="text-red-500">*</span>
+                        Merek <span class="text-red-500">*</span>
                     </label>
                     <input type="text" 
                            id="brand"
@@ -68,7 +68,7 @@
                 <!-- Year -->
                 <div>
                     <label for="year" class="block text-sm font-medium text-gray-700 mb-1">
-                        Year <span class="text-red-500">*</span>
+                        Tahun <span class="text-red-500">*</span>
                     </label>
                     <input type="number" 
                            id="year"
@@ -85,7 +85,7 @@
                 <!-- Color -->
                 <div>
                     <label for="color" class="block text-sm font-medium text-gray-700 mb-1">
-                        Color <span class="text-red-500">*</span>
+                        Warna <span class="text-red-500">*</span>
                     </label>
                     <input type="text" 
                            id="color"
@@ -101,13 +101,13 @@
 
         <!-- Documentation & Maintenance -->
         <div class="bg-white rounded-lg shadow-sm border p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Documentation & Maintenance</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Dokumen & Pemeliharaan</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- STNK Expiry -->
                 <div>
                     <label for="stnk_expiry" class="block text-sm font-medium text-gray-700 mb-1">
-                        STNK Expiry Date <span class="text-red-500">*</span>
+                        Tanggal STNK <span class="text-red-500">*</span>
                     </label>
                     <input type="date" 
                            id="stnk_expiry"
@@ -121,7 +121,7 @@
                 <!-- Last Oil Change -->
                 <div>
                     <label for="last_oil_change" class="block text-sm font-medium text-gray-700 mb-1">
-                        Last Oil Change Date
+                        Tanggal Ganti oli terakhir
                     </label>
                     <input type="date" 
                            id="last_oil_change"
@@ -135,7 +135,7 @@
                 <!-- Oil Change Interval -->
                 <div>
                     <label for="oil_change_interval_km" class="block text-sm font-medium text-gray-700 mb-1">
-                        Oil Change Interval (KM)
+                        Interval Ganti oli (KM)
                     </label>
                     <input type="number" 
                            id="oil_change_interval_km"
@@ -152,7 +152,7 @@
                 <!-- Current Odometer -->
                 <div>
                     <label for="current_odometer" class="block text-sm font-medium text-gray-700 mb-1">
-                        Current Odometer (KM) <span class="text-red-500">*</span>
+                        Odometer saat ini (KM)
                     </label>
                     <input type="number" 
                            id="current_odometer"
@@ -169,19 +169,25 @@
 
         <!-- Pricing Information -->
         <div class="bg-white rounded-lg shadow-sm border p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Pricing Information</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Harga</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Daily Rate -->
-                <div>
+                <div x-data="{
+                    raw: @entangle('daily_rate'),
+                    get formatted() {
+                        return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                    },
+                    set formatted(value) {
+                        this.raw = value.replace(/\D/g, '');
+                    }
+                }">
                     <label for="daily_rate" class="block text-sm font-medium text-gray-700 mb-1">
-                        Daily Rate (Rp) <span class="text-red-500">*</span>
+                        Harga Harian (Rp)
                     </label>
-                    <input type="number" 
+                    <input type="text" 
                            id="daily_rate"
-                           wire:model="daily_rate"
-                           min="0"
-                           step="1000"
+                           x-model="formatted"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('daily_rate') border-red-500 @enderror"
                            placeholder="300000">
                     @error('daily_rate')
@@ -190,15 +196,21 @@
                 </div>
 
                 <!-- Weekly Rate -->
-                <div>
+                <div x-data="{
+                    raw: @entangle('weekly_rate'),
+                    get formatted() {
+                        return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                    },
+                    set formatted(value) {
+                        this.raw = value.replace(/\D/g, '');
+                    }
+                }">
                     <label for="weekly_rate" class="block text-sm font-medium text-gray-700 mb-1">
-                        Weekly Rate (Rp) <span class="text-red-500">*</span>
+                        Harga Mingguan (Rp)
                     </label>
-                    <input type="number" 
+                    <input type="text" 
                            id="weekly_rate"
-                           wire:model="weekly_rate"
-                           min="0"
-                           step="1000"
+                           x-model="formatted"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('weekly_rate') border-red-500 @enderror"
                            placeholder="1800000">
                     @error('weekly_rate')
@@ -207,15 +219,21 @@
                 </div>
 
                 <!-- Driver Fee Per Day -->
-                <div>
+                <div x-data="{
+                    raw: @entangle('driver_fee_per_day'),
+                    get formatted() {
+                        return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                    },
+                    set formatted(value) {
+                        this.raw = value.replace(/\D/g, '');
+                    }
+                }">
                     <label for="driver_fee_per_day" class="block text-sm font-medium text-gray-700 mb-1">
-                        Driver Fee/Day (Rp) <span class="text-red-500">*</span>
+                        Biaya Driver/Hari (Rp)
                     </label>
-                    <input type="number" 
+                    <input type="text" 
                            id="driver_fee_per_day"
-                           wire:model="driver_fee_per_day"
-                           min="0"
-                           step="1000"
+                           x-model="formatted"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('driver_fee_per_day') border-red-500 @enderror"
                            placeholder="100000">
                     @error('driver_fee_per_day')
@@ -227,7 +245,7 @@
 
         <!-- Vehicle Status -->
         <div class="bg-white rounded-lg shadow-sm border p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Vehicle Status</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Status Kendaraan</h3>
             
             <div>
                 <label for="status" class="block text-sm font-medium text-gray-700 mb-1">
@@ -248,13 +266,13 @@
 
         <!-- Vehicle Photos -->
         <div class="bg-white rounded-lg shadow-sm border p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Vehicle Photos</h3>
-            <p class="text-sm text-gray-600 mb-6">Upload photos from three angles: front, side, and back view. Maximum file size: 2MB per photo.</p>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Foto Kendaraan</h3>
+            <p class="text-sm text-gray-600 mb-6">Upload foto dari tiga sudut: depan, samping, dan belakang. Ukuran file maksimum: 2MB per foto.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Front Photo -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Front View</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Foto Depan</label>
                     
                     @if($existing_photo_front && !$remove_photo_front && !$photo_front)
                         <div class="mb-3">
@@ -269,7 +287,7 @@
                         </div>
                     @elseif($remove_photo_front)
                         <div class="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                            <p class="text-sm text-red-600">Photo will be removed when saved.</p>
+                            <p class="text-sm text-red-600">Foto akan dihapus ketika disimpan.</p>
                             <button type="button" 
                                     wire:click="restorePhoto('front')"
                                     class="mt-1 text-sm text-blue-600 hover:text-blue-800">
@@ -297,7 +315,7 @@
 
                 <!-- Side Photo -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Side View</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Foto Samping</label>
                     
                     @if($existing_photo_side && !$remove_photo_side && !$photo_side)
                         <div class="mb-3">
@@ -312,7 +330,7 @@
                         </div>
                     @elseif($remove_photo_side)
                         <div class="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                            <p class="text-sm text-red-600">Photo will be removed when saved.</p>
+                            <p class="text-sm text-red-600">Foto akan dihapus ketika disimpan.</p>
                             <button type="button" 
                                     wire:click="restorePhoto('side')"
                                     class="mt-1 text-sm text-blue-600 hover:text-blue-800">
@@ -340,7 +358,7 @@
 
                 <!-- Back Photo -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Back View</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Foto Belakang</label>
                     
                     @if($existing_photo_back && !$remove_photo_back && !$photo_back)
                         <div class="mb-3">
@@ -355,7 +373,7 @@
                         </div>
                     @elseif($remove_photo_back)
                         <div class="mb-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                            <p class="text-sm text-red-600">Photo will be removed when saved.</p>
+                            <p class="text-sm text-red-600">Foto akan dihapus ketika disimpan.</p>
                             <button type="button" 
                                     wire:click="restorePhoto('back')"
                                     class="mt-1 text-sm text-blue-600 hover:text-blue-800">
@@ -387,7 +405,7 @@
         <div class="bg-white rounded-lg shadow-sm border p-6">
             <div class="flex items-center justify-between">
                 <div class="text-sm text-gray-600">
-                    <span class="text-red-500">*</span> Required fields
+                    <span class="text-red-500">*</span> Wajib diisi
                 </div>
                 <div class="flex items-center space-x-3">
                     @if($isEditing && $this->vehicle && $this->vehicle->id)

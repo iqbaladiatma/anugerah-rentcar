@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Maintenance Management') }}
+                {{ __('Pemeliharaan Management') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.maintenance.create') }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.plus class="w-4 h-4 inline mr-1" />
-                    Add Maintenance
+                    Tambah Pemeliharaan
                 </a>
                 <button onclick="window.location.href='{{ route('admin.maintenance.export') }}'" 
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
@@ -42,7 +42,7 @@
                                 <x-icons.currency-dollar class="h-8 w-8 text-green-500" />
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Total Cost</p>
+                                <p class="text-sm font-medium text-gray-500">Total Biaya</p>
                                 <p class="text-2xl font-semibold text-gray-900">
                                     Rp {{ number_format($totalCost, 0, ',', '.') }}
                                 </p>
@@ -58,7 +58,7 @@
                                 <x-icons.calendar class="h-8 w-8 text-blue-500" />
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">This Month</p>
+                                <p class="text-sm font-medium text-gray-500">Bulan Ini</p>
                                 <p class="text-2xl font-semibold text-gray-900">
                                     Rp {{ number_format($thisMonthCost, 0, ',', '.') }}
                                 </p>
@@ -74,7 +74,7 @@
                                 <x-icons.wrench class="h-8 w-8 text-red-500" />
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Overdue</p>
+                                <p class="text-sm font-medium text-gray-500">Terlambat</p>
                                 <p class="text-2xl font-semibold text-gray-900">{{ $overdueMaintenance }}</p>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                 <x-icons.clock class="h-8 w-8 text-yellow-500" />
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Due Soon</p>
+                                <p class="text-sm font-medium text-gray-500">Hampir Kedaluwarsa</p>
                                 <p class="text-2xl font-semibold text-gray-900">{{ $dueSoonMaintenance }}</p>
                             </div>
                         </div>
@@ -102,15 +102,15 @@
                     <nav class="-mb-px flex space-x-8" aria-label="Tabs">
                         <button onclick="showTab('maintenance-list')" 
                                 class="tab-button active border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm">
-                            Maintenance Records
+                            Riwayat Pemeliharaan
                         </button>
                         <button onclick="showTab('maintenance-scheduler')" 
                                 class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm">
-                            Schedule & Reminders
+                            Jadwal & Pengingat
                         </button>
                         <button onclick="showTab('maintenance-analytics')" 
                                 class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm">
-                            Analytics & Reports
+                            Analisis & Laporan
                         </button>
                     </nav>
                 </div>

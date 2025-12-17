@@ -11,7 +11,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Total Vehicles</dt>
+                        <dt class="truncate text-sm font-medium text-gray-500">Total Kendaraan</dt>
                         <dd class="text-lg font-medium text-gray-900">{{ $this->stats['total_vehicles'] }}</dd>
                     </dl>
                 </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Active Bookings</dt>
+                        <dt class="truncate text-sm font-medium text-gray-500">Pemesanan Aktif</dt>
                         <dd class="text-lg font-medium text-gray-900">{{ $this->stats['active_bookings'] }}</dd>
                     </dl>
                 </div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Available Now</dt>
+                        <dt class="truncate text-sm font-medium text-gray-500">Tersedia Sekarang</dt>
                         <dd class="text-lg font-medium text-gray-900">{{ $this->stats['available_vehicles'] }}</dd>
                     </dl>
                 </div>
@@ -62,8 +62,8 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="truncate text-sm font-medium text-gray-500">Monthly Revenue</dt>
-                        <dd class="text-lg font-medium text-gray-900">Rp {{ number_format($this->stats['monthly_revenue'], 0, '.', ',') }}</dd>
+                        <dt class="truncate text-sm font-medium text-gray-500">Pendapatan Bulanan</dt>
+                        <dd class="text-lg font-medium text-gray-900">Rp {{ number_format($this->stats['monthly_revenue'], 0, ',', '.') }}</dd>
                     </dl>
                 </div>
             </div>
@@ -74,10 +74,10 @@
     <div class="rounded-lg bg-white shadow">
         <div class="p-6">
             <div class="flex items-center justify-between">
-                <h3 class="text-base font-semibold leading-6 text-gray-900">Revenue Trend</h3>
+                <h3 class="text-base font-semibold leading-6 text-gray-900">Tren Pendapatan</h3>
                 <div class="flex items-center space-x-2">
                     <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                        Last 12 Months
+                        12 Bulan Terakhir
                     </span>
                 </div>
             </div>
@@ -93,8 +93,8 @@
         <div class="overflow-hidden rounded-lg bg-white shadow">
             <div class="p-6">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-base font-semibold leading-6 text-gray-900">Recent Bookings</h3>
-                    <a href="{{ route('admin.bookings.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">View all</a>
+                    <h3 class="text-base font-semibold leading-6 text-gray-900">Pemesanan Terbaru</h3>
+                    <a href="{{ route('admin.bookings.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">Lihat semua</a>
                 </div>
                 <div class="mt-6 flow-root">
                     @if($this->recentBookings->count() > 0)
@@ -122,9 +122,16 @@
                                                     'completed' => 'bg-gray-100 text-gray-800',
                                                     'cancelled' => 'bg-red-100 text-red-800',
                                                 ];
+                                                $statusLabels = [
+                                                    'pending' => 'Menunggu',
+                                                    'confirmed' => 'Dikonfirmasi',
+                                                    'active' => 'Aktif',
+                                                    'completed' => 'Selesai',
+                                                    'cancelled' => 'Dibatalkan',
+                                                ];
                                             @endphp
                                             <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {{ $statusColors[$booking->booking_status] ?? 'bg-gray-100 text-gray-800' }}">
-                                                {{ ucfirst($booking->booking_status) }}
+                                                {{ $statusLabels[$booking->booking_status] ?? ucfirst($booking->booking_status) }}
                                             </span>
                                         </div>
                                     </div>
@@ -136,7 +143,7 @@
                             <div class="flex justify-center">
                                 @include('components.icons.clipboard-list', ['class' => 'h-12 w-12 text-gray-400'])
                             </div>
-                            <p class="mt-2 text-sm text-gray-500">No recent bookings</p>
+                            <p class="mt-2 text-sm text-gray-500">Tidak ada pemesanan terbaru</p>
                         </div>
                     @endif
                 </div>
@@ -147,13 +154,13 @@
         <div class="overflow-hidden rounded-lg bg-white shadow">
             <div class="p-6">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-base font-semibold leading-6 text-gray-900">Notifications & Alerts</h3>
+                    <h3 class="text-base font-semibold leading-6 text-gray-900">Notifikasi & Peringatan</h3>
                     @php
                         $urgentCount = collect($this->notifications)->where('priority', 'high')->count();
                     @endphp
                     @if($urgentCount > 0)
                         <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
-                            {{ $urgentCount }} urgent
+                            {{ $urgentCount }} mendesak
                         </span>
                     @endif
                 </div>
@@ -182,7 +189,7 @@
                                         @if(isset($notification['action_url']))
                                             <div class="flex-shrink-0">
                                                 <a href="{{ $notification['action_url'] }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">
-                                                    View
+                                                    Lihat
                                                 </a>
                                             </div>
                                         @endif
@@ -195,8 +202,8 @@
                             <div class="flex justify-center">
                                 @include('components.icons.adjustments', ['class' => 'h-12 w-12 text-gray-400'])
                             </div>
-                            <p class="mt-2 text-sm text-gray-500">No notifications</p>
-                            <p class="text-xs text-gray-400">All systems running smoothly</p>
+                            <p class="mt-2 text-sm text-gray-500">Tidak ada notifikasi</p>
+                            <p class="text-xs text-gray-400">Semua sistem berjalan lancar</p>
                         </div>
                     @endif
                 </div>
@@ -207,7 +214,7 @@
     <!-- Quick Actions -->
     <div class="rounded-lg bg-white shadow">
         <div class="p-6">
-            <h3 class="text-base font-semibold leading-6 text-gray-900">Quick Actions</h3>
+            <h3 class="text-base font-semibold leading-6 text-gray-900">Aksi Cepat</h3>
             <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <a href="{{ route('admin.bookings.create') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                     <div class="flex-shrink-0">
@@ -217,8 +224,8 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <span class="absolute inset-0" aria-hidden="true"></span>
-                        <p class="text-sm font-medium text-gray-900">New Booking</p>
-                        <p class="text-sm text-gray-500 truncate">Create a new rental</p>
+                        <p class="text-sm font-medium text-gray-900">Pemesanan Baru</p>
+                        <p class="text-sm text-gray-500 truncate">Buat sewa baru</p>
                     </div>
                 </a>
 
@@ -230,8 +237,8 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <span class="absolute inset-0" aria-hidden="true"></span>
-                        <p class="text-sm font-medium text-gray-900">Check-out</p>
-                        <p class="text-sm text-gray-500 truncate">Process vehicle delivery</p>
+                        <p class="text-sm font-medium text-gray-900">Keluar</p>
+                        <p class="text-sm text-gray-500 truncate">Proses pengiriman kendaraan</p>
                     </div>
                 </a>
 
@@ -243,8 +250,8 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <span class="absolute inset-0" aria-hidden="true"></span>
-                        <p class="text-sm font-medium text-gray-900">Check-in</p>
-                        <p class="text-sm text-gray-500 truncate">Process vehicle return</p>
+                        <p class="text-sm font-medium text-gray-900">Masuk</p>
+                        <p class="text-sm text-gray-500 truncate">Proses pengembalian kendaraan</p>
                     </div>
                 </a>
 
@@ -256,8 +263,8 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <span class="absolute inset-0" aria-hidden="true"></span>
-                        <p class="text-sm font-medium text-gray-900">Timeline</p>
-                        <p class="text-sm text-gray-500 truncate">View availability</p>
+                        <p class="text-sm font-medium text-gray-900">Linimasa</p>
+                        <p class="text-sm text-gray-500 truncate">Lihat ketersediaan</p>
                     </div>
                 </a>
             </div>

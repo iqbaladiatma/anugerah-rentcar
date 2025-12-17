@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <!-- Date Range Selector -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
                 <select wire:model.live="dateRange" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                     <option value="7">Last 7 days</option>
                     <option value="30">Last 30 days</option>
@@ -16,9 +16,9 @@
 
             <!-- Vehicle Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mobil</label>
                 <select wire:model.live="selectedCar" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Vehicles</option>
+                    <option value="">Semua Mobil</option>
                     @foreach($cars as $car)
                         <option value="{{ $car->id }}">{{ $car->license_plate }} - {{ $car->brand }} {{ $car->model }}</option>
                     @endforeach
@@ -27,9 +27,9 @@
 
             <!-- Type Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Maintenance Type</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Pemeliharaan</label>
                 <select wire:model.live="selectedType" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Types</option>
+                    <option value="">Semua Jenis</option>
                     @foreach($maintenanceTypes as $key => $label)
                         <option value="{{ $key }}">{{ $label }}</option>
                     @endforeach
@@ -49,12 +49,12 @@
         @if($dateRange === 'custom')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
                     <input type="date" wire:model.live="startDate" 
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Selesai</label>
                     <input type="date" wire:model.live="endDate" 
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 </div>
@@ -72,7 +72,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Cost</p>
+                    <p class="text-sm font-medium text-gray-500">Total Biaya</p>
                     <p class="text-2xl font-semibold text-gray-900">
                         Rp {{ number_format($analyticsData['total_cost'], 0, ',', '.') }}
                     </p>
@@ -88,7 +88,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Total Records</p>
+                    <p class="text-sm font-medium text-gray-500">Total Record</p>
                     <p class="text-2xl font-semibold text-gray-900">{{ $analyticsData['total_count'] }}</p>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500">Average Cost</p>
+                    <p class="text-sm font-medium text-gray-500">Rata-rata Biaya</p>
                     <p class="text-2xl font-semibold text-gray-900">
                         Rp {{ number_format($analyticsData['average_cost'], 0, ',', '.') }}
                     </p>
@@ -129,7 +129,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Cost by Type Chart -->
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Cost by Maintenance Type</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Biaya berdasarkan jenis pemeliharaan</h3>
             @if($analyticsData['cost_by_type']->count() > 0)
                 <div class="space-y-4">
                     @foreach($analyticsData['cost_by_type'] as $typeData)
@@ -158,7 +158,7 @@
 
         <!-- Monthly Trends -->
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Monthly Trends</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Tren Bulanan</h3>
             @if($analyticsData['monthly_trends']->count() > 0)
                 <div class="space-y-3">
                     @foreach($analyticsData['monthly_trends'] as $trend)
@@ -186,7 +186,7 @@
     <!-- Top Service Providers -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Top Service Providers</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Top Provider</h3>
             @if($analyticsData['top_providers']->count() > 0)
                 <div class="space-y-3">
                     @foreach($analyticsData['top_providers'] as $provider)
@@ -216,7 +216,7 @@
         <!-- Vehicle Costs (only show if not filtering by specific car) -->
         @if(!$selectedCar && $analyticsData['vehicle_costs']->count() > 0)
             <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Vehicle Maintenance Costs</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Biaya Pemeliharaan Mobil</h3>
                 <div class="space-y-3">
                     @foreach($analyticsData['vehicle_costs'] as $vehicleData)
                         <div class="flex justify-between items-center">
@@ -263,7 +263,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-lg font-medium text-red-900">Overdue Maintenance</h3>
+                    <h3 class="text-lg font-medium text-red-900">Terlambat Pemeliharaan</h3>
                     <p class="text-2xl font-bold text-red-600">{{ $overdueCount }}</p>
                 </div>
             </div>
@@ -277,7 +277,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-lg font-medium text-orange-900">Due Soon (7 days)</h3>
+                    <h3 class="text-lg font-medium text-orange-900">Hampir Terlambat (7 days)</h3>
                     <p class="text-2xl font-bold text-orange-600">{{ $dueSoonCount }}</p>
                 </div>
             </div>

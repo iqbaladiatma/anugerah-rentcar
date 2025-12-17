@@ -87,7 +87,7 @@
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-lg shadow">
                         <div class="px-6 py-4 border-b border-gray-200">
-                            <h3 class="text-lg font-medium text-gray-900">Recent Bookings</h3>
+                            <h3 class="text-lg font-medium text-gray-900">Pemesanan Terbaru</h3>
                         </div>
                         <div class="p-6">
                             @if($recentBookings->count() > 0)
@@ -127,19 +127,19 @@
                                 </div>
                                 <div class="mt-6">
                                     <a href="{{ route('customer.bookings') }}" class="text-blue-600 hover:text-blue-500 font-medium">
-                                        View all bookings →
+                                        Lihat semua pemesanan →
                                     </a>
                                 </div>
                             @else
-                                <div class="text-center py-8">
+                                <div class="text-center py-12">
                                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                     </svg>
-                                    <h3 class="mt-2 text-sm font-medium text-gray-900">No bookings yet</h3>
-                                    <p class="mt-1 text-sm text-gray-500">Get started by booking your first vehicle.</p>
+                                    <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada pemesanan</h3>
+                                    <p class="mt-1 text-sm text-gray-500">Mulai dengan memesan kendaraan pertama Anda.</p>
                                     <div class="mt-6">
                                         <a href="{{ route('vehicles.catalog') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                                            Browse Vehicles
+                                            Lihat Kendaraan
                                         </a>
                                     </div>
                                 </div>
@@ -148,45 +148,22 @@
                     </div>
                 </div>
 
-                <!-- Quick Actions -->
-                <div class="space-y-6">
-                    <!-- Member Status -->
-                    @if(auth('customer')->user()->is_member)
-                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg p-6 text-white">
-                            <div class="flex items-center">
-                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                </svg>
-                                <div class="ml-3">
-                                    <h3 class="text-lg font-semibold">Premium Member</h3>
-                                    <p class="text-yellow-100">{{ auth('customer')->user()->getMemberDiscountPercentage() }}% discount on all bookings</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <!-- Action Cards -->
+                <!-- Quick Links -->
+                <div class="lg:col-span-1">
                     <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Aksi Cepat</h3>
                         <div class="space-y-3">
-                            <a href="{{ route('vehicles.catalog') }}" class="flex items-center p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50">
-                                <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-                                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
-                                </svg>
-                                Browse Vehicles
+                            <a href="{{ route('vehicles.catalog') }}" class="block w-full text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                                Pesan Kendaraan Baru
                             </a>
-                            <a href="{{ route('customer.bookings') }}" class="flex items-center p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50">
-                                <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                My Bookings
+                            <a href="{{ route('customer.bookings') }}" class="block w-full text-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Lihat Pemesanan Saya
                             </a>
-                            <a href="{{ route('customer.profile') }}" class="flex items-center p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50">
-                                <svg class="w-5 h-5 text-gray-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                                </svg>
-                                Edit Profile
+                            <a href="{{ route('customer.profile') }}" class="block w-full text-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Edit Profil
+                            </a>
+                            <a href="{{ route('customer.support') }}" class="block w-full text-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Hubungi Dukungan
                             </a>
                         </div>
                     </div>

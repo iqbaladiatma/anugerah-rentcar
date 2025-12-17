@@ -199,7 +199,7 @@ class BookingWizard extends Component
     {
         $errors = [];
 
-        if ($this->startDate && Carbon::parse($this->startDate) < Carbon::now()) {
+        if ($this->startDate && Carbon::parse($this->startDate)->startOfDay() < Carbon::today()) {
             $errors['startDate'] = 'Start date cannot be in the past';
         }
 
@@ -303,6 +303,17 @@ class BookingWizard extends Component
 
     public function validateStep3()
     {
+        // If customer is already logged in, skip validation
+        if ($this->customer) {
+            // Check if profile is completed (KYC)
+            if (!$this->customer->profile_completed) {
+                $this->errors['profile'] = 'Please complete your profile (KYC) before booking';
+                return;
+            }
+            return; // Customer already authenticated and verified, no need to validate
+        }
+
+        // Validate for new customer or login
         if ($this->isExistingCustomer) {
             if (!$this->customerEmail) {
                 $this->errors['customerEmail'] = 'Email is required';

@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Add Maintenance Record') }}
+                {{ __('Tambah Record Pemeliharaan') }}
             </h2>
             <a href="{{ route('admin.maintenance.index') }}" 
                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                 <x-icons.arrow-left class="w-4 h-4 inline mr-1" />
-                Back to List
+                Kembali ke Daftar
             </a>
         </div>
     </x-slot>
@@ -24,7 +24,7 @@
                             <div>
                                 <x-input-label for="car_id" :value="__('Vehicle')" />
                                 <select id="car_id" name="car_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                    <option value="">Select Vehicle</option>
+                                    <option value="">Select Kendaraan</option>
                                     @foreach($cars as $car)
                                         <option value="{{ $car->id }}" {{ old('car_id') == $car->id ? 'selected' : '' }}>
                                             {{ $car->license_plate }} - {{ $car->brand }} {{ $car->model }}
@@ -38,10 +38,10 @@
                             <div>
                                 <x-input-label for="maintenance_type" :value="__('Maintenance Type')" />
                                 <select id="maintenance_type" name="maintenance_type" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                    <option value="">Select Type</option>
-                                    <option value="routine" {{ old('maintenance_type') == 'routine' ? 'selected' : '' }}>Routine Maintenance</option>
-                                    <option value="repair" {{ old('maintenance_type') == 'repair' ? 'selected' : '' }}>Repair</option>
-                                    <option value="inspection" {{ old('maintenance_type') == 'inspection' ? 'selected' : '' }}>Inspection</option>
+                                    <option value="">Pilih Type</option>
+                                    <option value="routine" {{ old('maintenance_type') == 'routine' ? 'selected' : '' }}>Pemeliharaan Rutin</option>
+                                    <option value="repair" {{ old('maintenance_type') == 'repair' ? 'selected' : '' }}>Perbaikan</option>
+                                    <option value="inspection" {{ old('maintenance_type') == 'inspection' ? 'selected' : '' }}>Inspeksi</option>
                                 </select>
                                 <x-input-error :messages="$errors->get('maintenance_type')" class="mt-2" />
                             </div>
@@ -65,8 +65,12 @@
                             <!-- Cost -->
                             <div>
                                 <x-input-label for="cost" :value="__('Cost (IDR)')" />
-                                <x-text-input id="cost" name="cost" type="number" step="0.01" min="0" class="mt-1 block w-full" 
-                                              :value="old('cost')" required />
+                                <div x-data="currency('{{ old('cost') }}')">
+                                    <x-text-input id="cost_display" type="text" x-model="formatted"
+                                                 class="mt-1 block w-full" 
+                                                 placeholder="0" required />
+                                    <input type="hidden" id="cost" name="cost" x-model="raw">
+                                </div>
                                 <x-input-error :messages="$errors->get('cost')" class="mt-2" />
                             </div>
 
@@ -111,7 +115,7 @@
                                 Cancel
                             </a>
                             <x-primary-button>
-                                {{ __('Save Maintenance Record') }}
+                                {{ __('Simpan Record Pemeliharaan') }}
                             </x-primary-button>
                         </div>
                     </form>

@@ -2,23 +2,23 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Customer Management') }}
+                {{ __('Manajemen Pelanggan') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.customers.create') }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.plus class="w-4 h-4 inline mr-1" />
-                    Add Customer
+                    Tambah Pelanggan
                 </a>
                 <a href="{{ route('admin.customers.members') }}" 
                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.star class="w-4 h-4 inline mr-1" />
-                    Members
+                    Anggota
                 </a>
                 <a href="{{ route('admin.customers.blacklist') }}" 
                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.ban class="w-4 h-4 inline mr-1" />
-                    Blacklist
+                    Daftar Hitam
                 </a>
             </div>
         </div>

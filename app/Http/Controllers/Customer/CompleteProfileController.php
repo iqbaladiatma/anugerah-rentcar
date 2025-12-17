@@ -19,7 +19,7 @@ class CompleteProfileController extends Controller
         // If already completed, redirect to dashboard
         if ($customer->profile_completed) {
             return redirect()->route('customer.dashboard')
-                ->with('info', 'Your profile is already complete.');
+                ->with('info', 'Profil Anda sudah lengkap.');
         }
         
         return view('customer.complete-profile', compact('customer'));
@@ -39,17 +39,17 @@ class CompleteProfileController extends Controller
             'ktp_photo' => ['required', File::image()->max(2048)],
             'sim_photo' => ['required', File::image()->max(2048)],
         ], [
-            'phone.required' => 'Phone number is required',
-            'nik.required' => 'NIK (ID Number) is required',
-            'nik.size' => 'NIK must be exactly 16 digits',
-            'nik.unique' => 'This NIK is already registered',
-            'address.required' => 'Address is required',
-            'ktp_photo.required' => 'KTP photo is required',
-            'ktp_photo.image' => 'KTP photo must be an image',
-            'ktp_photo.max' => 'KTP photo must not exceed 2MB',
-            'sim_photo.required' => 'SIM photo is required',
-            'sim_photo.image' => 'SIM photo must be an image',
-            'sim_photo.max' => 'SIM photo must not exceed 2MB',
+            'phone.required' => 'Nomor telepon wajib diisi',
+            'nik.required' => 'NIK wajib diisi',
+            'nik.size' => 'NIK harus tepat 16 digit',
+            'nik.unique' => 'NIK ini sudah terdaftar',
+            'address.required' => 'Alamat wajib diisi',
+            'ktp_photo.required' => 'Foto KTP wajib diunggah',
+            'ktp_photo.image' => 'Foto KTP harus berupa gambar',
+            'ktp_photo.max' => 'Foto KTP tidak boleh melebihi 2MB',
+            'sim_photo.required' => 'Foto SIM wajib diunggah',
+            'sim_photo.image' => 'Foto SIM harus berupa gambar',
+            'sim_photo.max' => 'Foto SIM tidak boleh melebihi 2MB',
         ]);
         
         // Handle KTP photo upload
@@ -74,13 +74,16 @@ class CompleteProfileController extends Controller
             $validated['sim_photo'] = $simPath;
         }
         
-        // Mark profile as completed
-        $validated['profile_completed'] = true;
-        
-        // Update customer
-        $customer->update($validated);
+        // Update customer with specific fields only
+        $customer->phone = $validated['phone'];
+        $customer->nik = $validated['nik'];
+        $customer->address = $validated['address'];
+        $customer->ktp_photo = $validated['ktp_photo'];
+        $customer->sim_photo = $validated['sim_photo'];
+        $customer->profile_completed = true;
+        $customer->save();
         
         return redirect()->route('customer.dashboard')
-            ->with('success', 'Profile completed successfully! You can now access all features.');
+            ->with('success', 'Profil berhasil dilengkapi! Anda sekarang dapat mengakses semua fitur.');
     }
 }

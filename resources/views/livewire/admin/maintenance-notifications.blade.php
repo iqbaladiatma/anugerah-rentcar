@@ -1,11 +1,11 @@
 <div class="overflow-hidden rounded-lg bg-white shadow">
     <div class="p-6">
         <div class="flex items-center justify-between">
-            <h3 class="text-base font-semibold leading-6 text-gray-900">Maintenance & Renewals</h3>
+            <h3 class="text-base font-semibold leading-6 text-gray-900">Pemeliharaan & Perpanjangan</h3>
             <div class="flex items-center space-x-2">
                 @if($this->urgentCount > 0)
                     <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
-                        {{ $this->urgentCount }} urgent
+                        {{ $this->urgentCount }} urgensi
                     </span>
                 @endif
                 <button 
@@ -64,7 +64,7 @@
                                             @if(isset($notification['action_url']))
                                                 <a href="{{ $notification['action_url'] }}" 
                                                    class="text-sm font-medium text-blue-600 hover:text-blue-500">
-                                                    View Vehicle
+                                                    Lihat Mobil
                                                 </a>
                                             @endif
                                             
@@ -74,7 +74,7 @@
                                                     class="text-sm font-medium text-green-600 hover:text-green-500"
                                                     title="Mark as completed"
                                                 >
-                                                    Complete
+                                                    Selesai
                                                 </button>
                                             @endif
                                         </div>
@@ -91,7 +91,7 @@
                             wire:click="toggleShowAll"
                             class="text-sm font-medium text-blue-600 hover:text-blue-500"
                         >
-                            Show all notifications
+                            Lihat Semua Notifikasi
                         </button>
                     </div>
                 @elseif($showAll)
@@ -100,7 +100,7 @@
                             wire:click="toggleShowAll"
                             class="text-sm font-medium text-blue-600 hover:text-blue-500"
                         >
-                            Show less
+                            Lihat Kurang
                         </button>
                     </div>
                 @endif
@@ -109,8 +109,8 @@
                     <div class="flex justify-center">
                         @include('components.icons.adjustments', ['class' => 'h-12 w-12 text-gray-400'])
                     </div>
-                    <p class="mt-2 text-sm text-gray-500">No maintenance notifications</p>
-                    <p class="text-xs text-gray-400">All vehicles are up to date</p>
+                    <p class="mt-2 text-sm text-gray-500">Tidak ada notifikasi pemeliharaan</p>
+                    <p class="text-xs text-gray-400">Semua mobil sudah up to date</p>
                 </div>
             @endif
         </div>

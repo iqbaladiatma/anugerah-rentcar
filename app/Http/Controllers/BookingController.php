@@ -198,17 +198,20 @@ class BookingController extends Controller
     /**
      * Display the specified booking.
      */
-    public function show(Booking $booking): View
+    public function show($id): View
     {
-        $booking->load(['customer', 'car', 'driver', 'carInspections']);
+        $booking = Booking::with(['customer', 'car', 'driver', 'carInspections'])->findOrFail($id);
 
-        // Get pricing breakdown
-        $pricingBreakdown = $this->calculatorService->getPriceBreakdown(
-            $booking->car,
-            $booking->getDurationInDays(),
-            $booking->with_driver,
-            $booking->customer
-        );
+        // Get pricing breakdown only if car and customer exist
+        $pricingBreakdown = null;
+        if ($booking->car && $booking->customer) {
+            $pricingBreakdown = $this->calculatorService->getPriceBreakdown(
+                $booking->car,
+                $booking->getDurationInDays(),
+                $booking->with_driver,
+                $booking->customer
+            );
+        }
 
         return view('admin.bookings.show', compact('booking', 'pricingBreakdown'));
     }
@@ -216,7 +219,7 @@ class BookingController extends Controller
     /**
      * Show the form for editing the specified booking.
      */
-    public function edit(Booking $booking): View
+    public function edit(Booking $booking): View|RedirectResponse
     {
         if (!$booking->canBeModified()) {
             return redirect()->route('admin.bookings.show', $booking)
@@ -621,7 +624,7 @@ class BookingController extends Controller
     /**
      * Show the vehicle checkout form for a booking.
      */
-    public function checkout(Booking $booking): View
+    public function checkout(Booking $booking): View|RedirectResponse
     {
         if ($booking->booking_status !== Booking::STATUS_CONFIRMED) {
             return redirect()->route('admin.bookings.show', $booking)
@@ -639,7 +642,7 @@ class BookingController extends Controller
     /**
      * Show the vehicle checkin form for a booking.
      */
-    public function checkin(Booking $booking): View
+    public function checkin(Booking $booking): View|RedirectResponse
     {
         if ($booking->booking_status !== Booking::STATUS_ACTIVE) {
             return redirect()->route('admin.bookings.show', $booking)
@@ -657,5 +660,46 @@ class BookingController extends Controller
         }
 
         return view('admin.bookings.checkin', compact('booking'));
+    }
+    /**
+     * Approve payment for a booking.
+     */
+    public function approvePayment(Booking $booking): RedirectResponse
+    {
+        if ($booking->payment_status !== Booking::PAYMENT_VERIFYING) {
+            return redirect()->back()
+                ->with('error', 'Only bookings with verifying payment status can be approved.');
+        }
+
+        $booking->update([
+            'payment_status' => $booking->payment_type === 'full' ? Booking::PAYMENT_PAID : Booking::PAYMENT_PARTIAL,
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Payment approved successfully.');
+    }
+
+    /**
+     * Reject payment for a booking.
+     */
+    public function rejectPayment(Request $request, Booking $booking): RedirectResponse
+    {
+        if ($booking->payment_status !== Booking::PAYMENT_VERIFYING) {
+            return redirect()->back()
+                ->with('error', 'Only bookings with verifying payment status can be rejected.');
+        }
+
+        $validated = $request->validate([
+            'rejection_reason' => 'required|string|max:500',
+        ]);
+
+        $booking->update([
+            'payment_status' => Booking::PAYMENT_PENDING,
+            'payment_notes' => ($booking->payment_notes ? $booking->payment_notes . "\n\n" : '') . 
+                              "Payment Rejected: " . $validated['rejection_reason'],
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Payment rejected.');
     }
 }

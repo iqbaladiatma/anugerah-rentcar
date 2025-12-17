@@ -3,26 +3,26 @@
     <div class="bg-white shadow sm:rounded-lg mb-6">
         <div class="px-4 py-5 sm:p-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-                Advanced Customer Search
+                Pencarian Pelanggan Lanjutan
             </h3>
             
             <!-- Basic Search Fields -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
                     <input type="text" 
                            wire:model.live.debounce.300ms="name" 
                            id="name"
-                           placeholder="Customer name..."
+                           placeholder="Nama pelanggan..."
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 
                 <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telepon</label>
                     <input type="text" 
                            wire:model.live.debounce.300ms="phone" 
                            id="phone"
-                           placeholder="Phone number..."
+                           placeholder="Nomor telepon..."
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 
@@ -31,7 +31,7 @@
                     <input type="email" 
                            wire:model.live.debounce.300ms="email" 
                            id="email"
-                           placeholder="Email address..."
+                           placeholder="Alamat email..."
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 
@@ -40,7 +40,7 @@
                     <input type="text" 
                            wire:model.live.debounce.300ms="nik" 
                            id="nik"
-                           placeholder="NIK number..."
+                           placeholder="Nomor NIK..."
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
@@ -48,7 +48,7 @@
             <!-- Status Filters -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
-                    <label for="is_member" class="block text-sm font-medium text-gray-700 mb-1">Member Status</label>
+                    <label for="is_member" class="block text-sm font-medium text-gray-700 mb-1">Status Anggota</label>
                     <select wire:model.live="is_member" 
                             id="is_member"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -59,7 +59,7 @@
                 </div>
                 
                 <div>
-                    <label for="is_blacklisted" class="block text-sm font-medium text-gray-700 mb-1">Account Status</label>
+                    <label for="is_blacklisted" class="block text-sm font-medium text-gray-700 mb-1">Status Akun</label>
                     <select wire:model.live="is_blacklisted" 
                             id="is_blacklisted"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -70,7 +70,7 @@
                 </div>
                 
                 <div>
-                    <label for="loyalty_tier" class="block text-sm font-medium text-gray-700 mb-1">Loyalty Tier</label>
+                    <label for="loyalty_tier" class="block text-sm font-medium text-gray-700 mb-1">Tingkat Loyalitas</label>
                     <select wire:model.live="loyalty_tier" 
                             id="loyalty_tier"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -81,7 +81,7 @@
                 </div>
                 
                 <div>
-                    <label for="risk_level" class="block text-sm font-medium text-gray-700 mb-1">Risk Level</label>
+                    <label for="risk_level" class="block text-sm font-medium text-gray-700 mb-1">Tingkat Risiko</label>
                     <select wire:model.live="risk_level" 
                             id="risk_level"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -96,7 +96,7 @@
             <div class="mb-4">
                 <button wire:click="toggleAdvancedFilters" 
                         class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                    {{ $showAdvancedFilters ? 'Hide' : 'Show' }} Advanced Filters
+                    {{ $showAdvancedFilters ? 'Sembunyikan' : 'Tampilkan' }} Filter Lanjutan
                 </button>
             </div>
             
@@ -105,44 +105,44 @@
                 <div class="border-t pt-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                         <div>
-                            <label for="min_bookings" class="block text-sm font-medium text-gray-700 mb-1">Min Bookings</label>
+                            <label for="min_bookings" class="block text-sm font-medium text-gray-700 mb-1">Min Pemesanan</label>
                             <input type="number" 
                                    wire:model.live.debounce.500ms="min_bookings" 
                                    id="min_bookings"
                                    min="0"
-                                   placeholder="Minimum bookings..."
+                                   placeholder="Minimum pemesanan..."
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         
                         <div>
-                            <label for="max_bookings" class="block text-sm font-medium text-gray-700 mb-1">Max Bookings</label>
+                            <label for="max_bookings" class="block text-sm font-medium text-gray-700 mb-1">Max Pemesanan</label>
                             <input type="number" 
                                    wire:model.live.debounce.500ms="max_bookings" 
                                    id="max_bookings"
                                    min="0"
-                                   placeholder="Maximum bookings..."
+                                   placeholder="Maksimum pemesanan..."
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         
                         <div>
-                            <label for="min_revenue" class="block text-sm font-medium text-gray-700 mb-1">Min Revenue (IDR)</label>
+                            <label for="min_revenue" class="block text-sm font-medium text-gray-700 mb-1">Min Pendapatan (IDR)</label>
                             <input type="number" 
                                    wire:model.live.debounce.500ms="min_revenue" 
                                    id="min_revenue"
                                    min="0"
                                    step="100000"
-                                   placeholder="Minimum revenue..."
+                                   placeholder="Minimum pendapatan..."
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         
                         <div>
-                            <label for="max_revenue" class="block text-sm font-medium text-gray-700 mb-1">Max Revenue (IDR)</label>
+                            <label for="max_revenue" class="block text-sm font-medium text-gray-700 mb-1">Max Pendapatan (IDR)</label>
                             <input type="number" 
                                    wire:model.live.debounce.500ms="max_revenue" 
                                    id="max_revenue"
                                    min="0"
                                    step="100000"
-                                   placeholder="Maximum revenue..."
+                                   placeholder="Maksimum pendapatan..."
                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         
@@ -152,7 +152,7 @@
                                    id="has_overdue_bookings"
                                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                             <label for="has_overdue_bookings" class="ml-2 block text-sm text-gray-900">
-                                Has overdue bookings
+                                Memiliki pemesanan terlambat
                             </label>
                         </div>
                     </div>
@@ -163,12 +163,12 @@
             <div class="flex justify-between items-center">
                 <button wire:click="clearFilters" 
                         class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                    Clear All Filters
+                    Hapus Semua Filter
                 </button>
                 
                 @if($hasSearched && $searchResults)
                     <div class="text-sm text-gray-600">
-                        Found {{ $searchResults->total() }} customer(s)
+                        Ditemukan {{ $searchResults->total() }} pelanggan
                     </div>
                 @endif
             </div>
@@ -178,7 +178,7 @@
     <!-- Loading Indicator -->
     <div wire:loading class="mb-4">
         <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
-            Searching customers...
+            Mencari pelanggan...
         </div>
     </div>
 
@@ -188,7 +188,7 @@
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-                        Search Results ({{ $searchResults->total() }} found)
+                        Hasil Pencarian ({{ $searchResults->total() }} ditemukan)
                     </h3>
                     
                     <div class="overflow-x-auto">
@@ -196,22 +196,22 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Customer
+                                        Pelanggan
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Contact
+                                        Kontak
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Status & Tier
+                                        Status & Tingkat
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Statistics
+                                        Statistik
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Risk Assessment
+                                        Penilaian Risiko
                                     </th>
                                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Actions
+                                        Aksi
                                     </th>
                                 </tr>
                             </thead>
@@ -251,14 +251,14 @@
                                                 @if($customer->is_member)
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                         <x-icons.star class="w-3 h-3 mr-1" />
-                                                        Member
+                                                        Anggota
                                                     </span>
                                                 @endif
                                                 
                                                 @if($customer->is_blacklisted)
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                                         <x-icons.ban class="w-3 h-3 mr-1" />
-                                                        Blacklisted
+                                                        Daftar Hitam
                                                     </span>
                                                 @endif
                                                 
@@ -278,10 +278,10 @@
                                             @if($stats)
                                                 @php $statistics = $stats['statistics'] @endphp
                                                 <div class="text-sm text-gray-900">
-                                                    <div>Bookings: {{ $statistics['total_bookings'] }}</div>
-                                                    <div>Revenue: IDR {{ number_format($statistics['total_revenue'], 0, ',', '.') }}</div>
+                                                    <div>Pemesanan: {{ $statistics['total_bookings'] }}</div>
+                                                    <div>Pendapatan: Rp {{ number_format($statistics['total_revenue'], 0, ',', '.') }}</div>
                                                     <div class="text-gray-500">
-                                                        Completion: {{ number_format($statistics['completion_rate'], 1) }}%
+                                                        Penyelesaian: {{ number_format($statistics['completion_rate'], 1) }}%
                                                     </div>
                                                 </div>
                                             @endif
@@ -294,11 +294,11 @@
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                                                         {{ $risk['risk_level'] === 'high' ? 'bg-red-100 text-red-800' : 
                                                            ($risk['risk_level'] === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800') }}">
-                                                        {{ ucfirst($risk['risk_level']) }} Risk
+                                                        Risiko {{ ucfirst($risk['risk_level']) }}
                                                     </span>
                                                     @if($risk['overdue_bookings'] > 0)
                                                         <span class="text-xs text-red-600">
-                                                            {{ $risk['overdue_bookings'] }} overdue
+                                                            {{ $risk['overdue_bookings'] }} terlambat
                                                         </span>
                                                     @endif
                                                 </div>
@@ -309,7 +309,7 @@
                                             <div class="flex items-center justify-end space-x-2">
                                                 <a href="{{ route('admin.customers.show', $customer) }}" 
                                                    class="text-blue-600 hover:text-blue-900">
-                                                    View
+                                                    Lihat
                                                 </a>
                                                 <a href="{{ route('admin.customers.edit', $customer) }}" 
                                                    class="text-indigo-600 hover:text-indigo-900">
@@ -335,9 +335,9 @@
             <div class="bg-white shadow sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6 text-center">
                     <x-icons.users class="mx-auto h-12 w-12 text-gray-400" />
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No customers found</h3>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada pelanggan ditemukan</h3>
                     <p class="mt-1 text-sm text-gray-500">
-                        No customers match your search criteria. Try adjusting your filters.
+                        Tidak ada pelanggan yang cocok dengan kriteria pencarian Anda. Coba sesuaikan filter Anda.
                     </p>
                 </div>
             </div>
@@ -346,9 +346,9 @@
         <div class="bg-white shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6 text-center">
                 <x-icons.users class="mx-auto h-12 w-12 text-gray-400" />
-                <h3 class="mt-2 text-sm font-medium text-gray-900">Customer Search</h3>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">Pencarian Pelanggan</h3>
                 <p class="mt-1 text-sm text-gray-500">
-                    Use the search form above to find customers by various criteria.
+                    Gunakan formulir pencarian di atas untuk menemukan pelanggan berdasarkan berbagai kriteria.
                 </p>
             </div>
         </div>

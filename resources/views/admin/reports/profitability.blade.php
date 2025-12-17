@@ -1,7 +1,7 @@
 <x-admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Vehicle Profitability Report') }}
+            {{ __('Laporan Keuntungan Kendaraan') }}
         </h2>
     </x-slot>
 
@@ -10,16 +10,16 @@
             <!-- Filters -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Report Filters</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Filter Laporan</h3>
                     <form method="GET" action="{{ route('admin.reports.profitability') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                            <label for="start_date" class="block text-sm font-medium text-gray-700">Tanggal Mulai</label>
                             <input type="date" name="start_date" id="start_date" 
                                    value="{{ request('start_date', now()->subYear()->format('Y-m-d')) }}"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>
                         <div>
-                            <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
+                            <label for="end_date" class="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
                             <input type="date" name="end_date" id="end_date" 
                                    value="{{ request('end_date', now()->format('Y-m-d')) }}"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -27,7 +27,7 @@
                         <div class="flex items-end">
                             <button type="submit" 
                                     class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                Generate Report
+                                Hasilkan Laporan
                             </button>
                         </div>
                         <div class="flex items-end space-x-2">
@@ -56,7 +56,7 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-500">Total Vehicles</div>
+                                <div class="text-sm font-medium text-gray-500">Total Kendaraan</div>
                                 <div class="text-2xl font-bold text-gray-900">{{ number_format($reportData['summary']['total_vehicles']) }}</div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-500">Profitable Vehicles</div>
+                                <div class="text-sm font-medium text-gray-500">Kendaraan Profitable</div>
                                 <div class="text-2xl font-bold text-green-600">{{ number_format($reportData['summary']['profitable_vehicles']) }}</div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-500">Total Net Profit</div>
+                                <div class="text-sm font-medium text-gray-500">Total Keuntungan Bersih</div>
                                 <div class="text-2xl font-bold {{ $reportData['summary']['total_net_profit'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
                                     Rp {{ number_format($reportData['summary']['total_net_profit'], 0, ',', '.') }}
                                 </div>
@@ -106,7 +106,7 @@
                                 </svg>
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-500">Avg. Profit Margin</div>
+                                <div class="text-sm font-medium text-gray-500">Margin Keuntungan Rata-rata</div>
                                 <div class="text-2xl font-bold text-indigo-600">{{ number_format($reportData['summary']['average_profit_margin'], 1) }}%</div>
                             </div>
                         </div>
@@ -124,19 +124,19 @@
                             <svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
                             </svg>
-                            <h3 class="text-lg font-bold text-green-900">Best Performer</h3>
+                            <h3 class="text-lg font-bold text-green-900">Pemilik Kendaraan Terbaik</h3>
                         </div>
                         <div class="space-y-2">
-                            <div class="text-xl font-bold text-gray-900">{{ $reportData['summary']['best_performer']->brand }} {{ $reportData['summary']['best_performer']->model }}</div>
-                            <div class="text-sm text-gray-600">{{ $reportData['summary']['best_performer']->license_plate }}</div>
+                            <div class="text-xl font-bold text-gray-900">{{ $reportData['summary']['best_performer']['vehicle']->brand }} {{ $reportData['summary']['best_performer']['vehicle']->model }}</div>
+                            <div class="text-sm text-gray-600">{{ $reportData['summary']['best_performer']['vehicle']->license_plate }}</div>
                             <div class="grid grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <div class="text-xs text-gray-500">Revenue</div>
-                                    <div class="text-lg font-bold text-green-600">Rp {{ number_format($reportData['summary']['best_performer']->revenue ?? 0, 0, ',', '.') }}</div>
+                                    <div class="text-lg font-bold text-green-600">Rp {{ number_format($reportData['summary']['best_performer']['revenue'] ?? 0, 0, ',', '.') }}</div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-500">Net Profit</div>
-                                    <div class="text-lg font-bold text-green-600">Rp {{ number_format($reportData['summary']['best_performer']->net_profit ?? 0, 0, ',', '.') }}</div>
+                                    <div class="text-lg font-bold text-green-600">Rp {{ number_format($reportData['summary']['best_performer']['net_profit'] ?? 0, 0, ',', '.') }}</div>
                                 </div>
                             </div>
                         </div>
@@ -150,20 +150,20 @@
                             <svg class="h-6 w-6 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                             </svg>
-                            <h3 class="text-lg font-bold text-red-900">Needs Attention</h3>
+                            <h3 class="text-lg font-bold text-red-900">Perlu Perhatian</h3>
                         </div>
                         <div class="space-y-2">
-                            <div class="text-xl font-bold text-gray-900">{{ $reportData['summary']['worst_performer']->brand }} {{ $reportData['summary']['worst_performer']->model }}</div>
-                            <div class="text-sm text-gray-600">{{ $reportData['summary']['worst_performer']->license_plate }}</div>
+                            <div class="text-xl font-bold text-gray-900">{{ $reportData['summary']['worst_performer']['vehicle']->brand }} {{ $reportData['summary']['worst_performer']['vehicle']->model }}</div>
+                            <div class="text-sm text-gray-600">{{ $reportData['summary']['worst_performer']['vehicle']->license_plate }}</div>
                             <div class="grid grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <div class="text-xs text-gray-500">Revenue</div>
-                                    <div class="text-lg font-bold text-gray-600">Rp {{ number_format($reportData['summary']['worst_performer']->revenue ?? 0, 0, ',', '.') }}</div>
+                                    <div class="text-lg font-bold text-gray-600">Rp {{ number_format($reportData['summary']['worst_performer']['revenue'] ?? 0, 0, ',', '.') }}</div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-500">Net Profit</div>
-                                    <div class="text-lg font-bold {{ ($reportData['summary']['worst_performer']->net_profit ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                                        Rp {{ number_format($reportData['summary']['worst_performer']->net_profit ?? 0, 0, ',', '.') }}
+                                    <div class="text-lg font-bold {{ ($reportData['summary']['worst_performer']['net_profit'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                                        Rp {{ number_format($reportData['summary']['worst_performer']['net_profit'] ?? 0, 0, ',', '.') }}
                                     </div>
                                 </div>
                             </div>
@@ -177,49 +177,49 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">
-                        Vehicle Profitability Analysis ({{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }})
+                        Analisis Keuntungan Kendaraan ({{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }})
                     </h3>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Revenue</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Maintenance Costs</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Profit</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profit Margin</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bookings</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kendaraan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Pendapatan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Biaya Pemeliharaan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keuntungan Bersih</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Margin Keuntungan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pesan</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse($reportData['vehicles'] as $vehicle)
+                                @forelse($reportData['vehicles'] as $data)
                                 <tr class="{{ $loop->iteration % 2 == 0 ? 'bg-gray-50' : '' }}">
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900">{{ $vehicle->brand }} {{ $vehicle->model }}</div>
-                                        <div class="text-sm text-gray-500">{{ $vehicle->license_plate }}</div>
+                                        <div class="text-sm font-medium text-gray-900">{{ $data['vehicle']->brand }} {{ $data['vehicle']->model }}</div>
+                                        <div class="text-sm text-gray-500">{{ $data['vehicle']->license_plate }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        Rp {{ number_format($vehicle->revenue ?? 0, 0, ',', '.') }}
+                                        Rp {{ number_format($data['revenue'] ?? 0, 0, ',', '.') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">
-                                        Rp {{ number_format($vehicle->maintenance_costs ?? 0, 0, ',', '.') }}
+                                        Rp {{ number_format($data['maintenance_costs'] ?? 0, 0, ',', '.') }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold {{ ($vehicle->net_profit ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                                        Rp {{ number_format($vehicle->net_profit ?? 0, 0, ',', '.') }}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold {{ ($data['net_profit'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                                        Rp {{ number_format($data['net_profit'] ?? 0, 0, ',', '.') }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ ($vehicle->profit_margin ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                                        {{ number_format($vehicle->profit_margin ?? 0, 1) }}%
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm {{ ($data['profit_margin'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                                        {{ number_format($data['profit_margin'] ?? 0, 1) }}%
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {{ number_format($vehicle->total_bookings ?? 0) }}
+                                        {{ number_format($data['vehicle']->bookings->count() ?? 0) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @if(($vehicle->net_profit ?? 0) > 0)
+                                        @if(($data['net_profit'] ?? 0) > 0)
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                 Profitable
                                             </span>
-                                        @elseif(($vehicle->net_profit ?? 0) == 0)
+                                        @elseif(($data['net_profit'] ?? 0) == 0)
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
                                                 Break Even
                                             </span>

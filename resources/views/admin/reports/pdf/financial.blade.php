@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Financial Report</title>
+    <title>Laporan Keuangan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,15 +91,15 @@
 <body>
     <div class="header">
         <div class="company-name">Anugerah Rentcar</div>
-        <div class="report-title">Financial Report</div>
-        <div class="period">Period: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }}</div>
+        <div class="report-title">Laporan Keuangan</div>
+        <div class="period">Periode: {{ $reportData['period']['start_date'] }} sampai {{ $reportData['period']['end_date'] }}</div>
     </div>
 
     <div class="financial-grid">
         <div class="financial-box">
-            <div class="section-title">Revenue Breakdown</div>
+            <div class="section-title">Pendapatan</div>
             <div class="financial-item">
-                <span>Rental Income:</span>
+                <span>Pendapatan Rental:</span>
                 <span>Rp {{ number_format($reportData['revenue']['rental_income'], 0, ',', '.') }}</span>
             </div>
             <div class="financial-item">
@@ -125,32 +125,32 @@
         </div>
 
         <div class="financial-box">
-            <div class="section-title">Expense Breakdown</div>
+            <div class="section-title">Biaya</div>
             <div class="financial-item">
-                <span>Operational Expenses:</span>
+                <span>Biaya Operasional:</span>
                 <span>Rp {{ number_format($reportData['expenses']['operational'], 0, ',', '.') }}</span>
             </div>
             <div class="financial-item">
-                <span>Maintenance Costs:</span>
+                <span>Biaya Pemeliharaan:</span>
                 <span>Rp {{ number_format($reportData['expenses']['maintenance'], 0, ',', '.') }}</span>
             </div>
             <div class="financial-item total">
-                <span>Total Expenses:</span>
+                <span>Total Biaya:</span>
                 <span>Rp {{ number_format($reportData['expenses']['total'], 0, ',', '.') }}</span>
             </div>
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">Profit & Loss Analysis</div>
+        <div class="section-title">Analisis Laba Rugi</div>
         <div class="financial-item">
-            <span>Gross Profit:</span>
+            <span>Laba Bruto:</span>
             <span class="{{ $reportData['profit_loss']['gross_profit'] >= 0 ? 'profit-positive' : 'profit-negative' }}">
                 Rp {{ number_format($reportData['profit_loss']['gross_profit'], 0, ',', '.') }}
             </span>
         </div>
         <div class="financial-item">
-            <span>Profit Margin:</span>
+            <span>Margin Laba:</span>
             <span class="{{ $reportData['profit_loss']['profit_margin'] >= 0 ? 'profit-positive' : 'profit-negative' }}">
                 {{ number_format($reportData['profit_loss']['profit_margin'], 2) }}%
             </span>
@@ -162,15 +162,15 @@
     </div>
 
     <div class="section">
-        <div class="section-title">Monthly Breakdown</div>
+        <div class="section-title">Pendapatan Bulanan</div>
         <table>
             <thead>
                 <tr>
-                    <th>Month</th>
-                    <th class="text-right">Revenue</th>
-                    <th class="text-right">Expenses</th>
-                    <th class="text-right">Profit</th>
-                    <th class="text-center">Bookings</th>
+                    <th>Bulan</th>
+                    <th class="text-right">Pendapatan</th>
+                    <th class="text-right">Biaya</th>
+                    <th class="text-right">Laba</th>
+                    <th class="text-center">Peminjaman</th>
                 </tr>
             </thead>
             <tbody>
@@ -191,13 +191,13 @@
 
     @if(count($reportData['expenses']['by_category']) > 0)
     <div class="section">
-        <div class="section-title">Expense Categories</div>
+        <div class="section-title">Kategori Biaya</div>
         <table>
             <thead>
                 <tr>
-                    <th>Category</th>
-                    <th class="text-right">Amount</th>
-                    <th class="text-center">Count</th>
+                    <th>Kategori</th>
+                    <th class="text-right">Jumlah</th>
+                    <th class="text-center">Jumlah</th>
                 </tr>
             </thead>
             <tbody>

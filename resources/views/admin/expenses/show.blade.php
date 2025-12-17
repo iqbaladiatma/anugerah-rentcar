@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Expense Details') }}
+                {{ __('Detail Pengeluaran') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.expenses.edit', $expense) }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Edit Expense
+                    Edit Pengeluaran
                 </a>
                 <form method="POST" action="{{ route('admin.expenses.destroy', $expense) }}" 
                       onsubmit="return confirm('Are you sure you want to delete this expense?')" class="inline">
@@ -20,7 +20,7 @@
                 </form>
                 <a href="{{ route('admin.expenses.index') }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    Back to Expenses
+                    Back to Pengeluaran
                 </a>
             </div>
         </div>
@@ -33,11 +33,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Expense Information -->
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Expense Information</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Detail Pengeluaran</h3>
                             
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-500">Category</label>
+                                    <label class="block text-sm font-medium text-gray-500">Kategori</label>
                                     <div class="mt-1">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                             {{ $expense->category_display_name }}
@@ -46,35 +46,35 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-500">Description</label>
+                                    <label class="block text-sm font-medium text-gray-500">Deskripsi</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $expense->description }}</p>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-500">Amount</label>
+                                    <label class="block text-sm font-medium text-gray-500">Jumlah</label>
                                     <p class="mt-1 text-2xl font-bold text-green-600">
                                         {{ number_format($expense->amount, 0, ',', '.') }} IDR
                                     </p>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-500">Expense Date</label>
+                                    <label class="block text-sm font-medium text-gray-500">Tanggal Pengeluaran</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $expense->expense_date->format('d F Y') }}</p>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-500">Created By</label>
+                                    <label class="block text-sm font-medium text-gray-500">Dibuat Oleh</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $expense->creator->name ?? 'Unknown' }}</p>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-500">Created At</label>
+                                    <label class="block text-sm font-medium text-gray-500">Dibuat Pada</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $expense->created_at->format('d F Y H:i') }}</p>
                                 </div>
 
                                 @if($expense->updated_at != $expense->created_at)
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-500">Last Updated</label>
+                                    <label class="block text-sm font-medium text-gray-500">Terakhir Diperbarui</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $expense->updated_at->format('d F Y H:i') }}</p>
                                 </div>
                                 @endif
@@ -83,7 +83,7 @@
 
                         <!-- Receipt Photo -->
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Receipt Photo</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Foto Receipt</h3>
                             
                             @if($expense->receipt_photo)
                                 <div class="border rounded-lg p-4">
@@ -98,7 +98,7 @@
                             @else
                                 <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                                     <x-icons.receipt-tax class="mx-auto h-12 w-12 text-gray-400" />
-                                    <p class="mt-2 text-sm text-gray-500">No receipt photo uploaded</p>
+                                    <p class="mt-2 text-sm text-gray-500">Tidak ada foto receipt</p>
                                 </div>
                             @endif
                         </div>

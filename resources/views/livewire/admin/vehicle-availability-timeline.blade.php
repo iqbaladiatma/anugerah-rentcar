@@ -3,31 +3,31 @@
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-                <h2 class="text-xl font-semibold text-gray-900">Vehicle Availability Timeline</h2>
-                <p class="text-sm text-gray-600 mt-1">Interactive Gantt chart showing vehicle booking schedules</p>
+                <h2 class="text-xl font-semibold text-gray-900">Linimasa Ketersediaan Kendaraan</h2>
+                <p class="text-sm text-gray-600 mt-1">Bagan Gantt interaktif menampilkan jadwal pemesanan kendaraan</p>
             </div>
             
             <!-- Quick Date Range Buttons -->
             <div class="flex flex-wrap gap-2">
                 <button wire:click="selectDateRange('today')" 
                         class="px-3 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors">
-                    Today
+                    Hari Ini
                 </button>
                 <button wire:click="selectDateRange('week')" 
                         class="px-3 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors">
-                    This Week
+                    Minggu Ini
                 </button>
                 <button wire:click="selectDateRange('month')" 
                         class="px-3 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors">
-                    This Month
+                    Bulan Ini
                 </button>
                 <button wire:click="selectDateRange('next_week')" 
                         class="px-3 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors">
-                    Next Week
+                    Minggu Depan
                 </button>
                 <button wire:click="selectDateRange('next_month')" 
                         class="px-3 py-1 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors">
-                    Next Month
+                    Bulan Depan
                 </button>
             </div>
         </div>
@@ -37,14 +37,14 @@
             <!-- Date Range Selection -->
             <div class="lg:col-span-2 grid grid-cols-2 gap-4">
                 <div>
-                    <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                    <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
                     <input type="date" 
                            id="start_date"
                            wire:model.live="startDate" 
                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 <div>
-                    <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                    <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Selesai</label>
                     <input type="date" 
                            id="end_date"
                            wire:model.live="endDate" 
@@ -54,13 +54,13 @@
 
             <!-- Vehicle Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle Filter</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Filter Kendaraan</label>
                 <div class="space-y-2">
                     <label class="flex items-center">
                         <input type="checkbox" 
                                wire:model.live="showAllCars" 
                                class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
-                        <span class="ml-2 text-sm text-gray-700">Show All Vehicles</span>
+                        <span class="ml-2 text-sm text-gray-700">Tampilkan Semua Kendaraan</span>
                     </label>
                     
                     @if (!$showAllCars)
@@ -85,19 +85,19 @@
             <div class="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-green-50 border border-green-200 rounded-lg p-3">
                     <div class="text-lg font-semibold text-green-800">{{ $timelineData['summary']['available_cars'] }}</div>
-                    <div class="text-xs text-green-600">Available Vehicles</div>
+                    <div class="text-xs text-green-600">Kendaraan Tersedia</div>
                 </div>
                 <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div class="text-lg font-semibold text-blue-800">{{ $timelineData['summary']['unavailable_cars'] }}</div>
-                    <div class="text-xs text-blue-600">Unavailable Vehicles</div>
+                    <div class="text-xs text-blue-600">Kendaraan Tidak Tersedia</div>
                 </div>
                 <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
                     <div class="text-lg font-semibold text-gray-800">{{ $timelineData['summary']['total_cars'] }}</div>
-                    <div class="text-xs text-gray-600">Total Fleet</div>
+                    <div class="text-xs text-gray-600">Total Armada</div>
                 </div>
                 <div class="bg-purple-50 border border-purple-200 rounded-lg p-3">
                     <div class="text-lg font-semibold text-purple-800">{{ number_format($timelineData['summary']['availability_rate'], 1) }}%</div>
-                    <div class="text-xs text-purple-600">Availability Rate</div>
+                    <div class="text-xs text-purple-600">Tingkat Ketersediaan</div>
                 </div>
             </div>
         @endif
@@ -111,23 +111,23 @@
                 <div class="flex flex-wrap items-center gap-4 text-xs">
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-green-200 border border-green-300 rounded"></div>
-                        <span class="text-gray-700">Available</span>
+                        <span class="text-gray-700">Tersedia</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-blue-200 border border-blue-300 rounded"></div>
-                        <span class="text-gray-700">Booked</span>
+                        <span class="text-gray-700">Dipesan</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-yellow-200 border border-yellow-300 rounded"></div>
-                        <span class="text-gray-700">Rented</span>
+                        <span class="text-gray-700">Disewa</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-red-200 border border-red-300 rounded"></div>
-                        <span class="text-gray-700">Maintenance</span>
+                        <span class="text-gray-700">Perawatan</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-4 h-4 bg-gray-200 border border-gray-300 rounded"></div>
-                        <span class="text-gray-700">Inactive</span>
+                        <span class="text-gray-700">Tidak Aktif</span>
                     </div>
                 </div>
             </div>
@@ -138,7 +138,7 @@
                     <!-- Date Header -->
                     <div class="flex border-b border-gray-200 timeline-date-header">
                         <div class="w-48 flex-shrink-0 p-3 font-medium text-gray-900 border-r border-gray-200">
-                            Vehicle
+                            Kendaraan
                         </div>
                         <div class="flex flex-1">
                             @foreach ($timelineData['date_range'] as $date)
@@ -172,7 +172,15 @@
                                                 {{ $car['status'] === 'rented' ? 'bg-yellow-100 text-yellow-800' : '' }}
                                                 {{ $car['status'] === 'maintenance' ? 'bg-red-100 text-red-800' : '' }}
                                                 {{ $car['status'] === 'inactive' ? 'bg-gray-100 text-gray-800' : '' }}">
-                                                {{ ucfirst($car['status']) }}
+                                                @php
+                                                    $statusLabels = [
+                                                        'available' => 'Tersedia',
+                                                        'rented' => 'Disewa',
+                                                        'maintenance' => 'Perawatan',
+                                                        'inactive' => 'Tidak Aktif'
+                                                    ];
+                                                @endphp
+                                                {{ $statusLabels[$car['status']] ?? ucfirst($car['status']) }}
                                             </span>
                                             @if ($car['maintenance_due'])
                                                 <span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">
@@ -192,7 +200,7 @@
                                             <div class="timeline-cell timeline-booking-block h-8 rounded {{ $this->getStatusColor($day['status']) }} cursor-pointer"
                                                  wire:mouseenter="showBookingDetails({{ $day['booking']['id'] }})"
                                                  wire:mouseleave="hideBookingDetails"
-                                                 title="Booking: {{ $day['booking']['booking_number'] }} - {{ $day['booking']['customer_name'] }}">
+                                                 title="Pemesanan: {{ $day['booking']['booking_number'] }} - {{ $day['booking']['customer_name'] }}">
                                                 <div class="h-full flex items-center justify-center">
                                                     <div class="text-xs {{ $this->getStatusTextColor($day['status']) }} font-medium truncate px-1">
                                                         {{ substr($day['booking']['customer_name'], 0, 8) }}{{ strlen($day['booking']['customer_name']) > 8 ? '...' : '' }}
@@ -230,26 +238,33 @@
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
                     <div class="booking-popup bg-white rounded-lg shadow-lg border border-gray-200 p-4 max-w-sm">
                         <div class="space-y-2">
-                            <div class="font-medium text-gray-900">Booking Details</div>
+                            <div class="font-medium text-gray-900">Detail Pemesanan</div>
                             <div class="text-sm text-gray-600">
-                                <div><strong>Booking #:</strong> {{ $hoveredBooking->booking_number }}</div>
-                                <div><strong>Customer:</strong> {{ $hoveredBooking->customer->name }}</div>
-                                <div><strong>Vehicle:</strong> {{ $hoveredBooking->car->license_plate }}</div>
-                                <div><strong>Start:</strong> {{ $hoveredBooking->start_date->format('M j, Y H:i') }}</div>
-                                <div><strong>End:</strong> {{ $hoveredBooking->end_date->format('M j, Y H:i') }}</div>
+                                <div><strong>No. Pemesanan:</strong> {{ $hoveredBooking->booking_number }}</div>
+                                <div><strong>Pelanggan:</strong> {{ $hoveredBooking->customer->name }}</div>
+                                <div><strong>Kendaraan:</strong> {{ $hoveredBooking->car->license_plate }}</div>
+                                <div><strong>Mulai:</strong> {{ $hoveredBooking->start_date->format('d M Y H:i') }}</div>
+                                <div><strong>Selesai:</strong> {{ $hoveredBooking->end_date->format('d M Y H:i') }}</div>
                                 <div><strong>Status:</strong> 
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium 
                                         {{ $hoveredBooking->booking_status === 'confirmed' ? 'bg-blue-100 text-blue-800' : '' }}
                                         {{ $hoveredBooking->booking_status === 'active' ? 'bg-green-100 text-green-800' : '' }}
                                         {{ $hoveredBooking->booking_status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}">
-                                        {{ ucfirst($hoveredBooking->booking_status) }}
+                                        @php
+                                            $statusLabels = [
+                                                'confirmed' => 'Dikonfirmasi',
+                                                'active' => 'Aktif',
+                                                'pending' => 'Menunggu'
+                                            ];
+                                        @endphp
+                                        {{ $statusLabels[$hoveredBooking->booking_status] ?? ucfirst($hoveredBooking->booking_status) }}
                                     </span>
                                 </div>
                                 @if ($hoveredBooking->with_driver)
-                                    <div><strong>With Driver:</strong> Yes</div>
+                                    <div><strong>Dengan Sopir:</strong> Ya</div>
                                 @endif
                                 @if ($hoveredBooking->notes)
-                                    <div><strong>Notes:</strong> {{ Str::limit($hoveredBooking->notes, 50) }}</div>
+                                    <div><strong>Catatan:</strong> {{ Str::limit($hoveredBooking->notes, 50) }}</div>
                                 @endif
                             </div>
                         </div>
@@ -261,8 +276,8 @@
         <!-- Empty State -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
             <div class="text-gray-400 text-6xl mb-4">📅</div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">No Data Available</h3>
-            <p class="text-gray-600">Select a date range and vehicles to view the availability timeline.</p>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Tidak Ada Data Tersedia</h3>
+            <p class="text-gray-600">Pilih rentang tanggal dan kendaraan untuk melihat linimasa ketersediaan.</p>
         </div>
     @endif
 
@@ -271,7 +286,7 @@
         <div class="bg-white rounded-lg p-6 shadow-lg">
             <div class="flex items-center space-x-3">
                 <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                <div class="text-gray-900">Loading timeline data...</div>
+                <div class="text-gray-900">Memuat data linimasa...</div>
             </div>
         </div>
     </div>

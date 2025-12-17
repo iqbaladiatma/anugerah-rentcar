@@ -2,18 +2,18 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Maintenance Details') }}
+                {{ __('Detail Pemeliharaan') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.maintenance.edit', $maintenance) }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.pencil class="w-4 h-4 inline mr-1" />
-                    Edit
+                    Edit Pemeliharaan
                 </a>
                 <a href="{{ route('admin.maintenance.index') }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.arrow-left class="w-4 h-4 inline mr-1" />
-                    Back to List
+                    Kembali ke Daftar
                 </a>
             </div>
         </div>
@@ -33,12 +33,12 @@
                 <div class="lg:col-span-2">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4">Maintenance Information</h3>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Pemeliharaan</h3>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Vehicle Information -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Vehicle</label>
+                                    <label class="block text-sm font-medium text-gray-700">Kendaraan</label>
                                     <div class="mt-1 text-sm text-gray-900">
                                         <div class="font-semibold">{{ $maintenance->car->license_plate }}</div>
                                         <div class="text-gray-600">{{ $maintenance->car->brand }} {{ $maintenance->car->model }}</div>
@@ -48,7 +48,7 @@
 
                                 <!-- Maintenance Type -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Maintenance Type</label>
+                                    <label class="block text-sm font-medium text-gray-700">Tipe Pemeliharaan</label>
                                     <div class="mt-1">
                                         <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full
                                             @if($maintenance->maintenance_type === 'routine') bg-green-100 text-green-800
@@ -61,7 +61,7 @@
 
                                 <!-- Service Date -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Service Date</label>
+                                    <label class="block text-sm font-medium text-gray-700">Tanggal Pemeliharaan</label>
                                     <div class="mt-1 text-sm text-gray-900">
                                         {{ $maintenance->service_date->format('d F Y') }}
                                         <span class="text-gray-500">({{ $maintenance->service_date->diffForHumans() }})</span>
@@ -70,7 +70,7 @@
 
                                 <!-- Next Service Date -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Next Service Date</label>
+                                    <label class="block text-sm font-medium text-gray-700">Tanggal Pemeliharaan Berikutnya</label>
                                     <div class="mt-1 text-sm text-gray-900">
                                         @if($maintenance->next_service_date)
                                             <div class="@if($maintenance->isNextServiceDue()) text-red-600 font-semibold @elseif($maintenance->isNextServiceDueSoon()) text-yellow-600 font-semibold @endif">
@@ -87,14 +87,14 @@
                                                 </div>
                                             @endif
                                         @else
-                                            <span class="text-gray-400">Not scheduled</span>
+                                            <span class="text-gray-400">Tidak dischedule</span>
                                         @endif
                                     </div>
                                 </div>
 
                                 <!-- Cost -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Cost</label>
+                                    <label class="block text-sm font-medium text-gray-700">Biaya</label>
                                     <div class="mt-1 text-lg font-semibold text-gray-900">
                                         Rp {{ number_format($maintenance->cost, 0, ',', '.') }}
                                     </div>
@@ -102,7 +102,7 @@
 
                                 <!-- Odometer Reading -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Odometer Reading</label>
+                                    <label class="block text-sm font-medium text-gray-700">Bacaan Odometer</label>
                                     <div class="mt-1 text-sm text-gray-900">
                                         {{ number_format($maintenance->odometer_at_service, 0, ',', '.') }} km
                                     </div>
@@ -110,13 +110,13 @@
 
                                 <!-- Service Provider -->
                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700">Service Provider</label>
+                                    <label class="block text-sm font-medium text-gray-700">Pemasangan</label>
                                     <div class="mt-1 text-sm text-gray-900">{{ $maintenance->service_provider }}</div>
                                 </div>
 
                                 <!-- Description -->
                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700">Description</label>
+                                    <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
                                     <div class="mt-1 text-sm text-gray-900 whitespace-pre-line">{{ $maintenance->description }}</div>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                     @if($maintenance->receipt_photo)
                         <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 bg-white border-b border-gray-200">
-                                <h3 class="text-lg font-medium text-gray-900 mb-4">Receipt Photo</h3>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Foto Receipt</h3>
                                 <div class="text-center">
                                     <img src="{{ $maintenance->receipt_photo_url }}" 
                                          alt="Maintenance Receipt" 
@@ -137,7 +137,7 @@
                                         <a href="{{ $maintenance->receipt_photo_url }}" 
                                            target="_blank" 
                                            class="text-blue-600 hover:text-blue-800 text-sm">
-                                            View Full Size
+                                            Lihat Full Size
                                         </a>
                                     </div>
                                 </div>
@@ -155,15 +155,15 @@
                             <div class="space-y-3">
                                 <a href="{{ route('admin.maintenance.edit', $maintenance) }}" 
                                    class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center block">
-                                    Edit Maintenance
+                                    Edit Pemeliharaan
                                 </a>
                                 <a href="{{ route('admin.vehicles.show', $maintenance->car) }}" 
                                    class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-center block">
-                                    View Vehicle
+                                    Lihat Kendaraan
                                 </a>
                                 <a href="{{ route('admin.maintenance.car-history', $maintenance->car) }}" 
                                    class="w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-center block">
-                                    Vehicle History
+                                    Riwayat Kendaraan
                                 </a>
                             </div>
                         </div>
@@ -173,10 +173,10 @@
                     @if($maintenance->getCostPerKilometer())
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 bg-white border-b border-gray-200">
-                                <h3 class="text-lg font-medium text-gray-900 mb-4">Cost Analysis</h3>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Analisis Biaya</h3>
                                 <div class="space-y-3">
                                     <div class="flex justify-between">
-                                        <span class="text-sm text-gray-600">Cost per km:</span>
+                                        <span class="text-sm text-gray-600">Biaya per km:</span>
                                         <span class="text-sm font-medium">Rp {{ number_format($maintenance->getCostPerKilometer(), 2, ',', '.') }}</span>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                     @if($relatedMaintenances->count() > 0)
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 bg-white border-b border-gray-200">
-                                <h3 class="text-lg font-medium text-gray-900 mb-4">Recent Maintenance</h3>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Pemeliharaan Terkait</h3>
                                 <div class="space-y-3">
                                     @foreach($relatedMaintenances as $related)
                                         <div class="border-l-4 border-gray-200 pl-3">
@@ -210,7 +210,7 @@
                                                     </div>
                                                     <a href="{{ route('admin.maintenance.show', $related) }}" 
                                                        class="text-xs text-blue-600 hover:text-blue-800">
-                                                        View
+                                                        Lihat
                                                     </a>
                                                 </div>
                                             </div>

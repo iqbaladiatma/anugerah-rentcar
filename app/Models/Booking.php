@@ -38,6 +38,10 @@ class Booking extends Model
         'total_amount',
         'deposit_amount',
         'payment_status',
+        'payment_type',
+        'paid_amount',
+        'payment_proof',
+        'payment_notes',
         'booking_status',
         'notes',
     ];
@@ -66,6 +70,7 @@ class Booking extends Model
      * Payment status constants.
      */
     const PAYMENT_PENDING = 'pending';
+    const PAYMENT_VERIFYING = 'verifying';
     const PAYMENT_PARTIAL = 'partial';
     const PAYMENT_PAID = 'paid';
     const PAYMENT_REFUNDED = 'refunded';
@@ -132,6 +137,9 @@ class Booking extends Model
      */
     public function getDurationInDays(): int
     {
+        if (!$this->start_date || !$this->end_date) {
+            return 0;
+        }
         return $this->start_date->diffInDays($this->end_date) + 1;
     }
 
@@ -140,6 +148,9 @@ class Booking extends Model
      */
     public function getDurationInHours(): int
     {
+        if (!$this->start_date || !$this->end_date) {
+            return 0;
+        }
         return $this->start_date->diffInHours($this->end_date);
     }
 

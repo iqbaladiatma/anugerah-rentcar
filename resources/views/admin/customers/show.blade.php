@@ -2,18 +2,18 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Customer Details: ') . $customer->name }}
+                {{ __('Detail Pelanggan: ') . $customer->name }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.customers.edit', $customer) }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.cog class="w-4 h-4 inline mr-1" />
-                    Edit Customer
+                    Edit Pelanggan
                 </a>
                 <a href="{{ route('admin.customers.index') }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.arrow-left class="w-4 h-4 inline mr-1" />
-                    Back to Customers
+                    Kembali ke Pelanggan
                 </a>
             </div>
         </div>
@@ -33,27 +33,27 @@
                 </div>
             @endif
 
-            <!-- Customer Information -->
+            <!-- Informasi Pelanggan -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Customer Information</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Informasi Pelanggan</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Name</label>
+                                    <label class="block text-sm font-medium text-gray-700">Nama</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $customer->name }}</p>
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Phone</label>
+                                    <label class="block text-sm font-medium text-gray-700">Telepon</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $customer->phone }}</p>
                                 </div>
                                 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">Email</label>
-                                    <p class="mt-1 text-sm text-gray-900">{{ $customer->email ?: 'Not provided' }}</p>
+                                    <p class="mt-1 text-sm text-gray-900">{{ $customer->email ?: 'Tidak disediakan' }}</p>
                                 </div>
                                 
                                 <div>
@@ -62,7 +62,7 @@
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Address</label>
+                                    <label class="block text-sm font-medium text-gray-700">Alamat</label>
                                     <p class="mt-1 text-sm text-gray-900">{{ $customer->address }}</p>
                                 </div>
                             </div>
@@ -71,16 +71,16 @@
                         <div>
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Member Status</label>
+                                    <label class="block text-sm font-medium text-gray-700">Status Anggota</label>
                                     <div class="mt-1 flex items-center">
                                         @if($customer->is_member)
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                 <x-icons.star class="w-3 h-3 mr-1" />
-                                                Member ({{ $discountInfo['discount_percentage'] }}% discount)
+                                                Anggota (Diskon {{ $discountInfo['discount_percentage'] }}%)
                                             </span>
                                         @else
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                                Regular Customer
+                                                Pelanggan Biasa
                                             </span>
                                         @endif
                                     </div>
@@ -92,19 +92,19 @@
                                         @if($customer->is_blacklisted)
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                                 <x-icons.ban class="w-3 h-3 mr-1" />
-                                                Blacklisted
+                                                Daftar Hitam
                                             </span>
                                             <p class="mt-1 text-sm text-red-600">{{ $customer->blacklist_reason }}</p>
                                         @else
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Active
+                                                Aktif
                                             </span>
                                         @endif
                                     </div>
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Loyalty Tier</label>
+                                    <label class="block text-sm font-medium text-gray-700">Tingkat Loyalitas</label>
                                     <p class="mt-1">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                                             @if($loyaltyTier === 'platinum') bg-purple-100 text-purple-800
@@ -117,13 +117,13 @@
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Risk Assessment</label>
+                                    <label class="block text-sm font-medium text-gray-700">Penilaian Risiko</label>
                                     <p class="mt-1">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                                             @if($riskAssessment['risk_level'] === 'high') bg-red-100 text-red-800
                                             @elseif($riskAssessment['risk_level'] === 'medium') bg-yellow-100 text-yellow-800
                                             @else bg-green-100 text-green-800 @endif">
-                                            {{ ucfirst($riskAssessment['risk_level']) }} Risk
+                                            Risiko {{ ucfirst($riskAssessment['risk_level']) }}
                                         </span>
                                     </p>
                                     @if(!empty($riskAssessment['risk_factors']))
@@ -140,30 +140,30 @@
                 </div>
             </div>
 
-            <!-- Documents -->
+            <!-- Dokumen -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Documents</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Dokumen</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">KTP Photo</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Foto KTP</label>
                             @if($customer->ktp_photo)
-                                <img src="{{ $customer->ktp_photo_url }}" alt="KTP Photo" class="w-full h-48 object-cover rounded-lg border">
+                                <img src="{{ $customer->ktp_photo_url }}" alt="Foto KTP" class="w-full h-48 object-cover rounded-lg border">
                             @else
                                 <div class="w-full h-48 bg-gray-100 rounded-lg border flex items-center justify-center">
-                                    <span class="text-gray-500">No KTP photo uploaded</span>
+                                    <span class="text-gray-500">Foto KTP tidak diunggah</span>
                                 </div>
                             @endif
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">SIM Photo</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Foto SIM</label>
                             @if($customer->sim_photo)
-                                <img src="{{ $customer->sim_photo_url }}" alt="SIM Photo" class="w-full h-48 object-cover rounded-lg border">
+                                <img src="{{ $customer->sim_photo_url }}" alt="Foto SIM" class="w-full h-48 object-cover rounded-lg border">
                             @else
                                 <div class="w-full h-48 bg-gray-100 rounded-lg border flex items-center justify-center">
-                                    <span class="text-gray-500">No SIM photo uploaded</span>
+                                    <span class="text-gray-500">Foto SIM tidak diunggah</span>
                                 </div>
                             @endif
                         </div>
@@ -171,71 +171,71 @@
                 </div>
             </div>
 
-            <!-- Statistics -->
+            <!-- Statistik -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Booking Statistics</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Statistik Pemesanan</h3>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="bg-blue-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-blue-600">{{ $statistics['total_bookings'] }}</div>
-                            <div class="text-sm text-blue-600">Total Bookings</div>
+                            <div class="text-sm text-blue-600">Total Pemesanan</div>
                         </div>
                         
                         <div class="bg-green-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-green-600">{{ $statistics['completed_bookings'] }}</div>
-                            <div class="text-sm text-green-600">Completed</div>
+                            <div class="text-sm text-green-600">Selesai</div>
                         </div>
                         
                         <div class="bg-yellow-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-yellow-600">{{ $statistics['active_bookings'] }}</div>
-                            <div class="text-sm text-yellow-600">Active</div>
+                            <div class="text-sm text-yellow-600">Aktif</div>
                         </div>
                         
                         <div class="bg-red-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-red-600">{{ $statistics['cancelled_bookings'] }}</div>
-                            <div class="text-sm text-red-600">Cancelled</div>
+                            <div class="text-sm text-red-600">Dibatalkan</div>
                         </div>
                         
                         <div class="bg-purple-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-purple-600">Rp {{ number_format($statistics['total_revenue'], 0, ',', '.') }}</div>
-                            <div class="text-sm text-purple-600">Total Revenue</div>
+                            <div class="text-sm text-purple-600">Total Pendapatan</div>
                         </div>
                         
                         <div class="bg-indigo-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-indigo-600">Rp {{ number_format($statistics['average_booking_value'], 0, ',', '.') }}</div>
-                            <div class="text-sm text-indigo-600">Avg. Booking Value</div>
+                            <div class="text-sm text-indigo-600">Rata-rata Nilai Pemesanan</div>
                         </div>
                         
                         <div class="bg-pink-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-pink-600">{{ number_format($statistics['completion_rate'], 1) }}%</div>
-                            <div class="text-sm text-pink-600">Completion Rate</div>
+                            <div class="text-sm text-pink-600">Tingkat Penyelesaian</div>
                         </div>
                         
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <div class="text-2xl font-bold text-gray-600">
-                                {{ $statistics['last_booking_date'] ? $statistics['last_booking_date']->format('M d, Y') : 'Never' }}
+                                {{ $statistics['last_booking_date'] ? $statistics['last_booking_date']->format('M d, Y') : 'Belum pernah' }}
                             </div>
-                            <div class="text-sm text-gray-600">Last Booking</div>
+                            <div class="text-sm text-gray-600">Pemesanan Terakhir</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Bookings -->
+            <!-- Pemesanan Terbaru -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Bookings</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Pemesanan Terbaru</h3>
                     
                     @if($customer->bookings->count() > 0)
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking #</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No. Pemesanan</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kendaraan</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Periode</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                     </tr>
                                 </thead>
@@ -270,7 +270,7 @@
                             </table>
                         </div>
                     @else
-                        <p class="text-gray-500">No bookings found for this customer.</p>
+                        <p class="text-gray-500">Tidak ada pemesanan ditemukan untuk pelanggan ini.</p>
                     @endif
                 </div>
             </div>

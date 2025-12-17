@@ -4,21 +4,21 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <!-- Search -->
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search Description</label>
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari Deskripsi</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="search" 
                        id="search"
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                       placeholder="Search expenses...">
+                       placeholder="Cari pengeluaran...">
             </div>
 
             <!-- Category Filter -->
             <div>
-                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
                 <select wire:model.live="category" 
                         id="category"
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Categories</option>
+                    <option value="">Semua Kategori</option>
                     @foreach($categories as $key => $label)
                         <option value="{{ $key }}">{{ $label }}</option>
                     @endforeach
@@ -27,7 +27,7 @@
 
             <!-- Date Range -->
             <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
                 <input type="date" 
                        wire:model.live="startDate" 
                        id="start_date"
@@ -35,7 +35,7 @@
             </div>
 
             <div>
-                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                <label for="end_date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Selesai</label>
                 <input type="date" 
                        wire:model.live="endDate" 
                        id="end_date"
@@ -46,7 +46,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
             <!-- Amount Range -->
             <div>
-                <label for="min_amount" class="block text-sm font-medium text-gray-700 mb-1">Min Amount</label>
+                <label for="min_amount" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Minimum</label>
                 <input type="number" 
                        wire:model.live.debounce.300ms="minAmount" 
                        id="min_amount"
@@ -56,7 +56,7 @@
             </div>
 
             <div>
-                <label for="max_amount" class="block text-sm font-medium text-gray-700 mb-1">Max Amount</label>
+                <label for="max_amount" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Maksimum</label>
                 <input type="number" 
                        wire:model.live.debounce.300ms="maxAmount" 
                        id="max_amount"
@@ -78,7 +78,7 @@
     <!-- Summary -->
     <div class="mb-4 flex justify-between items-center">
         <div class="text-sm text-gray-600">
-            Showing {{ $expenses->count() }} of {{ $expenses->total() }} expenses
+            Showing {{ $expenses->count() }} of {{ $expenses->total() }} pengeluaran
             @if($totalAmount > 0)
                 | Total: <span class="font-semibold">{{ number_format($totalAmount, 0, ',', '.') }} IDR</span>
             @endif
@@ -96,7 +96,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('expense_date')">
                         <div class="flex items-center space-x-1">
-                            <span>Date</span>
+                            <span>Tanggal</span>
                             @if($sortField === 'expense_date')
                                 @if($sortDirection === 'asc')
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -113,7 +113,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('category')">
                         <div class="flex items-center space-x-1">
-                            <span>Category</span>
+                            <span>Kategori</span>
                             @if($sortField === 'category')
                                 @if($sortDirection === 'asc')
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -128,12 +128,12 @@
                         </div>
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Description
+                        Deskripsi
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                         wire:click="sortBy('amount')">
                         <div class="flex items-center space-x-1">
-                            <span>Amount</span>
+                            <span>Jumlah</span>
                             @if($sortField === 'amount')
                                 @if($sortDirection === 'asc')
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -148,7 +148,7 @@
                         </div>
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Created By
+                        Dibuat Oleh
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Receipt

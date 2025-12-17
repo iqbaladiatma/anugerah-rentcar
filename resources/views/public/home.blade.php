@@ -210,15 +210,15 @@
     <!-- CTA Section -->
     <section class="py-16 bg-blue-600 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-4">Ready to Start Your Journey?</h2>
-            <p class="text-xl mb-8 text-blue-100">Join thousands of satisfied customers who trust us with their transportation needs</p>
+            <h2 class="text-3xl font-bold mb-4">Siap Memulai Perjalanan Anda?</h2>
+            <p class="text-xl mb-8 text-blue-100">Bergabunglah dengan ribuan pelanggan yang puas dan mempercayai kami untuk kebutuhan transportasi mereka</p>
             <div class="space-x-4">
                 <a href="{{ route('vehicles.catalog') }}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block">
-                    Browse Vehicles
+                    Jelajahi Kendaraan
                 </a>
                 @guest('customer')
                     <a href="{{ route('customer.register') }}" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors inline-block">
-                        Register Now
+                        Daftar Sekarang
                     </a>
                 @endguest
             </div>

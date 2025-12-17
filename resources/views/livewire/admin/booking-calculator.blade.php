@@ -1,19 +1,19 @@
 <div class="space-y-6">
     <!-- Form Section -->
     <div class="bg-white shadow rounded-lg p-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Booking Details</h3>
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Detail Pemesanan</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Customer Selection -->
             <div>
-                <label for="customer_id" class="block text-sm font-medium text-gray-700">Customer</label>
+                <label for="customer_id" class="block text-sm font-medium text-gray-700">Pelanggan</label>
                 <select wire:model="customer_id" id="customer_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    <option value="">Select Customer</option>
+                    <option value="">Pilih Pelanggan</option>
                     @foreach($customers as $customer)
                         <option value="{{ $customer['id'] }}">
                             {{ $customer['name'] }} - {{ $customer['phone'] }}
                             @if($customer['is_member'])
-                                <span class="text-green-600">(Member)</span>
+                                <span class="text-green-600">(Anggota)</span>
                             @endif
                         </option>
                     @endforeach
@@ -22,7 +22,7 @@
                     @php $selectedCustomer = $this->getSelectedCustomer(); @endphp
                     @if($selectedCustomer && $selectedCustomer['is_member'])
                         <p class="mt-1 text-sm text-green-600">
-                            Member discount: {{ $selectedCustomer['member_discount'] ?? 10 }}%
+                            Diskon Anggota: {{ $selectedCustomer['member_discount'] ?? 10 }}%
                         </p>
                     @endif
                 @endif
@@ -30,13 +30,13 @@
 
             <!-- Vehicle Selection -->
             <div>
-                <label for="car_id" class="block text-sm font-medium text-gray-700">Vehicle</label>
+                <label for="car_id" class="block text-sm font-medium text-gray-700">Kendaraan</label>
                 <select wire:model="car_id" id="car_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    <option value="">Select Vehicle</option>
+                    <option value="">Pilih Kendaraan</option>
                     @foreach($cars as $car)
                         <option value="{{ $car['id'] }}">
                             {{ $car['license_plate'] }} - {{ $car['brand'] }} {{ $car['model'] }}
-                            (Rp {{ number_format($car['daily_rate'], 0, ',', '.') }}/day)
+                            (Rp {{ number_format($car['daily_rate'], 0, ',', '.') }}/hari)
                         </option>
                     @endforeach
                 </select>
@@ -44,8 +44,8 @@
                     @php $selectedCar = $this->getSelectedCar(); @endphp
                     @if($selectedCar)
                         <p class="mt-1 text-sm text-gray-600">
-                            Daily: Rp {{ number_format($selectedCar['daily_rate'], 0, ',', '.') }} | 
-                            Weekly: Rp {{ number_format($selectedCar['weekly_rate'], 0, ',', '.') }}
+                            Harian: Rp {{ number_format($selectedCar['daily_rate'], 0, ',', '.') }} | 
+                            Mingguan: Rp {{ number_format($selectedCar['weekly_rate'], 0, ',', '.') }}
                         </p>
                     @endif
                 @endif
@@ -53,32 +53,32 @@
 
             <!-- Start Date -->
             <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                <label for="start_date" class="block text-sm font-medium text-gray-700">Tanggal Mulai</label>
                 <input wire:model="start_date" type="datetime-local" id="start_date" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
             </div>
 
             <!-- End Date -->
             <div>
-                <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
+                <label for="end_date" class="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
                 <input wire:model="end_date" type="datetime-local" id="end_date" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
             </div>
 
             <!-- Pickup Location -->
             <div>
-                <label for="pickup_location" class="block text-sm font-medium text-gray-700">Pickup Location</label>
+                <label for="pickup_location" class="block text-sm font-medium text-gray-700">Lokasi Penjemputan</label>
                 <input wire:model="pickup_location" type="text" id="pickup_location" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                       placeholder="Enter pickup location">
+                       placeholder="Masukkan lokasi penjemputan">
             </div>
 
             <!-- Return Location -->
             <div>
-                <label for="return_location" class="block text-sm font-medium text-gray-700">Return Location</label>
+                <label for="return_location" class="block text-sm font-medium text-gray-700">Lokasi Pengembalian</label>
                 <input wire:model="return_location" type="text" id="return_location" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                       placeholder="Enter return location">
+                       placeholder="Masukkan lokasi pengembalian">
             </div>
         </div>
 
@@ -89,16 +89,16 @@
                 <input wire:model="with_driver" type="checkbox" id="with_driver" 
                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                 <label for="with_driver" class="ml-2 block text-sm text-gray-900">
-                    Include Driver
+                    Termasuk Sopir
                 </label>
             </div>
 
             <!-- Driver Selection -->
             @if($with_driver)
                 <div>
-                    <label for="driver_id" class="block text-sm font-medium text-gray-700">Select Driver</label>
+                    <label for="driver_id" class="block text-sm font-medium text-gray-700">Pilih Sopir</label>
                     <select wire:model="driver_id" id="driver_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="">Select Driver</option>
+                        <option value="">Pilih Sopir</option>
                         @foreach($available_drivers as $driver)
                             <option value="{{ $driver['id'] }}">
                                 {{ $driver['name'] }} - {{ $driver['phone'] }}
@@ -113,19 +113,27 @@
                 <input wire:model="is_out_of_town" type="checkbox" id="is_out_of_town" 
                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                 <label for="is_out_of_town" class="ml-2 block text-sm text-gray-900">
-                    Out of Town Trip
+                    Perjalanan Luar Kota
                 </label>
             </div>
 
             <!-- Out of Town Fee -->
             @if($is_out_of_town)
-                <div>
-                    <label for="out_of_town_fee" class="block text-sm font-medium text-gray-700">Out of Town Fee</label>
+                <div x-data="{
+                    raw: @entangle('out_of_town_fee'),
+                    get formatted() {
+                        return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                    },
+                    set formatted(value) {
+                        this.raw = value.replace(/\D/g, '');
+                    }
+                }">
+                    <label for="out_of_town_fee" class="block text-sm font-medium text-gray-700">Biaya Luar Kota</label>
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm">Rp</span>
                         </div>
-                        <input wire:model="out_of_town_fee" type="number" id="out_of_town_fee" 
+                        <input x-model="formatted" type="text" id="out_of_town_fee" 
                                class="pl-12 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                placeholder="0">
                     </div>
@@ -134,10 +142,10 @@
 
             <!-- Notes -->
             <div>
-                <label for="notes" class="block text-sm font-medium text-gray-700">Notes</label>
+                <label for="notes" class="block text-sm font-medium text-gray-700">Catatan</label>
                 <textarea wire:model="notes" id="notes" rows="3" 
                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                          placeholder="Additional notes or special requirements"></textarea>
+                          placeholder="Catatan tambahan atau persyaratan khusus"></textarea>
             </div>
         </div>
     </div>
@@ -145,7 +153,7 @@
     <!-- Availability Status -->
     @if(!empty($availability))
         <div class="bg-white shadow rounded-lg p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Availability Status</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Status Ketersediaan</h3>
             
             <div class="flex items-center space-x-2">
                 <div class="flex-shrink-0">
@@ -162,12 +170,12 @@
 
             @if(!empty($availability['conflicts']) && $availability['conflicts']->isNotEmpty())
                 <div class="mt-4">
-                    <h4 class="text-sm font-medium text-gray-700 mb-2">Conflicting Bookings:</h4>
+                    <h4 class="text-sm font-medium text-gray-700 mb-2">Pemesanan yang Bertentangan:</h4>
                     <div class="space-y-2">
                         @foreach($availability['conflicts'] as $conflict)
                             <div class="text-sm text-red-600 bg-red-50 p-2 rounded">
                                 {{ $conflict->booking_number }} - {{ $conflict->customer->name }} 
-                                ({{ $conflict->start_date->format('M j, Y H:i') }} - {{ $conflict->end_date->format('M j, Y H:i') }})
+                                ({{ $conflict->start_date->format('d M Y H:i') }} - {{ $conflict->end_date->format('d M Y H:i') }})
                             </div>
                         @endforeach
                     </div>
@@ -176,7 +184,7 @@
 
             @if(!empty($availability['next_available_date']))
                 <div class="mt-2 text-sm text-gray-600">
-                    Next available: {{ $availability['next_available_date']->format('M j, Y H:i') }}
+                    Tersedia berikutnya: {{ $availability['next_available_date']->format('d M Y H:i') }}
                 </div>
             @endif
         </div>
@@ -192,7 +200,7 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-red-800">Validation Errors</h3>
+                    <h3 class="text-sm font-medium text-red-800">Kesalahan Validasi</h3>
                     <div class="mt-2 text-sm text-red-700">
                         <ul class="list-disc pl-5 space-y-1">
                             @foreach($validation_errors as $error)
@@ -208,11 +216,11 @@
     <!-- Pricing Calculation -->
     @if($show_pricing && !empty($pricing))
         <div class="bg-white shadow rounded-lg p-6">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Pricing Calculation</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Perhitungan Harga</h3>
             
             <!-- Duration -->
             <div class="mb-4 p-3 bg-gray-50 rounded-lg">
-                <div class="text-sm font-medium text-gray-700">Duration</div>
+                <div class="text-sm font-medium text-gray-700">Durasi</div>
                 <div class="text-lg font-semibold text-gray-900">{{ $this->getDurationText() }}</div>
             </div>
 
@@ -251,7 +259,7 @@
                 <!-- Member Discount -->
                 @if($pricing['member_discount'] > 0)
                     <div class="flex justify-between items-center py-2 border-b border-gray-200">
-                        <div class="text-sm font-medium text-green-600">Member Discount</div>
+                        <div class="text-sm font-medium text-green-600">Diskon Anggota</div>
                         <div class="text-sm font-medium text-green-600">
                             -Rp {{ number_format($pricing['member_discount'], 0, ',', '.') }}
                         </div>
@@ -260,7 +268,7 @@
 
                 <!-- Total Amount -->
                 <div class="flex justify-between items-center py-3 border-t-2 border-gray-300">
-                    <div class="text-lg font-bold text-gray-900">Total Amount</div>
+                    <div class="text-lg font-bold text-gray-900">Total Biaya</div>
                     <div class="text-lg font-bold text-gray-900">
                         Rp {{ number_format($pricing['total_amount'], 0, ',', '.') }}
                     </div>
@@ -269,13 +277,13 @@
                 <!-- Deposit and Remaining -->
                 <div class="bg-blue-50 p-4 rounded-lg space-y-2">
                     <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-blue-900">Deposit Required (30%)</div>
+                        <div class="text-sm font-medium text-blue-900">Deposit Diperlukan (30%)</div>
                         <div class="text-sm font-bold text-blue-900">
                             Rp {{ number_format($pricing['deposit_amount'], 0, ',', '.') }}
                         </div>
                     </div>
                     <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-blue-900">Remaining Amount</div>
+                        <div class="text-sm font-medium text-blue-900">Sisa Pembayaran</div>
                         <div class="text-sm font-bold text-blue-900">
                             Rp {{ number_format($pricing['remaining_amount'], 0, ',', '.') }}
                         </div>
@@ -290,7 +298,7 @@
         <div class="bg-white shadow rounded-lg p-6">
             <div class="flex items-center justify-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-                <span class="ml-2 text-gray-600">Calculating pricing...</span>
+                <span class="ml-2 text-gray-600">Menghitung harga...</span>
             </div>
         </div>
     @endif
@@ -299,7 +307,7 @@
     <div class="flex justify-end space-x-3">
         <button type="button" wire:click="resetForm" 
                 class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Reset Form
+            Reset Formulir
         </button>
     </div>
 </div>

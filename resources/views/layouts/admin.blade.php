@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Anugerah Rentcar') }} - Admin Panel</title>
+        <title>{{ config('app.name', 'Anugerah Rentcar') }} - Panel Admin</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,18 +19,18 @@
     </head>
     <body class="font-sans antialiased bg-gray-50">
         <div class="min-h-screen">
-            <!-- Sidebar -->
+            <!-- Bilah Sisi -->
             <livewire:layout.admin-sidebar />
             
-            <!-- Main Content Area -->
+            <!-- Area Konten Utama -->
             <div class="lg:pl-64">
-                <!-- Top Navigation -->
+                <!-- Navigasi Atas -->
                 <livewire:layout.admin-header />
                 
-                <!-- Page Content -->
+                <!-- Konten Halaman -->
                 <main class="py-6 pb-20 lg:pb-6">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <!-- Page Heading -->
+                        <!-- Judul Halaman -->
                         @if (isset($header))
                             <div class="mb-6">
                                 {{ $header }}
@@ -43,11 +43,13 @@
                 </main>
             </div>
 
-            <!-- Mobile Bottom Navigation -->
+            <!-- Navigasi Bawah Seluler -->
             <livewire:layout.mobile-bottom-nav />
         </div>
         
         <!-- Livewire Scripts -->
+        <x-notification />
         @livewireScripts
+        @stack('scripts')
     </body>
 </html>

@@ -56,7 +56,7 @@
                 <div class="text-2xl font-bold text-blue-600">
                     Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}
                 </div>
-                <p class="text-sm text-gray-500">Total Amount</p>
+                <p class="text-sm text-gray-500">Total Biaya</p>
             </div>
         </div>
     </div>
@@ -66,11 +66,11 @@
         @if ($currentStep === 1)
             <!-- Step 1: Booking Details -->
             <div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Booking Details</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Detail Pemesanan</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Pickup Location *</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengambilan *</label>
                         <input type="text" wire:model="pickupLocation" 
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                placeholder="Enter pickup address">
@@ -78,7 +78,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Return Location *</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengembalian *</label>
                         <input type="text" wire:model="returnLocation" 
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                placeholder="Enter return address">
@@ -91,7 +91,7 @@
                         <input type="checkbox" wire:model="withDriver" id="withDriver"
                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         <label for="withDriver" class="ml-3 text-sm font-medium text-gray-700">
-                            Include Driver (+Rp {{ number_format($car->driver_fee_per_day, 0, ',', '.') }}/day)
+                            Termasuk Driver (+Rp {{ number_format($car->driver_fee_per_day, 0, ',', '.') }}/day)
                         </label>
                     </div>
 
@@ -99,41 +99,41 @@
                         <input type="checkbox" wire:model="isOutOfTown" id="isOutOfTown"
                                class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
                         <label for="isOutOfTown" class="ml-3 text-sm font-medium text-gray-700">
-                            Out of Town Trip (Additional fees may apply)
+                            Perjalanan Luar Kota (Biaya tambahan mungkin berlaku)
                         </label>
                     </div>
                 </div>
 
                 <div class="mt-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Special Notes (Optional)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Catatan Khusus (Opsional)</label>
                     <textarea wire:model="notes" rows="3"
                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                              placeholder="Any special requests or notes..."></textarea>
+                              placeholder="Catatan khusus..."></textarea>
                 </div>
 
                 <!-- Pricing Breakdown -->
                 <div class="mt-8 bg-gray-50 rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Pricing Breakdown</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Penjelasan Biaya</h3>
                     <div class="space-y-2">
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Base Rate ({{ $duration }} days)</span>
+                            <span class="text-gray-600">Biaya Dasar ({{ $duration }} hari)</span>
                             <span class="font-medium">Rp {{ number_format($pricing['base_amount'] ?? 0, 0, ',', '.') }}</span>
                         </div>
                         @if($withDriver && ($pricing['driver_fee'] ?? 0) > 0)
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Driver Fee</span>
+                                <span class="text-gray-600">Biaya Driver</span>
                                 <span class="font-medium">Rp {{ number_format($pricing['driver_fee'], 0, ',', '.') }}</span>
                             </div>
                         @endif
                         @if($isOutOfTown && ($pricing['out_of_town_fee'] ?? 0) > 0)
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Out of Town Fee</span>
+                                <span class="text-gray-600">Biaya Luar Kota</span>
                                 <span class="font-medium">Rp {{ number_format($pricing['out_of_town_fee'], 0, ',', '.') }}</span>
                             </div>
                         @endif
                         <div class="border-t pt-2">
                             <div class="flex justify-between text-lg font-bold">
-                                <span>Total Amount</span>
+                                <span>Total Biaya</span>
                                 <span class="text-blue-600">Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}</span>
                             </div>
                         </div>
@@ -144,29 +144,29 @@
         @elseif ($currentStep === 2)
             <!-- Step 2: Customer Information -->
             <div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Information</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Informasi Pelanggan</h2>
                 
                 <div class="mb-6">
                     <div class="flex space-x-4">
                         <label class="flex items-center cursor-pointer">
                             <input type="radio" wire:model="customerType" value="existing" 
                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <span class="ml-2 text-sm font-medium text-gray-700">Existing Customer</span>
+                            <span class="ml-2 text-sm font-medium text-gray-700">Pelanggan Lama</span>
                         </label>
                         <label class="flex items-center cursor-pointer">
                             <input type="radio" wire:model="customerType" value="new" 
                                    class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <span class="ml-2 text-sm font-medium text-gray-700">New Customer</span>
+                            <span class="ml-2 text-sm font-medium text-gray-700">Pelanggan Baru</span>
                         </label>
                     </div>
                 </div>
 
                 @if ($customerType === 'existing')
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Search Customer *</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Cari Pelanggan *</label>
                         <input type="text" wire:model.debounce.300ms="customerSearch" 
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="Search by name, phone, or NIK...">
+                               placeholder="Cari nama, no hp, atau NIK...">
                         
                         @if(count($existingCustomers) > 0)
                             <div class="mt-2 border border-gray-200 rounded-lg max-h-60 overflow-y-auto">
@@ -192,31 +192,31 @@
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
                             <input type="text" wire:model="customerName" 
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                   placeholder="Enter full name">
+                                   placeholder="Masukkan nama lengkap">
                             @error('customerName') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon *</label>
                             <input type="tel" wire:model="customerPhone" 
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                   placeholder="Enter phone number">
+                                   placeholder="Masukkan nomor telepon">
                             @error('customerPhone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email (Optional)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email (Opsional)</label>
                             <input type="email" wire:model="customerEmail" 
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                   placeholder="Enter email address">
+                                   placeholder="Masukkan email">
                             @error('customerEmail') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">NIK (ID Number) *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">NIK (Nomor Induk Kependudukan) *</label>
                             <input type="text" wire:model="customerNik" maxlength="16"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                    placeholder="16-digit NIK">
@@ -224,10 +224,10 @@
                         </div>
 
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Address *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Alamat *</label>
                             <textarea wire:model="customerAddress" rows="3"
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                      placeholder="Enter complete address"></textarea>
+                                      placeholder="Masukkan alamat"></textarea>
                             @error('customerAddress') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
                     </div>
@@ -237,20 +237,20 @@
         @elseif ($currentStep === 3)
             <!-- Step 3: Document Upload -->
             <div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Identity Verification</h2>
-                <p class="text-gray-600 mb-8">Please upload clear photos of your identity documents for verification purposes.</p>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Verifikasi Identitas</h2>
+                <p class="text-gray-600 mb-8">Silahkan unggah foto dokumen identitas Anda untuk verifikasi.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- KTP Upload -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-4">KTP (Identity Card) *</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-4">KTP (Kartu Tanda Penduduk) *</label>
                         <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
                             @if ($ktpPhoto)
                                 <div class="space-y-4">
                                     <img src="{{ $ktpPhoto->temporaryUrl() }}" class="mx-auto max-h-40 rounded-lg shadow-md">
                                     <button type="button" wire:click="$set('ktpPhoto', null)" 
                                             class="text-sm text-red-600 hover:text-red-800">
-                                        Remove Photo
+                                        Hapus Foto
                                     </button>
                                 </div>
                             @else
@@ -260,7 +260,7 @@
                                     </svg>
                                     <div>
                                         <label for="ktpPhoto" class="cursor-pointer">
-                                            <span class="text-blue-600 hover:text-blue-800 font-medium">Upload KTP Photo</span>
+                                            <span class="text-blue-600 hover:text-blue-800 font-medium">Unggah Foto KTP</span>
                                             <input id="ktpPhoto" type="file" wire:model="ktpPhoto" accept="image/*" class="hidden">
                                         </label>
                                         <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 2MB</p>
@@ -280,7 +280,7 @@
                                     <img src="{{ $simPhoto->temporaryUrl() }}" class="mx-auto max-h-40 rounded-lg shadow-md">
                                     <button type="button" wire:click="$set('simPhoto', null)" 
                                             class="text-sm text-red-600 hover:text-red-800">
-                                        Remove Photo
+                                        Hapus Foto
                                     </button>
                                 </div>
                             @else
@@ -290,7 +290,7 @@
                                     </svg>
                                     <div>
                                         <label for="simPhoto" class="cursor-pointer">
-                                            <span class="text-blue-600 hover:text-blue-800 font-medium">Upload SIM Photo</span>
+                                            <span class="text-blue-600 hover:text-blue-800 font-medium">Unggah Foto SIM</span>
                                             <input id="simPhoto" type="file" wire:model="simPhoto" accept="image/*" class="hidden">
                                         </label>
                                         <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 2MB</p>
@@ -308,12 +308,12 @@
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                         </svg>
                         <div class="ml-3">
-                            <h3 class="text-sm font-medium text-blue-800">Document Requirements</h3>
+                            <h3 class="text-sm font-medium text-blue-800">Persyaratan Dokumen</h3>
                             <div class="mt-2 text-sm text-blue-700">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>Photos must be clear and readable</li>
-                                    <li>Documents must be valid and not expired</li>
-                                    <li>Files should be in JPG or PNG format, maximum 2MB</li>
+                                    <li>Foto harus jelas dan mudah dibaca</li>
+                                    <li>Dokumen harus valid dan tidak habis masa berlaku</li>
+                                    <li>File harus berformat JPG atau PNG, maksimum 2MB</li>
                                     <li>Your information will be kept secure and confidential</li>
                                 </ul>
                             </div>
@@ -325,18 +325,18 @@
         @elseif ($currentStep === 4)
             <!-- Step 4: Payment Method -->
             <div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Information</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Informasi Pembayaran</h2>
                 
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Select Payment Method</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Pilih Metode Pembayaran</h3>
                         <div class="space-y-3">
                             <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
                                 <input type="radio" wire:model="paymentMethod" value="bank_transfer" 
                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <div class="ml-3">
-                                    <div class="font-medium text-gray-900">Bank Transfer</div>
-                                    <div class="text-sm text-gray-600">Transfer to our bank account</div>
+                                    <div class="font-medium text-gray-900">Transfer Bank</div>
+                                    <div class="text-sm text-gray-600">Transfer ke rekening bank kami</div>
                                 </div>
                             </label>
                             
@@ -344,8 +344,8 @@
                                 <input type="radio" wire:model="paymentMethod" value="cash" 
                                        class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                 <div class="ml-3">
-                                    <div class="font-medium text-gray-900">Cash Payment</div>
-                                    <div class="text-sm text-gray-600">Pay in cash at pickup</div>
+                                    <div class="font-medium text-gray-900">Cash</div>
+                                    <div class="text-sm text-gray-600">Bayar tunai saat pengambilan</div>
                                 </div>
                             </label>
                         </div>
@@ -354,49 +354,49 @@
                     <!-- Payment Instructions -->
                     @if($paymentMethod === 'bank_transfer')
                         <div class="bg-gray-50 rounded-lg p-6">
-                            <h4 class="font-semibold text-gray-900 mb-4">Bank Transfer Instructions</h4>
+                            <h4 class="font-semibold text-gray-900 mb-4">Instruksi Transfer Bank</h4>
                             <div class="space-y-3">
                                 <div>
                                     <span class="text-sm font-medium text-gray-700">Bank:</span>
                                     <span class="ml-2 text-sm text-gray-900">Bank BCA</span>
                                 </div>
                                 <div>
-                                    <span class="text-sm font-medium text-gray-700">Account Number:</span>
+                                    <span class="text-sm font-medium text-gray-700">Nomor Rekening:</span>
                                     <span class="ml-2 text-sm text-gray-900 font-mono">1234567890</span>
                                 </div>
                                 <div>
-                                    <span class="text-sm font-medium text-gray-700">Account Name:</span>
+                                    <span class="text-sm font-medium text-gray-700">Nama Rekening:</span>
                                     <span class="ml-2 text-sm text-gray-900">PT Anugerah Rentcar</span>
                                 </div>
                                 <div>
-                                    <span class="text-sm font-medium text-gray-700">Amount:</span>
+                                    <span class="text-sm font-medium text-gray-700">Jumlah:</span>
                                     <span class="ml-2 text-sm text-gray-900 font-semibold">Rp {{ number_format($pricing['deposit_amount'] ?? 0, 0, ',', '.') }}</span>
                                 </div>
                             </div>
                             <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                                 <p class="text-sm text-yellow-800">
-                                    <strong>Note:</strong> Please transfer the deposit amount to confirm your booking. 
-                                    The remaining balance can be paid at pickup.
+                                    <strong>Perhatian:</strong> Transfer deposit untuk konfirmasi pemesanan. 
+                                    Sisa pembayaran dapat dibayar saat pengambilan.
                                 </p>
                             </div>
                         </div>
                     @elseif($paymentMethod === 'cash')
                         <div class="bg-gray-50 rounded-lg p-6">
-                            <h4 class="font-semibold text-gray-900 mb-4">Cash Payment Instructions</h4>
+                            <h4 class="font-semibold text-gray-900 mb-4">Instruksi Cash</h4>
                             <div class="space-y-3">
                                 <p class="text-sm text-gray-700">
-                                    You can pay the full amount in cash when you pick up the vehicle. 
-                                    Please bring the exact amount or be prepared for change.
+                                    Anda dapat membayar total harga dengan uang tunai saat mengambil mobil. 
+                                    Bawa uang yang tepat atau siapkan kembalian.
                                 </p>
                                 <div>
-                                    <span class="text-sm font-medium text-gray-700">Total Amount:</span>
+                                    <span class="text-sm font-medium text-gray-700">Total:</span>
                                     <span class="ml-2 text-sm text-gray-900 font-semibold">Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}</span>
                                 </div>
                             </div>
                             <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                                 <p class="text-sm text-blue-800">
-                                    <strong>Note:</strong> Your booking will be confirmed immediately. 
-                                    Please arrive on time for vehicle pickup.
+                                    <strong>Perhatian:</strong> Pemesanan Anda akan segera dikonfirmasi. 
+                                    Silakan hadir tepat waktu saat mengambil mobil.
                                 </p>
                             </div>
                         </div>
@@ -404,33 +404,33 @@
 
                     <!-- Final Summary -->
                     <div class="bg-white border border-gray-200 rounded-lg p-6">
-                        <h4 class="font-semibold text-gray-900 mb-4">Booking Summary</h4>
+                        <h4 class="font-semibold text-gray-900 mb-4">Ringkasan Pemesanan</h4>
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Vehicle:</span>
+                                <span class="text-gray-600">Mobil:</span>
                                 <span class="font-medium">{{ $car->brand }} {{ $car->model }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Duration:</span>
-                                <span class="font-medium">{{ $duration }} days</span>
+                                <span class="text-gray-600">Durasi:</span>
+                                <span class="font-medium">{{ $duration }} hari</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Pickup:</span>
+                                <span class="text-gray-600">Pengambilan:</span>
                                 <span class="font-medium">{{ $pickupLocation }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">Return:</span>
+                                <span class="text-gray-600">Pengembalian:</span>
                                 <span class="font-medium">{{ $returnLocation }}</span>
                             </div>
                             @if($withDriver)
                                 <div class="flex justify-between">
                                     <span class="text-gray-600">Driver:</span>
-                                    <span class="font-medium text-green-600">Included</span>
+                                    <span class="font-medium text-green-600">Termasuk</span>
                                 </div>
                             @endif
                             <div class="border-t pt-2 mt-4">
                                 <div class="flex justify-between text-lg font-bold">
-                                    <span>Total Amount:</span>
+                                    <span>Total:</span>
                                     <span class="text-blue-600">Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}</span>
                                 </div>
                             </div>
@@ -448,13 +448,13 @@
                 <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
-                Previous
+                Sebelumnya
             </button>
 
             @if ($currentStep < $totalSteps)
                 <button type="button" wire:click="nextStep" 
                         class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md hover:shadow-lg">
-                    Next
+                    Selanjutnya
                     <svg class="w-4 h-4 inline ml-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                     </svg>
@@ -462,7 +462,7 @@
             @else
                 <button type="button" wire:click="completeBooking" 
                         class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium shadow-md hover:shadow-lg">
-                    Complete Booking
+                    Selesaikan Pemesanan
                     <svg class="w-4 h-4 inline ml-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>

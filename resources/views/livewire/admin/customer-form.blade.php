@@ -5,16 +5,16 @@
             <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Informasi Pribadi</h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Basic customer information and contact details.
+                            Informasi dasar pelanggan dan detail kontak.
                         </p>
                     </div>
                     <div class="mt-5 md:mt-0 md:col-span-2">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-4">
                                 <label for="name" class="block text-sm font-medium text-gray-700">
-                                    Full Name *
+                                    Nama Lengkap *
                                 </label>
                                 <input type="text" 
                                        wire:model="name" 
@@ -27,7 +27,7 @@
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="phone" class="block text-sm font-medium text-gray-700">
-                                    Phone Number *
+                                    Nomor Telepon *
                                 </label>
                                 <input type="tel" 
                                        wire:model="phone" 
@@ -40,7 +40,7 @@
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="email" class="block text-sm font-medium text-gray-700">
-                                    Email Address
+                                    Alamat Email
                                 </label>
                                 <input type="email" 
                                        wire:model="email" 
@@ -53,7 +53,7 @@
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="nik" class="block text-sm font-medium text-gray-700">
-                                    NIK (16 digits) *
+                                    NIK (16 digit) *
                                 </label>
                                 <input type="text" 
                                        wire:model="nik" 
@@ -68,7 +68,7 @@
 
                             <div class="col-span-6">
                                 <label for="address" class="block text-sm font-medium text-gray-700">
-                                    Address *
+                                    Alamat *
                                 </label>
                                 <textarea wire:model="address" 
                                           id="address"
@@ -87,9 +87,9 @@
             <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">Identity Documents</h3>
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Dokumen Identitas</h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Upload clear photos of KTP and SIM documents.
+                            Unggah foto dokumen KTP dan SIM yang jelas.
                         </p>
                     </div>
                     <div class="mt-5 md:mt-0 md:col-span-2">
@@ -97,42 +97,42 @@
                             <!-- KTP Photo -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">
-                                    KTP Photo *
+                                    Foto KTP *
                                 </label>
                                 
                                 @if($existing_ktp_photo && !$remove_ktp_photo && !$ktp_photo)
                                     <div class="mt-1">
                                         <img src="{{ asset('storage/' . $existing_ktp_photo) }}" 
-                                             alt="Current KTP" 
+                                             alt="KTP Saat Ini" 
                                              class="h-32 w-full object-cover rounded-md border">
                                         <div class="mt-2 flex space-x-2">
                                             <button type="button" 
                                                     wire:click="removeDocument('ktp')"
                                                     class="text-sm text-red-600 hover:text-red-800">
-                                                Remove
+                                                Hapus
                                             </button>
                                         </div>
                                     </div>
                                 @elseif($ktp_photo)
                                     <div class="mt-1">
                                         <img src="{{ $ktp_photo->temporaryUrl() }}" 
-                                             alt="New KTP" 
+                                             alt="KTP Baru" 
                                              class="h-32 w-full object-cover rounded-md border">
                                         <div class="mt-2">
                                             <button type="button" 
                                                     wire:click="$set('ktp_photo', null)"
                                                     class="text-sm text-red-600 hover:text-red-800">
-                                                Remove
+                                                Hapus
                                             </button>
                                         </div>
                                     </div>
                                 @elseif($remove_ktp_photo)
                                     <div class="mt-1 p-4 border-2 border-dashed border-red-300 rounded-md">
-                                        <p class="text-sm text-red-600">KTP photo will be removed</p>
+                                        <p class="text-sm text-red-600">Foto KTP akan dihapus</p>
                                         <button type="button" 
                                                 wire:click="restoreDocument('ktp')"
                                                 class="mt-1 text-sm text-blue-600 hover:text-blue-800">
-                                            Restore
+                                            Pulihkan
                                         </button>
                                     </div>
                                 @else
@@ -143,16 +143,16 @@
                                             </svg>
                                             <div class="flex text-sm text-gray-600">
                                                 <label for="ktp_photo" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                                    <span>Upload KTP photo</span>
+                                                    <span>Unggah foto KTP</span>
                                                     <input id="ktp_photo" 
                                                            wire:model="ktp_photo" 
                                                            type="file" 
                                                            accept="image/*"
                                                            class="sr-only">
                                                 </label>
-                                                <p class="pl-1">or drag and drop</p>
+                                                <p class="pl-1">atau seret dan lepas</p>
                                             </div>
-                                            <p class="text-xs text-gray-500">PNG, JPG up to 2MB</p>
+                                            <p class="text-xs text-gray-500">PNG, JPG hingga 2MB</p>
                                         </div>
                                     </div>
                                 @endif
@@ -165,42 +165,42 @@
                             <!-- SIM Photo -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">
-                                    SIM Photo *
+                                    Foto SIM *
                                 </label>
                                 
                                 @if($existing_sim_photo && !$remove_sim_photo && !$sim_photo)
                                     <div class="mt-1">
                                         <img src="{{ asset('storage/' . $existing_sim_photo) }}" 
-                                             alt="Current SIM" 
+                                             alt="SIM Saat Ini" 
                                              class="h-32 w-full object-cover rounded-md border">
                                         <div class="mt-2 flex space-x-2">
                                             <button type="button" 
                                                     wire:click="removeDocument('sim')"
                                                     class="text-sm text-red-600 hover:text-red-800">
-                                                Remove
+                                                Hapus
                                             </button>
                                         </div>
                                     </div>
                                 @elseif($sim_photo)
                                     <div class="mt-1">
                                         <img src="{{ $sim_photo->temporaryUrl() }}" 
-                                             alt="New SIM" 
+                                             alt="SIM Baru" 
                                              class="h-32 w-full object-cover rounded-md border">
                                         <div class="mt-2">
                                             <button type="button" 
                                                     wire:click="$set('sim_photo', null)"
                                                     class="text-sm text-red-600 hover:text-red-800">
-                                                Remove
+                                                Hapus
                                             </button>
                                         </div>
                                     </div>
                                 @elseif($remove_sim_photo)
                                     <div class="mt-1 p-4 border-2 border-dashed border-red-300 rounded-md">
-                                        <p class="text-sm text-red-600">SIM photo will be removed</p>
+                                        <p class="text-sm text-red-600">Foto SIM akan dihapus</p>
                                         <button type="button" 
                                                 wire:click="restoreDocument('sim')"
                                                 class="mt-1 text-sm text-blue-600 hover:text-blue-800">
-                                            Restore
+                                            Pulihkan
                                         </button>
                                     </div>
                                 @else
@@ -211,16 +211,16 @@
                                             </svg>
                                             <div class="flex text-sm text-gray-600">
                                                 <label for="sim_photo" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                                    <span>Upload SIM photo</span>
+                                                    <span>Unggah foto SIM</span>
                                                     <input id="sim_photo" 
                                                            wire:model="sim_photo" 
                                                            type="file" 
                                                            accept="image/*"
                                                            class="sr-only">
                                                 </label>
-                                                <p class="pl-1">or drag and drop</p>
+                                                <p class="pl-1">atau seret dan lepas</p>
                                             </div>
-                                            <p class="text-xs text-gray-500">PNG, JPG up to 2MB</p>
+                                            <p class="text-xs text-gray-500">PNG, JPG hingga 2MB</p>
                                         </div>
                                     </div>
                                 @endif
@@ -238,9 +238,9 @@
             <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">Member Status</h3>
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Status Anggota</h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Configure member benefits and discount settings.
+                            Konfigurasi manfaat anggota dan pengaturan diskon.
                         </p>
                     </div>
                     <div class="mt-5 md:mt-0 md:col-span-2">
@@ -253,15 +253,15 @@
                                            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
                                 </div>
                                 <div class="ml-3 text-sm">
-                                    <label for="is_member" class="font-medium text-gray-700">Member Status</label>
-                                    <p class="text-gray-500">Grant member privileges and discount benefits</p>
+                                    <label for="is_member" class="font-medium text-gray-700">Status Anggota</label>
+                                    <p class="text-gray-500">Berikan hak istimewa anggota dan manfaat diskon</p>
                                 </div>
                             </div>
 
                             @if($is_member)
                                 <div class="ml-7">
                                     <label for="member_discount" class="block text-sm font-medium text-gray-700">
-                                        Member Discount Percentage
+                                        Persentase Diskon Anggota
                                     </label>
                                     <div class="mt-1 relative rounded-md shadow-sm">
                                         <input type="number" 
@@ -276,7 +276,7 @@
                                         </div>
                                     </div>
                                     <p class="mt-1 text-sm text-gray-500">
-                                        System default: {{ $systemDefaultDiscount }}%. Leave empty to use system default.
+                                        Default sistem: {{ $systemDefaultDiscount }}%. Biarkan kosong untuk menggunakan default sistem.
                                     </p>
                                     @error('member_discount')
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -292,9 +292,9 @@
             <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
                 <div class="md:grid md:grid-cols-3 md:gap-6">
                     <div class="md:col-span-1">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">Account Status</h3>
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Status Akun</h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Manage customer access and restrictions.
+                            Kelola akses dan pembatasan pelanggan.
                         </p>
                     </div>
                     <div class="mt-5 md:mt-0 md:col-span-2">
@@ -307,20 +307,20 @@
                                            class="focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300 rounded">
                                 </div>
                                 <div class="ml-3 text-sm">
-                                    <label for="is_blacklisted" class="font-medium text-gray-700">Blacklist Customer</label>
-                                    <p class="text-gray-500">Prevent customer from making new bookings</p>
+                                    <label for="is_blacklisted" class="font-medium text-gray-700">Daftar Hitam Pelanggan</label>
+                                    <p class="text-gray-500">Cegah pelanggan melakukan pemesanan baru</p>
                                 </div>
                             </div>
 
                             @if($is_blacklisted)
                                 <div class="ml-7">
                                     <label for="blacklist_reason" class="block text-sm font-medium text-gray-700">
-                                        Blacklist Reason *
+                                        Alasan Daftar Hitam *
                                     </label>
                                     <textarea wire:model="blacklist_reason" 
                                               id="blacklist_reason"
                                               rows="3"
-                                              placeholder="Enter the reason for blacklisting this customer..."
+                                              placeholder="Masukkan alasan memasukkan pelanggan ini ke daftar hitam..."
                                               class="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md @error('blacklist_reason') border-red-300 @enderror"></textarea>
                                     @error('blacklist_reason')
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -337,17 +337,17 @@
         <div class="flex justify-end space-x-3 pt-6">
             <a href="{{ $isEditing && $customer && $customer->exists ? route('admin.customers.show', $customer) : route('admin.customers.index') }}" 
                class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Cancel
+                Batal
             </a>
             
             <button type="submit" 
                     wire:loading.attr="disabled"
                     class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50">
                 <span wire:loading.remove>
-                    {{ $isEditing ? 'Update Customer' : 'Create Customer' }}
+                    {{ $isEditing ? 'Perbarui Pelanggan' : 'Buat Pelanggan' }}
                 </span>
                 <span wire:loading>
-                    {{ $isEditing ? 'Updating...' : 'Creating...' }}
+                    {{ $isEditing ? 'Memperbarui...' : 'Membuat...' }}
                 </span>
             </button>
         </div>

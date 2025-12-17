@@ -1,7 +1,7 @@
 <div>
     <div class="mb-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-2">System Configuration</h3>
-        <p class="text-sm text-gray-600">Manage system maintenance, cache, and performance settings.</p>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Pengaturan Sistem</h3>
+        <p class="text-sm text-gray-600">Kelola pengaturan sistem, cache, dan pengaturan performa.</p>
     </div>
 
     @if (session()->has('success'))
@@ -19,11 +19,11 @@
     <div class="space-y-6">
         <!-- System Maintenance -->
         <div class="bg-white shadow rounded-lg p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-4">System Maintenance</h4>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Pemeliharaan Sistem</h4>
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-sm font-medium text-gray-900">Maintenance Mode</h5>
+                        <h5 class="text-sm font-medium text-gray-900">Mode Pemeliharaan</h5>
                         <p class="text-sm text-gray-500">Put the system in maintenance mode to prevent user access during updates.</p>
                     </div>
                     <button wire:click="toggleMaintenanceMode"
@@ -37,11 +37,11 @@
 
         <!-- Cache Management -->
         <div class="bg-white shadow rounded-lg p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-4">Cache Management</h4>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Pengelolaan Cache</h4>
             <div class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <h5 class="text-sm font-medium text-gray-900">Cache Information</h5>
+                        <h5 class="text-sm font-medium text-gray-900">Informasi Cache</h5>
                         <dl class="mt-2 text-sm text-gray-600">
                             <div class="flex justify-between">
                                 <dt>Driver:</dt>
@@ -57,7 +57,7 @@
                         <button wire:click="clearCache"
                                 wire:confirm="Are you sure you want to clear all caches?"
                                 class="w-full inline-flex justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                            Clear All Caches
+                            Hapus Semua Cache
                         </button>
                         <button wire:click="optimizeSystem"
                                 wire:confirm="Are you sure you want to optimize the system?"
@@ -71,17 +71,17 @@
 
         <!-- Database Management -->
         <div class="bg-white shadow rounded-lg p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-4">Database Management</h4>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Pengelolaan Database</h4>
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h5 class="text-sm font-medium text-gray-900">Database Migrations</h5>
+                        <h5 class="text-sm font-medium text-gray-900">Migrasi Database</h5>
                         <p class="text-sm text-gray-500">Run pending database migrations to update the schema.</p>
                     </div>
                     <button wire:click="runMigrations"
                             wire:confirm="Are you sure you want to run database migrations? This may affect the database structure."
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700">
-                        Run Migrations
+                        Jalankan Migrasi
                     </button>
                 </div>
             </div>
@@ -89,7 +89,7 @@
 
         <!-- System Information -->
         <div class="bg-white shadow rounded-lg p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-4">System Information</h4>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Informasi Sistem</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($systemInfo as $key => $value)
                     <div class="bg-gray-50 rounded-lg p-3">
@@ -102,31 +102,31 @@
 
         <!-- System Status -->
         <div class="bg-white shadow rounded-lg p-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-4">System Status</h4>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Status Sistem</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
                     <div class="text-2xl font-bold {{ $maintenance_mode ? 'text-red-600' : 'text-green-600' }}">
                         {{ $maintenance_mode ? 'DOWN' : 'UP' }}
                     </div>
-                    <div class="text-sm text-gray-500">System Status</div>
+                    <div class="text-sm text-gray-500">Status Sistem</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
                     <div class="text-2xl font-bold text-blue-600">
                         {{ $systemInfo['php_version'] }}
                     </div>
-                    <div class="text-sm text-gray-500">PHP Version</div>
+                    <div class="text-sm text-gray-500">Versi PHP</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
                     <div class="text-2xl font-bold text-purple-600">
                         {{ $systemInfo['laravel_version'] }}
                     </div>
-                    <div class="text-sm text-gray-500">Laravel Version</div>
+                    <div class="text-sm text-gray-500">Versi Laravel</div>
                 </div>
                 <div class="bg-gray-50 rounded-lg p-4 text-center">
                     <div class="text-2xl font-bold {{ $systemInfo['debug_mode'] === 'Enabled' ? 'text-yellow-600' : 'text-green-600' }}">
                         {{ $systemInfo['debug_mode'] === 'Enabled' ? 'DEBUG' : 'PROD' }}
                     </div>
-                    <div class="text-sm text-gray-500">Environment</div>
+                    <div class="text-sm text-gray-500">Mode Debug</div>
                 </div>
             </div>
         </div>
@@ -140,9 +140,9 @@
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-yellow-800">Important Notice</h3>
+                    <h3 class="text-sm font-medium text-yellow-800">Perhatian Penting</h3>
                     <div class="mt-2 text-sm text-yellow-700">
-                        <p>System configuration changes can affect application performance and availability. Always test changes in a development environment first.</p>
+                        <p>Perubahan konfigurasi sistem dapat mempengaruhi performa dan ketersediaan aplikasi. Selalu uji perubahan dalam lingkungan pengembangan terlebih dahulu.</p>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <!-- Notification Bell -->
     <button @click="open = !open" 
             class="relative p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-full">
-        <span class="sr-only">View notifications</span>
+        <span class="sr-only">Lihat Notifikasi</span>
         <x-icons.bell class="h-6 w-6" />
         
         <!-- Notification Badge -->
@@ -27,11 +27,11 @@
         <!-- Header -->
         <div class="px-4 py-3 border-b border-gray-200">
             <div class="flex items-center justify-between">
-                <h3 class="text-sm font-medium text-gray-900">Notifications</h3>
+                <h3 class="text-sm font-medium text-gray-900">Notifikasi</h3>
                 @if($unreadCount > 0)
                     <button wire:click="markAllAsRead" 
                             class="text-xs text-blue-600 hover:text-blue-800">
-                        Mark all read
+                        Tandai Semua Sudah Dibaca
                     </button>
                 @endif
             </div>
@@ -66,7 +66,7 @@
                                         @if($notification->action_url)
                                             <a href="{{ $notification->action_url }}" 
                                                class="text-xs text-blue-600 hover:text-blue-800">
-                                                View
+                                                Lihat
                                             </a>
                                         @endif
                                         @if($notification->isUnread())
@@ -84,8 +84,8 @@
             @else
                 <div class="px-4 py-8 text-center">
                     <x-icons.bell class="mx-auto h-8 w-8 text-gray-400" />
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No notifications</h3>
-                    <p class="mt-1 text-sm text-gray-500">You're all caught up!</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada notifikasi</h3>
+                    <p class="mt-1 text-sm text-gray-500">Anda sudah terkumpul!</p>
                 </div>
             @endif
         </div>
@@ -95,7 +95,7 @@
             <div class="px-4 py-3 border-t border-gray-200">
                 <a href="{{ route('admin.notifications.index') }}" 
                    class="block text-center text-sm text-blue-600 hover:text-blue-800">
-                    View all notifications
+                    Lihat Semua Notifikasi
                 </a>
             </div>
         @endif

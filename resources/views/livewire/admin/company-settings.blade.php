@@ -1,7 +1,7 @@
 <div>
     <div class="mb-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-2">Company Information</h3>
-        <p class="text-sm text-gray-600">Update your company details and branding information.</p>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Informasi Perusahaan</h3>
+        <p class="text-sm text-gray-600">Update informasi perusahaan dan branding information.</p>
     </div>
 
     @if (session()->has('success'))
@@ -20,7 +20,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Company Name -->
             <div>
-                <label for="company_name" class="block text-sm font-medium text-gray-700">Company Name</label>
+                <label for="company_name" class="block text-sm font-medium text-gray-700">Nama Perusahaan</label>
                 <input type="text" 
                        id="company_name" 
                        wire:model="company_name"
@@ -32,7 +32,7 @@
 
             <!-- Company Phone -->
             <div>
-                <label for="company_phone" class="block text-sm font-medium text-gray-700">Company Phone</label>
+                <label for="company_phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
                 <input type="text" 
                        id="company_phone" 
                        wire:model="company_phone"
@@ -45,7 +45,7 @@
 
         <!-- Company Address -->
         <div>
-            <label for="company_address" class="block text-sm font-medium text-gray-700">Company Address</label>
+            <label for="company_address" class="block text-sm font-medium text-gray-700">Alamat Perusahaan</label>
             <textarea id="company_address" 
                       wire:model="company_address"
                       rows="3"
@@ -57,14 +57,14 @@
 
         <!-- Company Logo -->
         <div>
-            <label class="block text-sm font-medium text-gray-700">Company Logo</label>
+            <label class="block text-sm font-medium text-gray-700">Logo Perusahaan</label>
             <div class="mt-1 flex items-center space-x-4">
                 <!-- Current Logo Display -->
                 @if($current_logo || $logo_preview)
                     <div class="flex-shrink-0">
                         <img class="h-20 w-20 object-contain border border-gray-300 rounded-lg" 
                              src="{{ $logo_preview ?: asset('storage/' . $current_logo) }}" 
-                             alt="Company Logo">
+                             alt="Logo Perusahaan">
                     </div>
                 @else
                     <div class="flex-shrink-0">
@@ -97,7 +97,7 @@
 
         <!-- Loading indicator -->
         <div wire:loading wire:target="company_logo" class="text-sm text-gray-500">
-            Uploading logo...
+            Mengunggah logo...
         </div>
 
         <!-- Submit Button -->

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Vehicle Check-Out')
+@section('title', 'Keluar Kendaraan')
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
@@ -8,13 +8,13 @@
     <div class="mb-6">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">Vehicle Check-Out</h1>
-                <p class="text-gray-600 mt-1">Process vehicle delivery for booking {{ $booking->booking_number }}</p>
+                <h1 class="text-3xl font-bold text-gray-900">Keluar Kendaraan</h1>
+                <p class="text-gray-600 mt-1">Proses pengiriman kendaraan untuk pemesanan {{ $booking->booking_number }}</p>
             </div>
             <div class="flex space-x-3">
                 <a href="{{ route('admin.bookings.show', $booking) }}" 
                    class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors">
-                    <i class="fas fa-arrow-left mr-2"></i>Back to Booking
+                    <i class="fas fa-arrow-left mr-2"></i>Kembali ke Pemesanan
                 </a>
             </div>
         </div>

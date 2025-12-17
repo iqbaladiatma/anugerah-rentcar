@@ -73,15 +73,15 @@
 <body>
     <div class="header">
         <div class="company-name">Anugerah Rentcar</div>
-        <div class="report-title">Analytics Dashboard Report</div>
-        <div class="period">Period: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }}</div>
+        <div class="report-title">Laporan Analitik</div>
+        <div class="period">Periode: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }}</div>
     </div>
 
     <div class="metrics-grid">
         <div class="metrics-box">
-            <div class="metrics-title">Key Performance Indicators</div>
+            <div class="metrics-title">Indikator Kinerja Utama</div>
             <div class="metric-item">
-                <span>Total Revenue:</span>
+                <span>Total Pendapatan:</span>
                 <span class="metric-value">Rp {{ number_format($reportData['analytics']['total_revenue'] ?? 0, 0, ',', '.') }}</span>
             </div>
             <div class="metric-item">
@@ -99,7 +99,7 @@
         </div>
 
         <div class="metrics-box">
-            <div class="metrics-title">Growth Metrics</div>
+            <div class="metrics-title">Indikator Pertumbuhan</div>
             <div class="metric-item">
                 <span>Revenue Growth Rate:</span>
                 <span class="metric-value {{ ($reportData['analytics']['revenue_growth_rate'] ?? 0) >= 0 ? 'positive' : 'negative' }}">
@@ -122,9 +122,9 @@
     </div>    <div
  class="metrics-grid">
         <div class="metrics-box">
-            <div class="metrics-title">Operational Metrics</div>
+            <div class="metrics-title">Indikator Operasional</div>
             <div class="metric-item">
-                <span>Completed Bookings:</span>
+                <span>Peminjaman Selesai:</span>
                 <span class="metric-value">{{ number_format($reportData['analytics']['completed_bookings'] ?? 0) }}</span>
             </div>
             <div class="metric-item">
@@ -142,19 +142,19 @@
         </div>
 
         <div class="metrics-box">
-            <div class="metrics-title">Financial Metrics</div>
+            <div class="metrics-title">Indikator Keuangan</div>
             <div class="metric-item">
-                <span>Gross Profit Margin:</span>
+                <span>Margin Laba:</span>
                 <span class="metric-value {{ ($reportData['analytics']['gross_profit_margin'] ?? 0) >= 20 ? 'positive' : 'warning' }}">
                     {{ number_format($reportData['analytics']['gross_profit_margin'] ?? 0, 2) }}%
                 </span>
             </div>
             <div class="metric-item">
-                <span>Operating Expense Ratio:</span>
+                <span>Biaya Operasional:</span>
                 <span class="metric-value">{{ number_format($reportData['analytics']['operating_expense_ratio'] ?? 0, 2) }}%</span>
             </div>
             <div class="metric-item">
-                <span>Revenue per Vehicle:</span>
+                <span>Pendapatan per Kendaraan:</span>
                 <span class="metric-value">Rp {{ number_format($reportData['analytics']['revenue_per_vehicle'] ?? 0, 0, ',', '.') }}</span>
             </div>
             <div class="metric-item">

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Profitability Report</title>
+    <title>Laporan Keuntungan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -94,64 +94,64 @@
 <body>
     <div class="header">
         <div class="company-name">Anugerah Rentcar</div>
-        <div class="report-title">Vehicle Profitability Analysis</div>
-        <div class="period">Period: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }}</div>
+        <div class="report-title">Analisis Keuntungan</div>
+        <div class="period">Periode: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }}</div>
     </div>
 
     <div class="summary-box">
-        <div class="summary-title">Profitability Summary</div>
+        <div class="summary-title">Ringkasan Keuntungan</div>
         <div class="summary-grid">
             <div class="summary-item">
-                <span>Total Vehicles:</span>
+                <span>Total Kendaraan:</span>
                 <span>{{ number_format($reportData['summary']['total_vehicles']) }}</span>
             </div>
             <div class="summary-item">
-                <span>Profitable Vehicles:</span>
+                <span>Kendaraan Profitable:</span>
                 <span>{{ number_format($reportData['summary']['profitable_vehicles']) }}</span>
             </div>
             <div class="summary-item">
-                <span>Total Revenue:</span>
+                <span>Total Pendapatan:</span>
                 <span>Rp {{ number_format($reportData['summary']['total_revenue'], 0, ',', '.') }}</span>
             </div>
             <div class="summary-item">
-                <span>Total Maintenance Costs:</span>
+                <span>Total Biaya Pemeliharaan:</span>
                 <span>Rp {{ number_format($reportData['summary']['total_maintenance_costs'], 0, ',', '.') }}</span>
             </div>
             <div class="summary-item">
-                <span>Total Net Profit:</span>
+                <span>Total Laba:</span>
                 <span>Rp {{ number_format($reportData['summary']['total_net_profit'], 0, ',', '.') }}</span>
             </div>
             <div class="summary-item">
-                <span>Average Profit Margin:</span>
+                <span>Margin Laba:</span>
                 <span>{{ number_format($reportData['summary']['average_profit_margin'], 2) }}%</span>
             </div>
         </div>
     </div>    @if
 (isset($reportData['summary']['best_performer']))
     <div class="highlight-box">
-        <strong>Best Performer:</strong> 
+        <strong>Pemilik Kendaraan Terbaik:</strong> 
         {{ $reportData['summary']['best_performer']->license_plate }} 
-        - Net Profit: Rp {{ number_format($reportData['summary']['best_performer']->net_profit ?? 0, 0, ',', '.') }}
+        - Laba: Rp {{ number_format($reportData['summary']['best_performer']->net_profit ?? 0, 0, ',', '.') }}
     </div>
     @endif
 
     @if(isset($reportData['summary']['worst_performer']))
     <div class="highlight-box">
-        <strong>Needs Attention:</strong> 
+        <strong>Pemilik Kendaraan yang Memerlukan Perhatian:</strong> 
         {{ $reportData['summary']['worst_performer']->license_plate }} 
-        - Net Profit: Rp {{ number_format($reportData['summary']['worst_performer']->net_profit ?? 0, 0, ',', '.') }}
+        - Laba: Rp {{ number_format($reportData['summary']['worst_performer']->net_profit ?? 0, 0, ',', '.') }}
     </div>
     @endif
 
     <table>
         <thead>
             <tr>
-                <th>License Plate</th>
-                <th>Vehicle</th>
-                <th class="text-right">Revenue</th>
-                <th class="text-right">Maintenance</th>
-                <th class="text-right">Net Profit</th>
-                <th class="text-center">Profit Margin %</th>
+                <th>Plat Kendaraan</th>
+                <th>Kendaraan</th>
+                <th class="text-right">Pendapatan</th>
+                <th class="text-right">Biaya Pemeliharaan</th>
+                <th class="text-right">Laba</th>
+                <th class="text-center">Margin Laba %</th>
                 <th class="text-center">Utilization %</th>
                 <th class="text-right">Rev/Day</th>
                 <th class="text-center">Performance</th>
@@ -192,12 +192,12 @@
     </table>
 
     <div style="margin-top: 30px; font-size: 10px; color: #666;">
-        <p><strong>Performance Rating:</strong></p>
+        <p><strong>Rating Performa:</strong></p>
         <ul>
-            <li><span class="profit-excellent">Excellent</span>: Profit Margin ≥ 30%</li>
-            <li><span class="profit-good">Good</span>: Profit Margin 15-29%</li>
-            <li><span class="profit-average">Average</span>: Profit Margin 5-14%</li>
-            <li><span class="profit-poor">Poor</span>: Profit Margin < 5%</li>
+            <li><span class="profit-excellent">Excellent</span>: Margin Laba ≥ 30%</li>
+            <li><span class="profit-good">Good</span>: Margin Laba 15-29%</li>
+            <li><span class="profit-average">Average</span>: Margin Laba 5-14%</li>
+            <li><span class="profit-poor">Poor</span>: Margin Laba < 5%</li>
         </ul>
     </div>
 </body>

@@ -2,8 +2,8 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900">Notification Preferences</h2>
-            <p class="text-sm text-gray-600">Customize how and when you receive notifications</p>
+            <h2 class="text-2xl font-bold text-gray-900">Pengaturan Notifikasi</h2>
+            <p class="text-sm text-gray-600">Customize when and how you receive notifications</p>
         </div>
         <div class="flex items-center space-x-3">
             <button wire:click="resetToDefaults" 
@@ -12,7 +12,7 @@
             </button>
             <button wire:click="savePreferences" 
                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Save Preferences
+                Simpan Pengaturan
             </button>
         </div>
     </div>
@@ -35,17 +35,17 @@
 
     <!-- Global Settings -->
     <div class="bg-white shadow rounded-lg p-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Global Settings</h3>
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Pengaturan Global</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Preferred Time for Daily Digest
+                    Waktu yang Disukai untuk Ringkasan Harian
                 </label>
                 <input type="time" 
                        wire:model="globalPreferredTime"
                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                <p class="text-xs text-gray-500 mt-1">Time when daily digest emails will be sent</p>
+                <p class="text-xs text-gray-500 mt-1">Waktu ketika ringkasan harian akan dikirim</p>
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- Delivery Methods -->
                     <div>
-                        <h4 class="text-sm font-medium text-gray-900 mb-3">Delivery Methods</h4>
+                        <h4 class="text-sm font-medium text-gray-900 mb-3">Metode Pengiriman</h4>
                         <div class="space-y-3">
                             <label class="flex items-center">
                                 <input type="checkbox" 
@@ -89,26 +89,26 @@
 
                     <!-- Timing -->
                     <div>
-                        <h4 class="text-sm font-medium text-gray-900 mb-3">Timing</h4>
+                        <h4 class="text-sm font-medium text-gray-900 mb-3">Waktu</h4>
                         <div class="space-y-3">
                             <label class="flex items-center">
                                 <input type="checkbox" 
                                        wire:model="preferences.{{ $type }}.instant_notifications"
                                        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <span class="ml-2 text-sm text-gray-700">Instant notifications</span>
+                                <span class="ml-2 text-sm text-gray-700">Notifikasi instan</span>
                             </label>
                             <label class="flex items-center">
                                 <input type="checkbox" 
                                        wire:model="preferences.{{ $type }}.daily_digest"
                                        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <span class="ml-2 text-sm text-gray-700">Daily digest</span>
+                                <span class="ml-2 text-sm text-gray-700">Ringkasan harian</span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Priority Filter -->
                     <div>
-                        <h4 class="text-sm font-medium text-gray-900 mb-3">Priority Levels</h4>
+                        <h4 class="text-sm font-medium text-gray-900 mb-3">Level Prioritas</h4>
                         <div class="space-y-3">
                             @foreach(['high', 'medium', 'low'] as $priority)
                                 <label class="flex items-center">
@@ -116,7 +116,7 @@
                                            @if(isset($preferences[$type]['priority_filter']) && in_array($priority, $preferences[$type]['priority_filter'])) checked @endif
                                            wire:click="togglePriority('{{ $type }}', '{{ $priority }}')"
                                            class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                    <span class="ml-2 text-sm text-gray-700 capitalize">{{ $priority }} priority</span>
+                                    <span class="ml-2 text-sm text-gray-700 capitalize">{{ $priority }}</span>
                                     <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium 
                                         {{ $priority === 'high' ? 'bg-red-100 text-red-800' : 
                                            ($priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800') }}">
@@ -135,7 +135,7 @@
     <div class="flex justify-end">
         <button wire:click="savePreferences" 
                 class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            Save All Preferences
+            Simpan Pengaturan Semua
         </button>
     </div>
 </div>

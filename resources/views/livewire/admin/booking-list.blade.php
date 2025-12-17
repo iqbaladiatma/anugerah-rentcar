@@ -20,7 +20,7 @@
                         </select>
                         <button wire:click="processBulkAction" type="button" 
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Apply
+                            Terapkan
                         </button>
                     </div>
                 @endif
@@ -30,7 +30,7 @@
                     <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    New Booking
+                    Pemesanan Baru
                 </a>
             </div>
         </div>
@@ -48,25 +48,25 @@
                                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Booking Details
+                                Detail Pemesanan
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Customer
+                                Pelanggan
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Vehicle
+                                Kendaraan
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Dates
+                                Tanggal
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Amount
+                                Jumlah
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Status
                             </th>
                             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actions
+                                Aksi
                             </th>
                         </tr>
                     </thead>
@@ -81,9 +81,9 @@
                                     <div class="flex items-center">
                                         <div>
                                             <div class="text-sm font-medium text-gray-900">{{ $booking->booking_number }}</div>
-                                            <div class="text-sm text-gray-500">Created {{ $booking->created_at->format('M j, Y') }}</div>
+                                            <div class="text-sm text-gray-500">Dibuat {{ $booking->created_at->format('d M Y') }}</div>
                                             @if($booking->with_driver && $booking->driver)
-                                                <div class="text-xs text-blue-600">Driver: {{ $booking->driver->name }}</div>
+                                                <div class="text-xs text-blue-600">Sopir: {{ $booking->driver->name }}</div>
                                             @endif
                                         </div>
                                     </div>
@@ -98,12 +98,12 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">
-                                        <div>Start: {{ $booking->start_date->format('M j, Y H:i') }}</div>
-                                        <div>End: {{ $booking->end_date->format('M j, Y H:i') }}</div>
+                                        <div>Mulai: {{ $booking->start_date->format('d M Y H:i') }}</div>
+                                        <div>Selesai: {{ $booking->end_date->format('d M Y H:i') }}</div>
                                     </div>
                                     @if($booking->actual_return_date)
                                         <div class="text-xs text-gray-500">
-                                            Returned: {{ $booking->actual_return_date->format('M j, Y H:i') }}
+                                            Dikembalikan: {{ $booking->actual_return_date->format('d M Y H:i') }}
                                         </div>
                                     @endif
                                 </td>
@@ -118,7 +118,7 @@
                                         {{ ucfirst($booking->booking_status) }}
                                     </span>
                                     @if($this->isOverdue($booking))
-                                        <div class="text-xs text-red-600 mt-1 font-medium">OVERDUE</div>
+                                        <div class="text-xs text-red-600 mt-1 font-medium">TERLAMBAT</div>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -126,35 +126,35 @@
                                         <!-- View Button -->
                                         <a href="{{ route('admin.bookings.show', $booking) }}" 
                                            class="text-indigo-600 hover:text-indigo-900">
-                                            View
+                                            Lihat
                                         </a>
 
                                         <!-- Status-specific Actions -->
                                         @if($booking->booking_status === 'pending')
                                             <button wire:click="confirmBooking({{ $booking->id }})" 
                                                     class="text-green-600 hover:text-green-900">
-                                                Confirm
+                                                Konfirmasi
                                             </button>
                                         @endif
 
                                         @if($booking->booking_status === 'confirmed')
                                             <button wire:click="activateBooking({{ $booking->id }})" 
                                                     class="text-blue-600 hover:text-blue-900">
-                                                Check Out
+                                                Keluar
                                             </button>
                                         @endif
 
                                         @if($booking->booking_status === 'active')
                                             <button wire:click="completeBooking({{ $booking->id }})" 
                                                     class="text-purple-600 hover:text-purple-900">
-                                                Check In
+                                                Masuk
                                             </button>
                                         @endif
 
                                         @if($booking->canBeCancelled())
                                             <button wire:click="cancelBooking({{ $booking->id }})" 
                                                     class="text-red-600 hover:text-red-900">
-                                                Cancel
+                                                Batal
                                             </button>
                                         @endif
 
@@ -181,15 +181,15 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">No bookings found</h3>
-                <p class="mt-1 text-sm text-gray-500">Get started by creating a new booking.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada pemesanan ditemukan</h3>
+                <p class="mt-1 text-sm text-gray-500">Mulai dengan membuat pemesanan baru.</p>
                 <div class="mt-6">
                     <a href="{{ route('admin.bookings.create') }}" 
                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
-                        New Booking
+                        Pemesanan Baru
                     </a>
                 </div>
             </div>
@@ -206,20 +206,20 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
                     </div>
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Confirm Booking</h3>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Konfirmasi Pemesanan</h3>
                     <div class="mt-2 px-7 py-3">
                         <p class="text-sm text-gray-500">
-                            Are you sure you want to confirm this booking? This will mark the vehicle as rented and the booking as confirmed.
+                            Apakah Anda yakin ingin mengonfirmasi pemesanan ini? Ini akan menandai kendaraan sebagai disewa dan pemesanan sebagai dikonfirmasi.
                         </p>
                     </div>
                     <div class="items-center px-4 py-3">
                         <button wire:click="processConfirmation" 
                                 class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-24 mr-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
-                            Confirm
+                            Konfirmasi
                         </button>
                         <button wire:click="closeConfirmModal" 
                                 class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-24 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                            Cancel
+                            Batal
                         </button>
                     </div>
                 </div>
@@ -237,21 +237,21 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </div>
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4 text-center">Cancel Booking</h3>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4 text-center">Batalkan Pemesanan</h3>
                     <div class="mt-4">
-                        <label for="cancellation_reason" class="block text-sm font-medium text-gray-700">Cancellation Reason (Optional)</label>
+                        <label for="cancellation_reason" class="block text-sm font-medium text-gray-700">Alasan Pembatalan (Opsional)</label>
                         <textarea wire:model="cancellation_reason" id="cancellation_reason" rows="3" 
                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                  placeholder="Enter reason for cancellation..."></textarea>
+                                  placeholder="Masukkan alasan pembatalan..."></textarea>
                     </div>
                     <div class="items-center px-4 py-3 text-center">
                         <button wire:click="processCancellation" 
                                 class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-24 mr-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
-                            Cancel Booking
+                            Batalkan
                         </button>
                         <button wire:click="closeCancelModal" 
                                 class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-24 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                            Keep Booking
+                            Kembali
                         </button>
                     </div>
                 </div>

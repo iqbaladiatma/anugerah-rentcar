@@ -207,6 +207,8 @@ class BookingCalculator extends Component
                 $this->validation_errors = [];
                 $this->pricing = $this->calculatorService->calculateBookingPrice($params);
                 $this->show_pricing = true;
+
+                $this->dispatch('pricingCalculated', array_merge($params, ['notes' => $this->notes]));
             }
 
         } catch (\Exception $e) {

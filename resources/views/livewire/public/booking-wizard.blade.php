@@ -635,27 +635,28 @@
                                             <span>Rp {{ number_format($pricingData['deposit_amount'] ?? 0, 0, ',', '.') }}</span>
                                         </div>
                                     </div>
-                                </div>
                             </div>
 
                             <!-- Payment Method -->
                             <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Payment Method</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Metode Pembayaran</label>
                                 <div class="space-y-3">
-                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                                        <input type="radio" wire:model="paymentMethod" value="bank_transfer" 
+                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer transition-all
+                                        {{ $paymentMethod === 'bank_transfer' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:bg-gray-50' }}">
+                                        <input type="radio" name="paymentMethod" wire:model="paymentMethod" value="bank_transfer" 
                                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                         <div class="ml-3">
                                             <p class="font-medium text-gray-900">Bank Transfer</p>
-                                            <p class="text-sm text-gray-500">Transfer to our bank account</p>
+                                            <p class="text-sm text-gray-500">Transfer ke rekening bank</p>
                                         </div>
                                     </label>
-                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                                        <input type="radio" wire:model="paymentMethod" value="cash" 
+                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer transition-all
+                                        {{ $paymentMethod === 'cash' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:bg-gray-50' }}">
+                                        <input type="radio" name="paymentMethod" wire:model="paymentMethod" value="cash" 
                                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                                         <div class="ml-3">
                                             <p class="font-medium text-gray-900">Cash Payment</p>
-                                            <p class="text-sm text-gray-500">Pay at pickup location</p>
+                                            <p class="text-sm text-gray-500">Bayar di lokasi pick up</p>
                                         </div>
                                     </label>
                                 </div>

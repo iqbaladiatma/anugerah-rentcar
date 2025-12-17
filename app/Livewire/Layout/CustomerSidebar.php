@@ -17,17 +17,17 @@ class CustomerSidebar extends Component
     {
         $menuItems = [
             [
-                'name' => 'Dashboard',
+                'name' => 'Dasbor',
                 'route' => 'customer.dashboard',
                 'icon' => 'home',
             ],
             [
-                'name' => 'My Bookings',
+                'name' => 'Pemesanan Saya',
                 'route' => 'customer.bookings',
                 'icon' => 'clipboard',
             ],
             [
-                'name' => 'Browse Vehicles',
+                'name' => 'Jelajahi Kendaraan',
                 'route' => 'vehicles.catalog',
                 'icon' => 'car',
             ],

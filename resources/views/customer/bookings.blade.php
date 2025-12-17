@@ -3,8 +3,8 @@
         <!-- Header -->
         <div class="bg-gray-50 border-b">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h1 class="text-3xl font-bold text-gray-900">My Orders</h1>
-                <p class="mt-2 text-gray-600">View and manage your rental bookings</p>
+                <h1 class="text-3xl font-bold text-gray-900">Pesanan Saya</h1>
+                <p class="mt-2 text-gray-600">Lihat dan kelola pemesanan sewa Anda</p>
             </div>
         </div>
 
@@ -17,10 +17,10 @@
                                 <div class="flex items-center justify-between mb-4">
                                     <div>
                                         <h3 class="text-lg font-semibold text-gray-900">
-                                            Booking #{{ $booking->booking_number }}
+                                            Pemesanan #{{ $booking->booking_number }}
                                         </h3>
                                         <p class="text-sm text-gray-500">
-                                            Booked on {{ $booking->created_at->format('M d, Y') }}
+                                            Dipesan pada {{ $booking->created_at->format('M d, Y') }}
                                         </p>
                                     </div>
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
@@ -77,7 +77,7 @@
                                                 <svg class="w-4 h-4 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                                 </svg>
-                                                <span class="text-gray-600">With Driver</span>
+                                                <span class="text-gray-600">Dengan Sopir</span>
                                             </div>
                                         @endif
                                     </div>
@@ -88,7 +88,7 @@
                                             Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
                                         </p>
                                         <p class="text-sm text-gray-500">
-                                            Payment: 
+                                            Pembayaran: 
                                             <span class="font-medium
                                                 @if($booking->payment_status === 'paid') text-green-600
                                                 @elseif($booking->payment_status === 'partial') text-yellow-600
@@ -102,7 +102,7 @@
                                 @if($booking->notes)
                                     <div class="mt-4 p-3 bg-gray-50 rounded-md">
                                         <p class="text-sm text-gray-600">
-                                            <strong>Notes:</strong> {{ $booking->notes }}
+                                            <strong>Catatan:</strong> {{ $booking->notes }}
                                         </p>
                                     </div>
                                 @endif
@@ -110,36 +110,36 @@
                                 <!-- Actions -->
                                 <div class="mt-6 flex items-center justify-between">
                                     <div class="text-sm text-gray-500">
-                                        Duration: {{ $booking->start_date->diffInDays($booking->end_date) }} day(s)
+                                        Durasi: {{ $booking->start_date->diffInDays($booking->end_date) }} hari
                                     </div>
                                     <div class="flex space-x-3">
                                         @if($booking->canBeCancelled())
                                             <form method="POST" action="{{ route('customer.bookings.cancel', $booking) }}" 
-                                                  onsubmit="return confirm('Are you sure you want to cancel this booking?')" 
+                                                  onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pemesanan ini?')" 
                                                   class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" name="cancellation_reason" value="Cancelled by customer">
                                                 <button type="submit" class="text-red-600 hover:text-red-500 text-sm font-medium">
-                                                    Cancel Booking
+                                                    Batalkan Pemesanan
                                                 </button>
                                             </form>
                                         @endif
                                         @if($booking->canBeModified())
                                             <a href="{{ route('customer.bookings.edit', $booking) }}" 
                                                class="text-yellow-600 hover:text-yellow-500 text-sm font-medium">
-                                                Modify
+                                                Ubah
                                             </a>
                                         @endif
                                         @if(in_array($booking->booking_status, ['confirmed', 'active']))
                                             <a href="{{ route('customer.bookings.ticket', $booking) }}" 
                                                class="text-green-600 hover:text-green-500 text-sm font-medium">
-                                                E-Ticket
+                                                E-Tiket
                                             </a>
                                         @endif
                                         <a href="{{ route('customer.bookings.show', $booking) }}" 
                                            class="text-blue-600 hover:text-blue-500 text-sm font-medium">
-                                            View Details
+                                            Lihat Detail
                                         </a>
                                     </div>
                                 </div>
@@ -157,11 +157,11 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No orders yet</h3>
-                    <p class="mt-1 text-sm text-gray-500">Start by booking your first vehicle.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada pesanan</h3>
+                    <p class="mt-1 text-sm text-gray-500">Mulai dengan memesan kendaraan pertama Anda.</p>
                     <div class="mt-6">
                         <a href="{{ route('vehicles.catalog') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                            Browse Vehicles
+                            Jelajahi Kendaraan
                         </a>
                     </div>
                 </div>

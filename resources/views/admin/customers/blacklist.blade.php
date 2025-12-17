@@ -2,18 +2,18 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Blacklisted Customers') }}
+                {{ __('Pelanggan Daftar Hitam') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.customers.create') }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.plus class="w-4 h-4 inline mr-1" />
-                    Add Customer
+                    Tambah Pelanggan
                 </a>
                 <a href="{{ route('admin.customers.index') }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.arrow-left class="w-4 h-4 inline mr-1" />
-                    All Customers
+                    Semua Pelanggan
                 </a>
             </div>
         </div>
@@ -39,10 +39,10 @@
                     <div class="mb-6 bg-red-50 p-4 rounded-lg">
                         <div class="flex items-center">
                             <x-icons.ban class="w-6 h-6 text-red-600 mr-2" />
-                            <h3 class="text-lg font-semibold text-red-800">Blacklisted Customers</h3>
+                            <h3 class="text-lg font-semibold text-red-800">Pelanggan Daftar Hitam</h3>
                         </div>
                         <p class="mt-2 text-sm text-red-700">
-                            These customers are restricted from making new bookings. Any pending bookings have been cancelled.
+                            Pelanggan ini dibatasi dari melakukan pemesanan baru. Setiap pemesanan yang tertunda telah dibatalkan.
                         </p>
                     </div>
 

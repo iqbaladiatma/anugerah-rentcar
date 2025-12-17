@@ -1,7 +1,7 @@
 <div>
     <div class="mb-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-2">Pricing Configuration</h3>
-        <p class="text-sm text-gray-600">Configure penalty rates, buffer times, and member discounts.</p>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Pengaturan Harga</h3>
+        <p class="text-sm text-gray-600">Konfigurasikan tarif denda, waktu buffer, dan diskon anggota.</p>
     </div>
 
     @if (session()->has('success'))
@@ -19,31 +19,37 @@
     <form wire:submit.prevent="save" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Late Penalty Rate -->
-            <div>
+            <div x-data="{
+                raw: @entangle('late_penalty_per_hour'),
+                get formatted() {
+                    return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                },
+                set formatted(value) {
+                    this.raw = value.replace(/\D/g, '');
+                }
+            }">
                 <label for="late_penalty_per_hour" class="block text-sm font-medium text-gray-700">
-                    Late Penalty Rate (per hour)
+                    Tarif Denda (per jam)
                 </label>
                 <div class="mt-1 relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span class="text-gray-500 sm:text-sm">Rp</span>
                     </div>
-                    <input type="number" 
+                    <input type="text" 
                            id="late_penalty_per_hour" 
-                           wire:model="late_penalty_per_hour"
-                           step="0.01"
-                           min="0"
+                           x-model="formatted"
                            class="pl-12 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('late_penalty_per_hour') border-red-300 @enderror">
                 </div>
                 @error('late_penalty_per_hour')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-1 text-sm text-gray-500">Penalty charged per hour for late returns.</p>
+                <p class="mt-1 text-sm text-gray-500">Denda yang dikenakan per jam untuk pengembalian yang terlambat.</p>
             </div>
 
             <!-- Buffer Time -->
             <div>
                 <label for="buffer_time_hours" class="block text-sm font-medium text-gray-700">
-                    Buffer Time (hours)
+                    Waktu Buffer (jam)
                 </label>
                 <div class="mt-1 relative rounded-md shadow-sm">
                     <input type="number" 
@@ -59,7 +65,7 @@
                 @error('buffer_time_hours')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-1 text-sm text-gray-500">Time reserved after return for vehicle cleaning.</p>
+                <p class="mt-1 text-sm text-gray-500">Waktu yang disimpan setelah pengembalian untuk membersihkan mobil.</p>
             </div>
 
             <!-- Member Discount -->
@@ -82,21 +88,21 @@
                 @error('member_discount_percentage')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-1 text-sm text-gray-500">Default discount percentage for member customers.</p>
+                <p class="mt-1 text-sm text-gray-500">Persentase diskon default untuk pelanggan anggota.</p>
             </div>
         </div>
 
         <!-- Preview Section -->
         <div class="bg-gray-50 rounded-lg p-4">
-            <h4 class="text-sm font-medium text-gray-900 mb-3">Configuration Preview</h4>
+            <h4 class="text-sm font-medium text-gray-900 mb-3">Preview Pengaturan</h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
                     <span class="text-gray-600">Late Penalty:</span>
-                    <span class="font-medium">Rp {{ number_format($late_penalty_per_hour ?? 0, 0, ',', '.') }}/hour</span>
+                    <span class="font-medium">Rp {{ number_format($late_penalty_per_hour ?? 0, 0, ',', '.') }}/jam</span>
                 </div>
                 <div>
                     <span class="text-gray-600">Buffer Time:</span>
-                    <span class="font-medium">{{ $buffer_time_hours ?? 0 }} hours</span>
+                    <span class="font-medium">{{ $buffer_time_hours ?? 0 }} jam</span>
                 </div>
                 <div>
                     <span class="text-gray-600">Member Discount:</span>
@@ -117,7 +123,7 @@
             <button type="submit" 
                     wire:loading.attr="disabled"
                     class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
-                <span wire:loading.remove wire:target="save">Save Configuration</span>
+                <span wire:loading.remove wire:target="save">Simpan Pengaturan</span>
                 <span wire:loading wire:target="save">Saving...</span>
             </button>
         </div>

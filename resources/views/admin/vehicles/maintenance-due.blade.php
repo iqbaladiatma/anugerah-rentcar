@@ -3,17 +3,17 @@
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                    Vehicles Requiring Maintenance
+                    Kendaraan yang perlu Pemeliharaan
                 </h1>
                 <p class="mt-1 text-sm text-gray-500">
-                    Vehicles that need oil changes, STNK renewals, or other maintenance services.
+                    Kendaraan yang perlu oil changes, STNK renewals, atau perawatan lainnya.
                 </p>
             </div>
             <div class="flex items-center space-x-3">
                 <a href="{{ route('admin.vehicles.index') }}" 
                    class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <x-icons.arrow-left class="w-4 h-4 mr-2" />
-                    Back to Vehicles
+                    Kembali ke Armada Kendaraan
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
         <!-- Vehicles Needing Maintenance -->
         <div class="bg-white shadow rounded-lg">
             <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Vehicles Requiring Attention</h3>
+                <h3 class="text-lg font-medium text-gray-900">Kendaraan yang perlu perhatian</h3>
             </div>
             <div class="overflow-hidden">
                 <div class="overflow-x-auto">
@@ -34,7 +34,7 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Vehicle
+                                    Kendaraan
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Issue
@@ -114,12 +114,12 @@
                                                         <input type="hidden" name="reason" value="Scheduled maintenance">
                                                         <button type="submit" 
                                                                 class="text-yellow-600 hover:text-yellow-900 text-sm">
-                                                            Mark for Maintenance
+                                                            Tandai untuk Pemeliharaan
                                                         </button>
                                                     </form>
                                                 @endif
                                                 <a href="{{ route('admin.vehicles.show', $vehicle) }}" 
-                                                   class="text-blue-600 hover:text-blue-900 text-sm">View</a>
+                                                   class="text-blue-600 hover:text-blue-900 text-sm">Lihat</a>
                                                 <a href="{{ route('admin.vehicles.edit', $vehicle) }}" 
                                                    class="text-indigo-600 hover:text-indigo-900 text-sm">Edit</a>
                                             </div>
@@ -131,8 +131,8 @@
                                     <td colspan="5" class="px-6 py-12 text-center">
                                         <div class="text-gray-500">
                                             <x-icons.wrench class="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                                            <p class="text-lg font-medium">No maintenance required</p>
-                                            <p class="text-sm">All vehicles are up to date with maintenance schedules.</p>
+                                            <p class="text-lg font-medium">Tidak ada kendaraan yang perlu pemeliharaan</p>
+                                            <p class="text-sm">Semua kendaraan sudah up to date dengan jadwal pemeliharaan.</p>
                                         </div>
                                     </td>
                                 </tr>

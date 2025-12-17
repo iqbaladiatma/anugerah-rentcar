@@ -29,7 +29,7 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Pending</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Menunggu</dt>
                             <dd class="text-lg font-medium text-gray-900">{{ $statistics['pending'] }}</dd>
                         </dl>
                     </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Confirmed</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Dikonfirmasi</dt>
                             <dd class="text-lg font-medium text-gray-900">{{ $statistics['confirmed'] }}</dd>
                         </dl>
                     </div>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Active</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Aktif</dt>
                             <dd class="text-lg font-medium text-gray-900">{{ $statistics['active'] }}</dd>
                         </dl>
                     </div>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Completed</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Selesai</dt>
                             <dd class="text-lg font-medium text-gray-900">{{ $statistics['completed'] }}</dd>
                         </dl>
                     </div>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Overdue</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Terlambat</dt>
                             <dd class="text-lg font-medium text-gray-900">{{ $statistics['overdue'] }}</dd>
                         </dl>
                     </div>
@@ -114,13 +114,13 @@
     <div class="bg-white shadow rounded-lg">
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
-                <h3 class="text-lg font-medium text-gray-900">Search Bookings</h3>
+                <h3 class="text-lg font-medium text-gray-900">Cari Pemesanan</h3>
                 <button wire:click="toggleFilters" type="button" 
                         class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707v4.586l-4-2v-2.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
-                    {{ $show_filters ? 'Hide Filters' : 'Show Filters' }}
+                    {{ $show_filters ? 'Sembunyikan Filter' : 'Tampilkan Filter' }}
                 </button>
             </div>
         </div>
@@ -129,13 +129,13 @@
             <!-- Basic Search -->
             <div class="flex space-x-4">
                 <div class="flex-1">
-                    <input wire:model="search" type="text" placeholder="Search by booking number, customer name, phone, or vehicle..." 
+                    <input wire:model="search" type="text" placeholder="Cari berdasarkan nomor pemesanan, nama pelanggan, telepon, atau kendaraan..." 
                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </div>
                 <div class="flex-shrink-0">
                     <select wire:model="sort_by" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         @foreach($this->getSortOptions() as $value => $label)
-                            <option value="{{ $value }}">Sort by {{ $label }}</option>
+                            <option value="{{ $value }}">Urutkan berdasarkan {{ $label }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -170,9 +170,9 @@
 
                     <!-- Customer Filter -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Customer</label>
+                        <label class="block text-sm font-medium text-gray-700">Pelanggan</label>
                         <select wire:model="customer_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">All Customers</option>
+                            <option value="">Semua Pelanggan</option>
                             @foreach($customers as $customer)
                                 <option value="{{ $customer['id'] }}">{{ $customer['name'] }}</option>
                             @endforeach
@@ -181,9 +181,9 @@
 
                     <!-- Vehicle Filter -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Vehicle</label>
+                        <label class="block text-sm font-medium text-gray-700">Kendaraan</label>
                         <select wire:model="car_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">All Vehicles</option>
+                            <option value="">Semua Kendaraan</option>
                             @foreach($cars as $car)
                                 <option value="{{ $car['id'] }}">{{ $car['license_plate'] }} - {{ $car['brand'] }} {{ $car['model'] }}</option>
                             @endforeach
@@ -192,7 +192,7 @@
 
                     <!-- Payment Status Filter -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Payment Status</label>
+                        <label class="block text-sm font-medium text-gray-700">Status Pembayaran</label>
                         <select wire:model="payment_status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             @foreach($this->getPaymentStatusOptions() as $value => $label)
                                 <option value="{{ $value }}">{{ $label }}</option>
@@ -202,13 +202,13 @@
 
                     <!-- Start Date Filter -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Start Date From</label>
+                        <label class="block text-sm font-medium text-gray-700">Tanggal Mulai Dari</label>
                         <input wire:model="start_date" type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
                     <!-- End Date Filter -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">End Date To</label>
+                        <label class="block text-sm font-medium text-gray-700">Tanggal Selesai Sampai</label>
                         <input wire:model="end_date" type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
@@ -216,11 +216,11 @@
                     <div class="space-y-2">
                         <div class="flex items-center">
                             <input wire:model="overdue_only" type="checkbox" id="overdue_only" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                            <label for="overdue_only" class="ml-2 block text-sm text-gray-900">Overdue only</label>
+                            <label for="overdue_only" class="ml-2 block text-sm text-gray-900">Hanya yang terlambat</label>
                         </div>
                         <div class="flex items-center">
                             <input wire:model="with_driver_only" type="checkbox" id="with_driver_only" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                            <label for="with_driver_only" class="ml-2 block text-sm text-gray-900">With driver only</label>
+                            <label for="with_driver_only" class="ml-2 block text-sm text-gray-900">Hanya dengan sopir</label>
                         </div>
                     </div>
 
@@ -228,7 +228,7 @@
                     <div class="flex items-end">
                         <button wire:click="clearFilters" type="button" 
                                 class="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Clear Filters
+                            Hapus Filter
                         </button>
                     </div>
                 </div>
@@ -241,10 +241,10 @@
         <div class="px-6 py-4 border-b border-gray-200">
             <div class="flex items-center justify-between">
                 <h3 class="text-lg font-medium text-gray-900">
-                    Search Results ({{ $filtered_count }} found)
+                    Hasil Pencarian ({{ $filtered_count }} ditemukan)
                 </h3>
                 <div class="flex items-center space-x-2">
-                    <label class="text-sm text-gray-700">Show:</label>
+                    <label class="text-sm text-gray-700">Tampilkan:</label>
                     <select wire:model="per_page" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                         <option value="10">10</option>
                         <option value="15">15</option>
@@ -261,28 +261,28 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th wire:click="sortBy('booking_number')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
-                                Booking #
+                                No. Pemesanan
                                 @if($sort_by === 'booking_number')
                                     @if($sort_direction === 'asc') ↑ @else ↓ @endif
                                 @endif
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelanggan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kendaraan</th>
                             <th wire:click="sortBy('start_date')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
-                                Dates
+                                Tanggal
                                 @if($sort_by === 'start_date')
                                     @if($sort_direction === 'asc') ↑ @else ↓ @endif
                                 @endif
                             </th>
                             <th wire:click="sortBy('total_amount')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
-                                Amount
+                                Jumlah
                                 @if($sort_by === 'total_amount')
                                     @if($sort_direction === 'asc') ↑ @else ↓ @endif
                                 @endif
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pembayaran</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -290,7 +290,7 @@
                             <tr class="hover:bg-gray-50 {{ $this->isOverdue($booking) ? 'bg-red-50' : '' }}">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">{{ $booking->booking_number }}</div>
-                                    <div class="text-sm text-gray-500">{{ $booking->created_at->format('M j, Y') }}</div>
+                                    <div class="text-sm text-gray-500">{{ $booking->created_at->format('d M Y') }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">{{ $booking->customer->name }}</div>
@@ -301,13 +301,13 @@
                                     <div class="text-sm text-gray-500">{{ $booking->car->brand }} {{ $booking->car->model }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $booking->start_date->format('M j, Y H:i') }}</div>
-                                    <div class="text-sm text-gray-500">{{ $booking->end_date->format('M j, Y H:i') }}</div>
+                                    <div class="text-sm text-gray-900">{{ $booking->start_date->format('d M Y H:i') }}</div>
+                                    <div class="text-sm text-gray-500">{{ $booking->end_date->format('d M Y H:i') }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">{{ $this->formatCurrency($booking->total_amount) }}</div>
                                     @if($booking->with_driver)
-                                        <div class="text-xs text-blue-600">With Driver</div>
+                                        <div class="text-xs text-blue-600">Dengan Sopir</div>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -315,7 +315,7 @@
                                         {{ ucfirst($booking->booking_status) }}
                                     </span>
                                     @if($this->isOverdue($booking))
-                                        <div class="text-xs text-red-600 mt-1">Overdue</div>
+                                        <div class="text-xs text-red-600 mt-1">Terlambat</div>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -325,7 +325,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="{{ route('admin.bookings.show', $booking) }}" 
-                                       class="text-indigo-600 hover:text-indigo-900">View</a>
+                                       class="text-indigo-600 hover:text-indigo-900">Lihat</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -342,8 +342,8 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">No bookings found</h3>
-                <p class="mt-1 text-sm text-gray-500">Try adjusting your search criteria or filters.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada pemesanan ditemukan</h3>
+                <p class="mt-1 text-sm text-gray-500">Coba sesuaikan kriteria pencarian atau filter Anda.</p>
             </div>
         @endif
     </div>

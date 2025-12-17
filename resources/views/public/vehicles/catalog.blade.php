@@ -3,18 +3,18 @@
         <!-- Header -->
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <h1 class="text-4xl font-bold mb-4">Vehicle Catalog</h1>
-                <p class="text-xl text-blue-100">Choose from our wide selection of quality rental vehicles</p>
+                <h1 class="text-4xl font-bold mb-4">Katalog Kendaraan</h1>
+                <p class="text-xl text-blue-100">Pilih dari berbagai koleksi kendaraan rental berkualitas kami</p>
                 
                 @if(request()->hasAny(['start_date', 'end_date']))
                     <div class="mt-4 bg-blue-500 bg-opacity-50 rounded-lg p-4">
                         <p class="text-sm">
-                            <span class="font-medium">Showing available vehicles for:</span>
-                            {{ request('start_date') ? \Carbon\Carbon::parse(request('start_date'))->format('M d, Y') : 'Not specified' }}
+                            <span class="font-medium">Menampilkan kendaraan tersedia untuk:</span>
+                            {{ request('start_date') ? \Carbon\Carbon::parse(request('start_date'))->format('d M Y') : 'Tidak ditentukan' }}
                             -
-                            {{ request('end_date') ? \Carbon\Carbon::parse(request('end_date'))->format('M d, Y') : 'Not specified' }}
+                            {{ request('end_date') ? \Carbon\Carbon::parse(request('end_date'))->format('d M Y') : 'Tidak ditentukan' }}
                             @if(request('start_date') && request('end_date'))
-                                ({{ \Carbon\Carbon::parse(request('start_date'))->diffInDays(\Carbon\Carbon::parse(request('end_date'))) + 1 }} days)
+                                ({{ \Carbon\Carbon::parse(request('start_date'))->diffInDays(\Carbon\Carbon::parse(request('end_date'))) + 1 }} hari)
                             @endif
                         </p>
                     </div>
@@ -31,7 +31,7 @@
                             <svg class="w-5 h-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"/>
                             </svg>
-                            <h3 class="text-lg font-semibold text-gray-900">Search Filters</h3>
+                            <h3 class="text-lg font-semibold text-gray-900">Filter Pencarian</h3>
                         </div>
                         
                         <form method="GET" action="{{ route('vehicles.catalog') }}" class="space-y-6" id="filterForm">
@@ -41,17 +41,17 @@
                                     <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                     </svg>
-                                    Rental Period
+                                    Periode Rental
                                 </label>
                                 <div class="space-y-3">
                                     <div>
-                                        <label class="block text-xs text-gray-500 mb-1">Pickup Date</label>
+                                        <label class="block text-xs text-gray-500 mb-1">Tanggal Ambil</label>
                                         <input type="date" name="start_date" value="{{ request('start_date') }}" 
                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                                                min="{{ date('Y-m-d') }}" id="startDate">
                                     </div>
                                     <div>
-                                        <label class="block text-xs text-gray-500 mb-1">Return Date</label>
+                                        <label class="block text-xs text-gray-500 mb-1">Tanggal Kembali</label>
                                         <input type="date" name="end_date" value="{{ request('end_date') }}" 
                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                                                min="{{ date('Y-m-d') }}" id="endDate">
@@ -66,10 +66,10 @@
                                         <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
                                         <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
                                     </svg>
-                                    Vehicle Brand
+                                    Merek Kendaraan
                                 </label>
                                 <select name="brand" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
-                                    <option value="">All Brands</option>
+                                    <option value="">Semua Merek</option>
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand }}" {{ request('brand') === $brand ? 'selected' : '' }}>
                                             {{ $brand }}
@@ -85,10 +85,10 @@
                                         <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
                                     </svg>
-                                    Price Range
+                                    Rentang Harga
                                 </label>
                                 <select name="max_price" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
-                                    <option value="">Any Price</option>
+                                    <option value="">Semua Harga</option>
                                     @foreach($priceRanges as $range)
                                         <option value="{{ $range['value'] }}" {{ request('max_price') == $range['value'] ? 'selected' : '' }}>
                                             {{ $range['label'] }}
@@ -107,7 +107,7 @@
                                         <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                         </svg>
-                                        With Driver
+                                        Dengan Sopir
                                     </span>
                                 </label>
                             </div>
@@ -117,7 +117,7 @@
                                     <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
                                     </svg>
-                                    Apply Filters
+                                    Terapkan Filter
                                 </button>
                                 
                                 @if(request()->hasAny(['start_date', 'end_date', 'brand', 'max_price', 'with_driver']))
@@ -149,16 +149,16 @@
                         <!-- Vehicle Grid -->
                         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                             @foreach($vehicles as $vehicle)
-                                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+                                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 group flex flex-col">
                                     <!-- Vehicle Image -->
                                     <div class="relative overflow-hidden">
                                         @if($vehicle->photo_front)
                                             <img src="{{ asset('storage/' . $vehicle->photo_front) }}" 
                                                  alt="{{ $vehicle->brand }} {{ $vehicle->model }}"
-                                                 class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                                                 class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-300">
                                         @else
-                                            <div class="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                                                <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <div class="w-full h-52 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                                <svg class="w-20 h-20 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
                                                     <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
                                                 </svg>
@@ -167,59 +167,76 @@
                                         
                                         <!-- Availability Badge -->
                                         <div class="absolute top-3 left-3">
-                                            <span class="bg-green-500 text-white text-xs font-medium px-2 py-1 rounded-full shadow-lg">
+                                            <span class="bg-green-500 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg">
                                                 Available
                                             </span>
                                         </div>
                                     </div>
 
                                     <!-- Vehicle Info -->
-                                    <div class="p-6">
+                                    <div class="p-5 flex flex-col flex-grow">
+                                        <!-- Title & Basic Info -->
                                         <div class="mb-4">
-                                            <h3 class="text-xl font-bold text-gray-900 mb-1">
+                                            <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-1">
                                                 {{ $vehicle->brand }} {{ $vehicle->model }}
                                             </h3>
-                                            <p class="text-sm text-gray-600">{{ $vehicle->year }} • {{ $vehicle->color }} • {{ $vehicle->license_plate }}</p>
+                                            <div class="flex items-center text-sm text-gray-600 space-x-2">
+                                                <span class="flex items-center">
+                                                    <svg class="w-4 h-4 mr-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                                    </svg>
+                                                    {{ $vehicle->year }}
+                                                </span>
+                                                <span class="text-gray-400">•</span>
+                                                <span>{{ $vehicle->color }}</span>
+                                            </div>
+                                            <div class="flex items-center text-sm text-gray-500 mt-1">
+                                                <svg class="w-4 h-4 mr-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                                                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a2 2 0 002 2h4a2 2 0 002-2V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                                                </svg>
+                                                {{ $vehicle->license_plate }}
+                                            </div>
                                         </div>
                                         
                                         <!-- Features -->
-                                        <div class="grid grid-cols-2 gap-2 mb-4">
-                                            <div class="flex items-center text-xs text-gray-600">
-                                                <svg class="w-3 h-3 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <div class="grid grid-cols-2 gap-3 mb-4 pb-4 border-b border-gray-100">
+                                            <div class="flex items-center text-sm text-gray-700">
+                                                <svg class="w-4 h-4 mr-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                                 </svg>
-                                                Air Conditioning
+                                                <span>Air Conditioning</span>
                                             </div>
-                                            <div class="flex items-center text-xs text-gray-600">
-                                                <svg class="w-3 h-3 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <div class="flex items-center text-sm text-gray-700">
+                                                <svg class="w-4 h-4 mr-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                                 </svg>
-                                                Manual Trans.
+                                                <span>Manual Trans.</span>
                                             </div>
-                                            <div class="flex items-center text-xs text-gray-600">
-                                                <svg class="w-3 h-3 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <div class="flex items-center text-sm text-gray-700">
+                                                <svg class="w-4 h-4 mr-2 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                                 </svg>
-                                                5 Seats
+                                                <span>5 Seats</span>
                                             </div>
                                             @if($vehicle->driver_fee_per_day > 0)
-                                                <div class="flex items-center text-xs text-blue-600">
-                                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <div class="flex items-center text-sm text-blue-600 font-medium">
+                                                    <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                                     </svg>
-                                                    Driver Available
+                                                    <span>Driver Available</span>
                                                 </div>
                                             @endif
                                         </div>
 
-                                        <!-- Pricing -->
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <div class="flex items-baseline space-x-1">
+                                        <!-- Pricing & Actions -->
+                                        <div class="mt-auto">
+                                            <div class="mb-4">
+                                                <div class="flex items-baseline mb-1">
                                                     <span class="text-2xl font-bold text-blue-600">
                                                         Rp {{ number_format($vehicle->daily_rate, 0, ',', '.') }}
                                                     </span>
-                                                    <span class="text-sm text-gray-500">/day</span>
+                                                    <span class="text-sm text-gray-500 ml-1">/day</span>
                                                 </div>
                                                 @if($vehicle->weekly_rate && $vehicle->weekly_rate < ($vehicle->daily_rate * 7))
                                                     <p class="text-xs text-green-600 font-medium">
@@ -227,27 +244,23 @@
                                                     </p>
                                                 @endif
                                                 @if($vehicle->driver_fee_per_day > 0)
-                                                    <p class="text-xs text-gray-500">
-                                                        +Rp {{ number_format($vehicle->driver_fee_per_day, 0, ',', '.') }}/day driver
+                                                    <p class="text-xs text-gray-500 mt-0.5">
+                                                        +Rp {{ number_format($vehicle->driver_fee_per_day, 0, ',', '.') }}/day with driver
                                                     </p>
                                                 @endif
                                             </div>
-                                            <div class="flex space-x-2">
+                                            
+                                            <!-- Action Buttons -->
+                                            <div class="flex gap-2">
                                                 <a href="{{ route('vehicles.show', $vehicle) }}" 
-                                                   class="bg-gray-100 text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium text-sm">
+                                                   class="flex-1 text-center bg-white border-2 border-gray-300 text-gray-700 px-4 py-2.5 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium text-sm">
                                                     Details
                                                 </a>
-                                                @if(request()->hasAny(['start_date', 'end_date']))
-                                                    <a href="{{ route('booking.wizard', ['car_id' => $vehicle->id, 'start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" 
-                                                       class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md hover:shadow-lg text-sm">
-                                                        Book Now
-                                                    </a>
-                                                @else
-                                                    <button onclick="alert('Please select dates first')" 
-                                                            class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md hover:shadow-lg text-sm">
-                                                        Book Now
-                                                    </button>
-                                                @endif
+                                                <button 
+                                                    onclick="openBookingModal({{ $vehicle->id }}, '{{ $vehicle->brand }} {{ $vehicle->model }}', {{ $vehicle->daily_rate }}, '{{ request('start_date') }}', '{{ request('end_date') }}')"
+                                                    class="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-all font-semibold shadow-md hover:shadow-lg text-sm">
+                                                    Book Now
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -285,8 +298,98 @@
         </div>
     </div>
 
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" onclick="closeBookingModal(event)">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all" onclick="event.stopPropagation()">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold">Pesan Kendaraan</h3>
+                    <button onclick="closeBookingModal()" class="text-white hover:text-gray-200 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6">
+                <!-- Vehicle Info -->
+                <div class="bg-blue-50 rounded-lg p-4 mb-6">
+                    <div class="flex items-center mb-2">
+                        <svg class="w-5 h-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                            <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
+                        </svg>
+                        <span class="font-semibold text-gray-900" id="modalVehicleName"></span>
+                    </div>
+                    <div class="text-2xl font-bold text-blue-600" id="modalVehiclePrice"></div>
+                </div>
+
+                @auth('customer')
+                    <!-- Logged In - Show Booking Options -->
+                    <div class="space-y-4">
+                        <p class="text-gray-700 text-center mb-4">Pilih tanggal rental untuk melanjutkan pemesanan</p>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+                            <input type="date" id="modalStartDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" min="{{ date('Y-m-d') }}">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
+                            <input type="date" id="modalEndDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" min="{{ date('Y-m-d') }}">
+                        </div>
+
+                        <button onclick="proceedToBooking()" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg">
+                            Lanjutkan Pemesanan
+                        </button>
+                    </div>
+                @else
+                    <!-- Not Logged In - Show Login/Register Options -->
+                    <div class="text-center space-y-4">
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-yellow-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                                <div class="text-left">
+                                    <h4 class="font-semibold text-yellow-800 mb-1">Akun Diperlukan</h4>
+                                    <p class="text-sm text-yellow-700">Anda perlu masuk atau mendaftar untuk melakukan pemesanan kendaraan.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <a href="{{ route('login') }}" class="block w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg">
+                                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                </svg>
+                                Masuk ke Akun
+                            </a>
+                            
+                            <a href="{{ route('customer.register') }}" class="block w-full bg-white border-2 border-blue-600 text-blue-600 py-3 px-4 rounded-lg hover:bg-blue-50 transition-colors font-semibold">
+                                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                </svg>
+                                Daftar Akun Baru
+                            </a>
+                        </div>
+
+                        <p class="text-sm text-gray-500 mt-4">
+                            Sudah punya akun? <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium">Masuk di sini</a>
+                        </p>
+                    </div>
+                @endauth
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
     <script>
+        let currentVehicleId = null;
+
         // Auto-update end date when start date changes
         document.getElementById('startDate').addEventListener('change', function() {
             const startDate = new Date(this.value);
@@ -304,14 +407,72 @@
             endDateInput.min = this.value;
         });
 
-        // Real-time search functionality (optional enhancement)
-        let searchTimeout;
-        document.getElementById('filterForm').addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                // Could implement AJAX search here for better UX
-                // For now, we'll rely on form submission
-            }, 500);
+        // Modal functions
+        function openBookingModal(vehicleId, vehicleName, vehiclePrice, startDate = '', endDate = '') {
+            currentVehicleId = vehicleId;
+            document.getElementById('modalVehicleName').textContent = vehicleName;
+            document.getElementById('modalVehiclePrice').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(vehiclePrice) + '/day';
+            
+            @auth('customer')
+            // Pre-fill dates if available
+            if (startDate) {
+                document.getElementById('modalStartDate').value = startDate;
+            }
+            if (endDate) {
+                document.getElementById('modalEndDate').value = endDate;
+            }
+            
+            // Setup date validation
+            const modalStartInput = document.getElementById('modalStartDate');
+            const modalEndInput = document.getElementById('modalEndDate');
+            
+            modalStartInput.addEventListener('change', function() {
+                const start = new Date(this.value);
+                const end = new Date(modalEndInput.value);
+                
+                if (!modalEndInput.value || end <= start) {
+                    const nextDay = new Date(start);
+                    nextDay.setDate(nextDay.getDate() + 1);
+                    modalEndInput.value = nextDay.toISOString().split('T')[0];
+                }
+                
+                modalEndInput.min = this.value;
+            });
+            @endauth
+            
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeBookingModal(event) {
+            if (!event || event.target.id === 'bookingModal') {
+                const modal = document.getElementById('bookingModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        @auth('customer')
+        function proceedToBooking() {
+            const startDate = document.getElementById('modalStartDate').value;
+            const endDate = document.getElementById('modalEndDate').value;
+            
+            if (!startDate || !endDate) {
+                alert('Mohon pilih tanggal mulai dan selesai rental');
+                return;
+            }
+            
+            // Redirect to booking wizard
+            window.location.href = `{{ route('booking.wizard') }}?car_id=${currentVehicleId}&start_date=${startDate}&end_date=${endDate}`;
+        }
+        @endauth
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeBookingModal();
+            }
         });
     </script>
     @endpush

@@ -2,18 +2,18 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Member Customers') }}
+                {{ __('Pelanggan Anggota') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.customers.create') }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.plus class="w-4 h-4 inline mr-1" />
-                    Add Customer
+                    Tambah Pelanggan
                 </a>
                 <a href="{{ route('admin.customers.index') }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.arrow-left class="w-4 h-4 inline mr-1" />
-                    All Customers
+                    Semua Pelanggan
                 </a>
             </div>
         </div>
@@ -39,10 +39,10 @@
                     <div class="mb-6 bg-green-50 p-4 rounded-lg">
                         <div class="flex items-center">
                             <x-icons.star class="w-6 h-6 text-green-600 mr-2" />
-                            <h3 class="text-lg font-semibold text-green-800">Member Benefits Overview</h3>
+                            <h3 class="text-lg font-semibold text-green-800">Ringkasan Manfaat Anggota</h3>
                         </div>
                         <p class="mt-2 text-sm text-green-700">
-                            Members enjoy exclusive discounts on all bookings and priority customer service.
+                            Anggota menikmati diskon eksklusif untuk semua pemesanan dan layanan pelanggan prioritas.
                         </p>
                     </div>
 

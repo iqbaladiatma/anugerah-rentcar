@@ -2,8 +2,8 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900">Notification Center</h2>
-            <p class="text-sm text-gray-600">Manage and view system notifications</p>
+            <h2 class="text-2xl font-bold text-gray-900">Pusat Notifikasi</h2>
+            <p class="text-sm text-gray-600">Kelola dan lihat notifikasi sistem</p>
         </div>
         <div class="flex items-center space-x-3">
             <button wire:click="refreshNotifications" 
@@ -27,12 +27,12 @@
             <label class="flex items-center">
                 <input type="checkbox" wire:model.live="showUnreadOnly" 
                        class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                <span class="ml-2 text-sm text-gray-700">Show unread only</span>
+                <span class="ml-2 text-sm text-gray-700">Tampilkan yang belum dibaca</span>
             </label>
 
             <!-- Type Filter -->
             <div class="flex items-center space-x-2">
-                <label class="text-sm font-medium text-gray-700">Type:</label>
+                <label class="text-sm font-medium text-gray-700">Jenis:</label>
                 <select wire:model.live="selectedType" 
                         class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-sm">
                     @foreach($notificationTypes as $value => $label)
@@ -43,7 +43,7 @@
 
             <!-- Priority Filter -->
             <div class="flex items-center space-x-2">
-                <label class="text-sm font-medium text-gray-700">Priority:</label>
+                <label class="text-sm font-medium text-gray-700">Prioritas:</label>
                 <select wire:model.live="selectedPriority" 
                         class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-sm">
                     @foreach($priorityOptions as $value => $label)
@@ -100,7 +100,7 @@
                                             {{ $notification->title }}
                                             @if($notification->isUnread())
                                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 ml-2">
-                                                    New
+                                                    Baru
                                                 </span>
                                             @endif
                                         </p>
@@ -129,7 +129,7 @@
                                         @if($notification->action_url)
                                             <a href="{{ $notification->action_url }}" 
                                                class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                                                View
+                                                Lihat
                                             </a>
                                         @endif
                                         @if($notification->isUnread())
@@ -153,12 +153,12 @@
         @else
             <div class="text-center py-12">
                 <x-icons.bell class="mx-auto h-12 w-12 text-gray-400" />
-                <h3 class="mt-2 text-sm font-medium text-gray-900">No notifications</h3>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada notifikasi</h3>
                 <p class="mt-1 text-sm text-gray-500">
                     @if($showUnreadOnly || $selectedType || $selectedPriority)
-                        No notifications match your current filters.
+                        Tidak ada notifikasi yang cocok dengan filter yang Anda pilih.
                     @else
-                        You're all caught up! No notifications to display.
+                        Anda sudah terpangkat! Tidak ada notifikasi untuk ditampilkan.
                     @endif
                 </p>
             </div>

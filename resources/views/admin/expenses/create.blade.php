@@ -2,11 +2,11 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Add New Expense') }}
+                {{ __('Tambah Pengeluaran Baru') }}
             </h2>
             <a href="{{ route('admin.expenses.index') }}" 
                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                Back to Expenses
+                Kembali ke Pengeluaran
             </a>
         </div>
     </x-slot>
@@ -24,7 +24,7 @@
                             <select id="category" name="category" 
                                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
                                     required>
-                                <option value="">Select Category</option>
+                                <option value="">Pilih Category</option>
                                 @foreach($categories as $key => $label)
                                     <option value="{{ $key }}" {{ old('category') == $key ? 'selected' : '' }}>
                                         {{ $label }}
@@ -36,7 +36,7 @@
 
                         <!-- Description -->
                         <div class="mb-4">
-                            <x-input-label for="description" :value="__('Description')" />
+                            <x-input-label for="description" :value="__('Deskripsi')" />
                             <x-text-input id="description" name="description" type="text" 
                                          class="mt-1 block w-full" :value="old('description')" 
                                          placeholder="Enter expense description" required />
@@ -46,9 +46,12 @@
                         <!-- Amount -->
                         <div class="mb-4">
                             <x-input-label for="amount" :value="__('Amount (IDR)')" />
-                            <x-text-input id="amount" name="amount" type="number" step="0.01" min="0" max="999999.99"
-                                         class="mt-1 block w-full" :value="old('amount')" 
-                                         placeholder="0.00" required />
+                            <div x-data="currency('{{ old('amount') }}')">
+                                <x-text-input id="amount_display" type="text" x-model="formatted"
+                                             class="mt-1 block w-full" 
+                                             placeholder="0" required />
+                                <input type="hidden" id="amount" name="amount" x-model="raw">
+                            </div>
                             <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                         </div>
 
@@ -79,7 +82,7 @@
                                 Cancel
                             </a>
                             <x-primary-button>
-                                {{ __('Create Expense') }}
+                                {{ __('Tambah Pengeluaran') }}
                             </x-primary-button>
                         </div>
                     </form>

@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Add New Customer') }}
+                {{ __('Tambah Pelanggan Baru') }}
             </h2>
             <a href="{{ route('admin.customers.index') }}" 
                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                 <x-icons.arrow-left class="w-4 h-4 inline mr-1" />
-                Back to Customers
+                Kembali ke Pelanggan
             </a>
         </div>
     </x-slot>

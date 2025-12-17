@@ -10,11 +10,11 @@
                     @foreach($years as $year)
                         <option value="{{ $year }}">{{ $year }}</option>
                     @endforeach
-                </select>
+                </select>   
             </div>
 
             <div>
-                <label for="month" class="block text-sm font-medium text-gray-700 mb-1">Month (Optional)</label>
+                <label for="month" class="block text-sm font-medium text-gray-700 mb-1">Bulan (Opsional)</label>
                 <select wire:model.live="selectedMonth" 
                         id="month"
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -26,12 +26,12 @@
             </div>
 
             <div>
-                <label for="comparison" class="block text-sm font-medium text-gray-700 mb-1">Compare With</label>
+                <label for="comparison" class="block text-sm font-medium text-gray-700 mb-1">Bandingkan Dengan</label>
                 <select wire:model.live="comparisonPeriod" 
                         id="comparison"
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="year">Previous Year</option>
-                    <option value="month">Previous Month</option>
+                    <option value="year">Tahun Lalu</option>
+                    <option value="month">Bulan Lalu</option>
                 </select>
             </div>
 
@@ -59,7 +59,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Total Expenses</p>
+                        <p class="text-sm font-medium text-gray-500">Total Pengeluaran</p>
                         <p class="text-2xl font-semibold text-gray-900">
                             {{ number_format($yearlySummary['total_amount'] ?? 0, 0, ',', '.') }} IDR
                         </p>
@@ -77,7 +77,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Total Records</p>
+                        <p class="text-sm font-medium text-gray-500">Total Catatan</p>
                         <p class="text-2xl font-semibold text-gray-900">{{ $yearlySummary['total_count'] ?? 0 }}</p>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Average Monthly</p>
+                        <p class="text-sm font-medium text-gray-500">Rata-rata Bulanan</p>
                         <p class="text-2xl font-semibold text-gray-900">
                             {{ number_format($yearlySummary['average_monthly'] ?? 0, 0, ',', '.') }} IDR
                         </p>
@@ -123,7 +123,7 @@
                         @endif
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">vs {{ $comparison['period2_label'] ?? 'Previous' }}</p>
+                        <p class="text-sm font-medium text-gray-500">vs {{ $comparison['period2_label'] ?? 'Tahun Lalu' }}</p>
                         <p class="text-2xl font-semibold {{ isset($comparison['difference']['percentage']) && $comparison['difference']['percentage'] > 0 ? 'text-red-600' : 'text-green-600' }}">
                             @if(isset($comparison['difference']['percentage']))
                                 {{ $comparison['difference']['percentage'] > 0 ? '+' : '' }}{{ number_format($comparison['difference']['percentage'], 1) }}%
@@ -141,7 +141,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Trend Chart -->
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">12-Month Trend</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Tren 12 Bulan</h3>
             <div class="h-64">
                 <canvas id="trendChart" width="400" height="200"></canvas>
             </div>
@@ -149,7 +149,7 @@
 
         <!-- Category Breakdown -->
         <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Category Breakdown</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Penjelasan Kategori</h3>
             <div class="h-64">
                 <canvas id="categoryChart" width="400" height="200"></canvas>
             </div>
@@ -159,7 +159,7 @@
     <!-- Monthly Breakdown Table -->
     @if(!empty($yearlySummary['monthly_breakdown']))
     <div class="bg-white p-6 rounded-lg shadow mb-6">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Monthly Breakdown - {{ $selectedYear }}</h3>
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Penjelasan Bulanan - {{ $selectedYear }}</h3>
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">

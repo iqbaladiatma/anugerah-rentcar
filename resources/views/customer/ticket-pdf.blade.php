@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Ticket - {{ $booking->booking_number }}</title>
+    <title>E-Tiket - {{ $booking->booking_number }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,7 +38,7 @@
             display: inline-block;
         }
         .content {
-            display: table;
+            display: block;
             width: 100%;
             margin-bottom: 30px;
         }
@@ -146,31 +146,31 @@
 <body>
     <div class="header">
         <div class="company-name">Anugerah Rent Car</div>
-        <div class="ticket-title">Electronic Ticket</div>
-        <div class="booking-number">Booking #{{ $booking->booking_number }}</div>
+        <div class="ticket-title">Tiket Elektronik</div>
+        <div class="booking-number">Pemesanan #{{ $booking->booking_number }}</div>
     </div>
 
     <div class="content">
         <!-- Customer Information -->
         <div class="section">
-            <div class="section-title">Customer Information</div>
+            <div class="section-title">Informasi Pelanggan</div>
             <div class="info-grid">
                 <div class="info-row">
-                    <div class="info-label">Name:</div>
+                    <div class="info-label">Nama:</div>
                     <div class="info-value">{{ $booking->customer->name }}</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">Phone:</div>
+                    <div class="info-label">Telepon:</div>
                     <div class="info-value">{{ $booking->customer->phone }}</div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">Email:</div>
-                    <div class="info-value">{{ $booking->customer->email ?? 'Not provided' }}</div>
+                    <div class="info-value">{{ $booking->customer->email ?? 'Tidak disediakan' }}</div>
                 </div>
                 @if($booking->customer->is_member)
                 <div class="info-row">
-                    <div class="info-label">Member Status:</div>
-                    <div class="info-value">Premium Member ({{ $booking->customer->getMemberDiscountPercentage() }}% discount)</div>
+                    <div class="info-label">Status Anggota:</div>
+                    <div class="info-value">Anggota Premium (diskon {{ $booking->customer->getMemberDiscountPercentage() }}%)</div>
                 </div>
                 @endif
             </div>
@@ -178,18 +178,18 @@
 
         <!-- Vehicle Information -->
         <div class="section">
-            <div class="section-title">Vehicle Information</div>
+            <div class="section-title">Informasi Kendaraan</div>
             <div class="info-grid">
                 <div class="info-row">
-                    <div class="info-label">Vehicle:</div>
+                    <div class="info-label">Kendaraan:</div>
                     <div class="info-value">{{ $booking->car->brand }} {{ $booking->car->model }} ({{ $booking->car->year }})</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">License Plate:</div>
+                    <div class="info-label">Plat Nomor:</div>
                     <div class="info-value">{{ $booking->car->license_plate }}</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">Color:</div>
+                    <div class="info-label">Warna:</div>
                     <div class="info-value">{{ $booking->car->color }}</div>
                 </div>
             </div>
@@ -197,35 +197,35 @@
 
         <!-- Rental Details -->
         <div class="section">
-            <div class="section-title">Rental Details</div>
+            <div class="section-title">Detail Sewa</div>
             <div class="info-grid">
                 <div class="info-row">
-                    <div class="info-label">Start Date:</div>
+                    <div class="info-label">Tanggal Mulai:</div>
                     <div class="info-value">{{ $booking->start_date->format('l, F d, Y - H:i') }}</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">End Date:</div>
+                    <div class="info-label">Tanggal Selesai:</div>
                     <div class="info-value">{{ $booking->end_date->format('l, F d, Y - H:i') }}</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">Duration:</div>
-                    <div class="info-value">{{ $booking->getDurationInDays() }} day(s)</div>
+                    <div class="info-label">Durasi:</div>
+                    <div class="info-value">{{ $booking->getDurationInDays() }} hari</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">Pickup Location:</div>
+                    <div class="info-label">Lokasi Penjemputan:</div>
                     <div class="info-value">{{ $booking->pickup_location }}</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">Return Location:</div>
+                    <div class="info-label">Lokasi Pengembalian:</div>
                     <div class="info-value">{{ $booking->return_location }}</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">Driver Service:</div>
-                    <div class="info-value">{{ $booking->with_driver ? 'Yes' : 'No' }}</div>
+                    <div class="info-label">Layanan Sopir:</div>
+                    <div class="info-value">{{ $booking->with_driver ? 'Ya' : 'Tidak' }}</div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label">Out of Town:</div>
-                    <div class="info-value">{{ $booking->is_out_of_town ? 'Yes' : 'No' }}</div>
+                    <div class="info-label">Luar Kota:</div>
+                    <div class="info-value">{{ $booking->is_out_of_town ? 'Ya' : 'Tidak' }}</div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">Status:</div>
@@ -240,50 +240,50 @@
 
         <!-- Pricing Breakdown -->
         <div class="section">
-            <div class="section-title">Pricing Breakdown</div>
+            <div class="section-title">Rincian Harga</div>
             <table class="pricing-table">
                 <thead>
                     <tr>
-                        <th>Description</th>
-                        <th style="text-align: right;">Amount</th>
+                        <th>Deskripsi</th>
+                        <th style="text-align: right;">Jumlah</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Base Rental ({{ $booking->getDurationInDays() }} day(s) × Rp {{ number_format($booking->car->daily_rate, 0, ',', '.') }})</td>
+                        <td>Sewa Dasar ({{ $booking->getDurationInDays() }} hari × Rp {{ number_format($booking->car->daily_rate, 0, ',', '.') }})</td>
                         <td style="text-align: right;">Rp {{ number_format($booking->base_amount, 0, ',', '.') }}</td>
                     </tr>
                     @if($booking->driver_fee > 0)
                     <tr>
-                        <td>Driver Service ({{ $booking->getDurationInDays() }} day(s) × Rp {{ number_format($booking->car->driver_fee_per_day, 0, ',', '.') }})</td>
+                        <td>Layanan Sopir ({{ $booking->getDurationInDays() }} hari × Rp {{ number_format($booking->car->driver_fee_per_day, 0, ',', '.') }})</td>
                         <td style="text-align: right;">Rp {{ number_format($booking->driver_fee, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     @if($booking->out_of_town_fee > 0)
                     <tr>
-                        <td>Out of Town Fee</td>
+                        <td>Biaya Luar Kota</td>
                         <td style="text-align: right;">Rp {{ number_format($booking->out_of_town_fee, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     @if($booking->member_discount > 0)
                     <tr style="color: #16a34a;">
-                        <td>Member Discount ({{ $booking->customer->getMemberDiscountPercentage() }}%)</td>
+                        <td>Diskon Anggota ({{ $booking->customer->getMemberDiscountPercentage() }}%)</td>
                         <td style="text-align: right;">-Rp {{ number_format($booking->member_discount, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     @if($booking->late_penalty > 0)
                     <tr style="color: #dc2626;">
-                        <td>Late Return Penalty</td>
+                        <td>Denda Keterlambatan Pengembalian</td>
                         <td style="text-align: right;">Rp {{ number_format($booking->late_penalty, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     <tr class="total-row">
-                        <td>Total Amount</td>
+                        <td>Total Jumlah</td>
                         <td style="text-align: right;">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</td>
                     </tr>
                     @if($booking->deposit_amount > 0)
                     <tr>
-                        <td>Security Deposit</td>
+                        <td>Deposit Keamanan</td>
                         <td style="text-align: right;">Rp {{ number_format($booking->deposit_amount, 0, ',', '.') }}</td>
                     </tr>
                     @endif
@@ -294,7 +294,7 @@
         @if($booking->notes)
         <!-- Notes -->
         <div class="section">
-            <div class="section-title">Additional Notes</div>
+            <div class="section-title">Catatan Tambahan</div>
             <p>{{ $booking->notes }}</p>
         </div>
         @endif
@@ -302,29 +302,29 @@
 
     <!-- QR Code Section (Placeholder) -->
     <div class="qr-section">
-        <div style="font-weight: bold; margin-bottom: 10px;">Booking Verification</div>
+        <div style="font-weight: bold; margin-bottom: 10px;">Verifikasi Pemesanan</div>
         <div style="width: 100px; height: 100px; border: 2px dashed #ccc; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">
-            QR Code<br>{{ $booking->booking_number }}
+            Kode QR<br>{{ $booking->booking_number }}
         </div>
         <div style="margin-top: 10px; font-size: 12px; color: #666;">
-            Show this ticket during vehicle pickup
+            Tunjukkan tiket ini saat pengambilan kendaraan
         </div>
     </div>
 
     <!-- Important Notes -->
     <div class="important-notes">
-        <h4>Important Information:</h4>
+        <h4>Informasi Penting:</h4>
         <ul>
-            <li>Please bring your original KTP and valid driving license (SIM) during pickup</li>
-            <li>Vehicle inspection will be conducted before and after rental period</li>
-            <li>Late returns are subject to penalty charges as specified in the pricing breakdown</li>
-            <li>Contact our customer service at +62 123 456 7890 for any assistance</li>
-            <li>This e-ticket is valid only for the specified booking period and vehicle</li>
+            <li>Harap bawa KTP asli dan SIM yang sah saat pengambilan</li>
+            <li>Pemeriksaan kendaraan akan dilakukan sebelum dan sesudah masa sewa</li>
+            <li>Pengembalian terlambat dikenakan biaya denda sebagaimana tercantum dalam rincian harga</li>
+            <li>Hubungi layanan pelanggan kami di +62 123 456 7890 untuk bantuan apa pun</li>
+            <li>E-tiket ini hanya berlaku untuk periode pemesanan dan kendaraan yang ditentukan</li>
             @if($booking->with_driver)
-            <li>Driver service is included - our professional driver will be assigned to your booking</li>
+            <li>Layanan sopir sudah termasuk - sopir profesional kami akan ditugaskan untuk pemesanan Anda</li>
             @endif
             @if($booking->is_out_of_town)
-            <li>Out of town trip approved - additional terms and conditions may apply</li>
+            <li>Perjalanan luar kota disetujui - syarat dan ketentuan tambahan mungkin berlaku</li>
             @endif
         </ul>
     </div>
@@ -332,9 +332,9 @@
     <div class="footer">
         <p><strong>Anugerah Rent Car</strong></p>
         <p>Jl. Raya Utama No. 123, Jakarta Selatan 12345</p>
-        <p>Phone: +62 123 456 7890 | Email: info@anugerahrentcar.com</p>
-        <p style="margin-top: 15px;">Generated on {{ now()->format('F d, Y H:i:s') }}</p>
-        <p>Booking ID: {{ $booking->booking_number }} | Customer: {{ $booking->customer->name }}</p>
+        <p>Telepon: +62 123 456 7890 | Email: info@anugerahrentcar.com</p>
+        <p style="margin-top: 15px;">Dibuat pada {{ now()->format('F d, Y H:i:s') }}</p>
+        <p>ID Pemesanan: {{ $booking->booking_number }} | Pelanggan: {{ $booking->customer->name }}</p>
     </div>
 </body>
 </html>

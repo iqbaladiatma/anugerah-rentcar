@@ -4,34 +4,34 @@
         <div class="bg-white rounded-lg shadow-lg">
             <!-- Header -->
             <div class="bg-orange-600 text-white p-6 rounded-t-lg">
-                <h2 class="text-2xl font-bold">Vehicle Check-In</h2>
+                <h2 class="text-2xl font-bold">Masuk Kendaraan</h2>
                 <p class="text-orange-100 mt-2">{{ $booking->booking_number }} - {{ $booking->car->license_plate }}</p>
             </div>
 
             <!-- Booking Information -->
             <div class="p-6 border-b border-gray-200">
-                <h3 class="text-lg font-semibold mb-4">Booking Information</h3>
+                <h3 class="text-lg font-semibold mb-4">Informasi Pemesanan</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <p class="text-sm text-gray-600">Customer</p>
+                        <p class="text-sm text-gray-600">Pelanggan</p>
                         <p class="font-medium">{{ $booking->customer->name }}</p>
                         <p class="text-sm text-gray-500">{{ $booking->customer->phone }}</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600">Vehicle</p>
+                        <p class="text-sm text-gray-600">Kendaraan</p>
                         <p class="font-medium">{{ $booking->car->brand }} {{ $booking->car->model }}</p>
                         <p class="text-sm text-gray-500">{{ $booking->car->license_plate }} - {{ $booking->car->color }}</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600">Scheduled Return</p>
+                        <p class="text-sm text-gray-600">Jadwal Pengembalian</p>
                         <p class="font-medium">{{ $booking->end_date->format('d/m/Y H:i') }}</p>
                         @if($booking->isOverdue())
-                            <p class="text-sm text-red-600 font-medium">OVERDUE</p>
+                            <p class="text-sm text-red-600 font-medium">TERLAMBAT</p>
                         @endif
                     </div>
                     <div>
-                        <p class="text-sm text-gray-600">Duration</p>
-                        <p class="font-medium">{{ $booking->getDurationInDays() }} days</p>
+                        <p class="text-sm text-gray-600">Durasi</p>
+                        <p class="font-medium">{{ $booking->getDurationInDays() }} hari</p>
                     </div>
                 </div>
             </div>
@@ -47,9 +47,9 @@
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Late Return Penalty</h3>
+                                <h3 class="text-sm font-medium text-yellow-800">Denda Keterlambatan Pengembalian</h3>
                                 <p class="mt-1 text-sm text-yellow-700">
-                                    Estimated penalty: <strong>Rp {{ number_format($penaltyEstimate['penalty_amount'], 0, ',', '.') }}</strong>
+                                    Perkiraan denda: <strong>Rp {{ number_format($penaltyEstimate['penalty_amount'], 0, ',', '.') }}</strong>
                                     <br>{{ $penaltyEstimate['calculation_details'] ?? '' }}
                                 </p>
                             </div>
@@ -61,23 +61,23 @@
             <!-- Checkout Comparison -->
             @if(!empty($checkoutComparison))
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold mb-4">Checkout Condition Reference</h3>
+                    <h3 class="text-lg font-semibold mb-4">Referensi Kondisi Keluar</h3>
                     <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                             <div>
-                                <p class="text-gray-600">Fuel Level (Checkout)</p>
+                                <p class="text-gray-600">Bahan Bakar (Keluar)</p>
                                 <p class="font-medium">{{ ucwords(str_replace('_', ' ', $checkoutComparison['fuel_level'])) }}</p>
                             </div>
                             <div>
-                                <p class="text-gray-600">Odometer (Checkout)</p>
+                                <p class="text-gray-600">Odometer (Keluar)</p>
                                 <p class="font-medium">{{ number_format($checkoutComparison['odometer_reading']) }} km</p>
                             </div>
                             <div>
-                                <p class="text-gray-600">Exterior Issues</p>
+                                <p class="text-gray-600">Masalah Eksterior</p>
                                 <p class="font-medium">{{ count($checkoutComparison['exterior_condition'] ?? []) }}</p>
                             </div>
                             <div>
-                                <p class="text-gray-600">Interior Issues</p>
+                                <p class="text-gray-600">Masalah Interior</p>
                                 <p class="font-medium">{{ count($checkoutComparison['interior_condition'] ?? []) }}</p>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Please correct the following errors:</h3>
+                                <h3 class="text-sm font-medium text-red-800">Mohon perbaiki kesalahan berikut:</h3>
                                 <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
                                     @foreach($validationErrors as $error)
                                         <li>{{ $error }}</li>
@@ -111,19 +111,19 @@
             <form wire:submit.prevent="previewCheckin">
                 <!-- Return Information -->
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold mb-4">Return Information</h3>
+                    <h3 class="text-lg font-semibold mb-4">Informasi Pengembalian</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Actual Return Date -->
                         <div class="md:col-span-1">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Actual Return Date & Time</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal & Waktu Pengembalian Aktual</label>
                             <input type="datetime-local" wire:model.live="inspectionData.actual_return_date" 
                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                         </div>
 
                         <!-- Fuel Level -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Fuel Level</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Level Bahan Bakar</label>
                             <select wire:model="inspectionData.fuel_level" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                 @foreach($fuelLevelOptions as $value => $label)
                                     <option value="{{ $value }}">{{ $label }}</option>
@@ -133,7 +133,7 @@
 
                         <!-- Odometer Reading -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Odometer Reading (km)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Odometer (km)</label>
                             <input type="number" wire:model="inspectionData.odometer_reading" 
                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
                                    min="0" step="1">
@@ -143,7 +143,7 @@
 
                 <!-- Exterior Inspection -->
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold mb-4">Exterior Inspection</h3>
+                    <h3 class="text-lg font-semibold mb-4">Pemeriksaan Eksterior</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @foreach($preparationData['inspection_checklist']['exterior'] as $key => $label)
@@ -153,7 +153,7 @@
                                     <div class="flex space-x-2">
                                         <button type="button" wire:click="addExteriorDamage('{{ $key }}')"
                                                 class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">
-                                            Report Issue
+                                            Lapor Masalah
                                         </button>
                                     </div>
                                 </div>
@@ -162,18 +162,18 @@
                                     <div class="mt-2 space-y-2">
                                         <select wire:model="inspectionData.exterior_condition.{{ $key }}.damage" 
                                                 class="w-full text-sm border border-gray-300 rounded px-2 py-1">
-                                            <option value="">No damage</option>
+                                            <option value="">Tidak ada kerusakan</option>
                                             @foreach($damageTypeOptions as $value => $damageLabel)
                                                 <option value="{{ $value }}">{{ $damageLabel }}</option>
                                             @endforeach
                                         </select>
                                         <textarea wire:model="inspectionData.exterior_condition.{{ $key }}.description"
-                                                  placeholder="Describe the condition or damage..."
+                                                  placeholder="Jelaskan kondisi atau kerusakan..."
                                                   class="w-full text-sm border border-gray-300 rounded px-2 py-1"
                                                   rows="2"></textarea>
                                         <button type="button" wire:click="removeExteriorDamage('{{ $key }}')"
                                                 class="text-xs text-gray-500 hover:text-red-600">
-                                            Clear
+                                            Hapus
                                         </button>
                                     </div>
                                 @endif
@@ -184,7 +184,7 @@
 
                 <!-- Interior Inspection -->
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold mb-4">Interior Inspection</h3>
+                    <h3 class="text-lg font-semibold mb-4">Pemeriksaan Interior</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @foreach($preparationData['inspection_checklist']['interior'] as $key => $label)
@@ -194,7 +194,7 @@
                                     <div class="flex space-x-2">
                                         <button type="button" wire:click="addInteriorDamage('{{ $key }}')"
                                                 class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">
-                                            Report Issue
+                                            Lapor Masalah
                                         </button>
                                     </div>
                                 </div>
@@ -203,18 +203,18 @@
                                     <div class="mt-2 space-y-2">
                                         <select wire:model="inspectionData.interior_condition.{{ $key }}.damage" 
                                                 class="w-full text-sm border border-gray-300 rounded px-2 py-1">
-                                            <option value="">No damage</option>
+                                            <option value="">Tidak ada kerusakan</option>
                                             @foreach($damageTypeOptions as $value => $damageLabel)
                                                 <option value="{{ $value }}">{{ $damageLabel }}</option>
                                             @endforeach
                                         </select>
                                         <textarea wire:model="inspectionData.interior_condition.{{ $key }}.description"
-                                                  placeholder="Describe the condition or damage..."
+                                                  placeholder="Jelaskan kondisi atau kerusakan..."
                                                   class="w-full text-sm border border-gray-300 rounded px-2 py-1"
                                                   rows="2"></textarea>
                                         <button type="button" wire:click="removeInteriorDamage('{{ $key }}')"
                                                 class="text-xs text-gray-500 hover:text-red-600">
-                                            Clear
+                                            Hapus
                                         </button>
                                     </div>
                                 @endif
@@ -225,20 +225,20 @@
 
                 <!-- Photo Documentation -->
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold mb-4">Photo Documentation</h3>
+                    <h3 class="text-lg font-semibold mb-4">Dokumentasi Foto</h3>
                     
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Photos</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Unggah Foto</label>
                         <input type="file" wire:model="photos" multiple accept="image/*"
                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        <p class="text-xs text-gray-500 mt-1">Maximum 2MB per image. Multiple images allowed.</p>
+                        <p class="text-xs text-gray-500 mt-1">Maksimal 2MB per gambar. Diperbolehkan banyak gambar.</p>
                     </div>
 
                     @if(!empty($photos))
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             @foreach($photos as $index => $photo)
                                 <div class="relative">
-                                    <img src="{{ $photo->temporaryUrl() }}" alt="Inspection Photo" 
+                                    <img src="{{ $photo->temporaryUrl() }}" alt="Foto Pemeriksaan" 
                                          class="w-full h-24 object-cover rounded border">
                                     <button type="button" wire:click="removePhoto({{ $index }})"
                                             class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
@@ -252,19 +252,19 @@
 
                 <!-- Digital Signatures -->
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold mb-4">Digital Signatures</h3>
+                    <h3 class="text-lg font-semibold mb-4">Tanda Tangan Digital</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Inspector Signature -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Inspector Signature</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tanda Tangan Pemeriksa</label>
                             <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
                                 <canvas id="inspector-signature" width="300" height="150" 
                                         class="border border-gray-200 bg-white rounded cursor-crosshair w-full"></canvas>
                                 <div class="mt-2 flex space-x-2">
                                     <button type="button" onclick="clearInspectorSignature()" 
                                             class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-                                        Clear
+                                        Hapus
                                     </button>
                                 </div>
                             </div>
@@ -272,14 +272,14 @@
 
                         <!-- Customer Signature -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Customer Signature</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tanda Tangan Pelanggan</label>
                             <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
                                 <canvas id="customer-signature" width="300" height="150" 
                                         class="border border-gray-200 bg-white rounded cursor-crosshair w-full"></canvas>
                                 <div class="mt-2 flex space-x-2">
                                     <button type="button" onclick="clearCustomerSignature()" 
                                             class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-                                        Clear
+                                        Hapus
                                     </button>
                                 </div>
                             </div>
@@ -289,9 +289,9 @@
 
                 <!-- Notes -->
                 <div class="p-6 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold mb-4">Additional Notes</h3>
+                    <h3 class="text-lg font-semibold mb-4">Catatan Tambahan</h3>
                     <textarea wire:model="inspectionData.notes" 
-                              placeholder="Any additional notes or observations..."
+                              placeholder="Catatan tambahan atau pengamatan..."
                               class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
                               rows="4"></textarea>
                 </div>
@@ -301,11 +301,11 @@
                     <div class="flex justify-between">
                         <a href="{{ route('admin.bookings.show', $booking->id) }}" 
                            class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400 transition-colors">
-                            Cancel
+                            Batal
                         </a>
                         <button type="submit" 
                                 class="bg-orange-600 text-white px-6 py-2 rounded-md hover:bg-orange-700 transition-colors">
-                            Preview Check-In
+                            Pratinjau Masuk
                         </button>
                     </div>
                 </div>
@@ -317,8 +317,8 @@
         <div class="bg-white rounded-lg shadow-lg">
             <!-- Header -->
             <div class="bg-green-600 text-white p-6 rounded-t-lg">
-                <h2 class="text-2xl font-bold">Check-In Summary</h2>
-                <p class="text-green-100 mt-2">Please review before confirming</p>
+                <h2 class="text-2xl font-bold">Ringkasan Masuk</h2>
+                <p class="text-green-100 mt-2">Harap tinjau sebelum mengonfirmasi</p>
             </div>
 
             <!-- Summary Content -->
@@ -326,7 +326,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Booking Details -->
                     <div>
-                        <h3 class="text-lg font-semibold mb-3">Booking Details</h3>
+                        <h3 class="text-lg font-semibold mb-3">Detail Pemesanan</h3>
                         <dl class="space-y-2">
                             @foreach($summary['booking_details'] as $key => $value)
                                 <div class="flex justify-between">
@@ -339,7 +339,7 @@
 
                     <!-- Vehicle Condition -->
                     <div>
-                        <h3 class="text-lg font-semibold mb-3">Vehicle Condition</h3>
+                        <h3 class="text-lg font-semibold mb-3">Kondisi Kendaraan</h3>
                         <dl class="space-y-2">
                             @foreach($summary['vehicle_condition'] as $key => $value)
                                 <div class="flex justify-between">
@@ -354,15 +354,15 @@
                 <!-- Penalty Information -->
                 @if($summary['penalty_calculation']['penalty_amount'] > 0)
                     <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-3 text-yellow-800">Late Return Penalty</h3>
+                        <h3 class="text-lg font-semibold mb-3 text-yellow-800">Denda Keterlambatan Pengembalian</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <p class="text-sm text-yellow-700">Penalty Amount:</p>
+                                <p class="text-sm text-yellow-700">Jumlah Denda:</p>
                                 <p class="text-lg font-bold text-yellow-800">Rp {{ number_format($summary['penalty_calculation']['penalty_amount'], 0, ',', '.') }}</p>
                             </div>
                             <div>
-                                <p class="text-sm text-yellow-700">Late Duration:</p>
-                                <p class="font-medium text-yellow-800">{{ $summary['penalty_calculation']['late_hours'] ?? 0 }} hours</p>
+                                <p class="text-sm text-yellow-700">Durasi Terlambat:</p>
+                                <p class="font-medium text-yellow-800">{{ $summary['penalty_calculation']['late_hours'] ?? 0 }} jam</p>
                             </div>
                         </div>
                         <p class="text-sm text-yellow-700 mt-2">{{ $summary['penalty_calculation']['calculation_details'] ?? '' }}</p>
@@ -372,22 +372,22 @@
                 <!-- Final Amount -->
                 <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <div class="flex justify-between items-center">
-                        <span class="text-lg font-semibold text-blue-800">Final Amount:</span>
+                        <span class="text-lg font-semibold text-blue-800">Jumlah Akhir:</span>
                         <span class="text-2xl font-bold text-blue-800">Rp {{ number_format($summary['final_amount'], 0, ',', '.') }}</span>
                     </div>
                 </div>
 
                 <!-- Signatures Status -->
                 <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-3">Signatures</h3>
+                    <h3 class="text-lg font-semibold mb-3">Tanda Tangan</h3>
                     <div class="flex space-x-6">
                         <div class="flex items-center">
                             <span class="w-3 h-3 rounded-full {{ $summary['signatures']['inspector_signed'] ? 'bg-green-500' : 'bg-red-500' }} mr-2"></span>
-                            <span class="text-sm">Inspector Signature</span>
+                            <span class="text-sm">Tanda Tangan Pemeriksa</span>
                         </div>
                         <div class="flex items-center">
                             <span class="w-3 h-3 rounded-full {{ $summary['signatures']['customer_signed'] ? 'bg-green-500' : 'bg-red-500' }} mr-2"></span>
-                            <span class="text-sm">Customer Signature</span>
+                            <span class="text-sm">Tanda Tangan Pelanggan</span>
                         </div>
                     </div>
                 </div>
@@ -399,7 +399,7 @@
                             <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            <span class="text-green-800 font-medium">Ready for check-in</span>
+                            <span class="text-green-800 font-medium">Siap untuk masuk</span>
                         </div>
                     </div>
                 @else
@@ -408,7 +408,7 @@
                             <svg class="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
                             </svg>
-                            <span class="text-red-800 font-medium">Please complete all required fields</span>
+                            <span class="text-red-800 font-medium">Harap lengkapi semua bidang yang diperlukan</span>
                         </div>
                     </div>
                 @endif
@@ -419,12 +419,12 @@
                 <div class="flex justify-between">
                     <button wire:click="backToForm" 
                             class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400 transition-colors">
-                        Back to Form
+                        Kembali ke Formulir
                     </button>
                     @if($summary['ready_for_checkin'])
                         <button wire:click="processCheckin" 
                                 class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
-                            Confirm Check-In
+                            Konfirmasi Masuk
                         </button>
                     @endif
                 </div>

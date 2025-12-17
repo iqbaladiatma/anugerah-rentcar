@@ -4,18 +4,18 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <!-- Search -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Cari</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="search" 
-                       placeholder="Search maintenance records..."
+                       placeholder="Cari catatan pemeliharaan..."
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
 
             <!-- Vehicle Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mobil</label>
                 <select wire:model.live="carFilter" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Vehicles</option>
+                    <option value="">Semua Mobil</option>
                     @foreach($cars as $car)
                         <option value="{{ $car->id }}">{{ $car->license_plate }} - {{ $car->brand }} {{ $car->model }}</option>
                     @endforeach
@@ -24,9 +24,9 @@
 
             <!-- Type Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Pemeliharaan</label>
                 <select wire:model.live="typeFilter" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    <option value="">All Types</option>
+                    <option value="">Semua Jenis Pemeliharaan</option>
                     @foreach($maintenanceTypes as $key => $label)
                         <option value="{{ $key }}">{{ $label }}</option>
                     @endforeach
@@ -35,7 +35,7 @@
 
             <!-- Service Provider Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Service Provider</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Provider</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="providerFilter" 
                        placeholder="Filter by provider..."
@@ -46,7 +46,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <!-- Date From -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Date From</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Dari Tanggal</label>
                 <input type="date" 
                        wire:model.live="dateFrom" 
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -54,7 +54,7 @@
 
             <!-- Date To -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Date To</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Sampai Tanggal</label>
                 <input type="date" 
                        wire:model.live="dateTo" 
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -73,15 +73,15 @@
     <!-- Statistics Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
         <div class="bg-blue-50 p-4 rounded-lg">
-            <div class="text-sm font-medium text-blue-600">Total Cost</div>
+            <div class="text-sm font-medium text-blue-600">Total Biaya</div>
             <div class="text-2xl font-bold text-blue-900">Rp {{ number_format($statistics['total_cost'], 0, ',', '.') }}</div>
         </div>
         <div class="bg-green-50 p-4 rounded-lg">
-            <div class="text-sm font-medium text-green-600">Total Records</div>
+            <div class="text-sm font-medium text-green-600">Total Record</div>
             <div class="text-2xl font-bold text-green-900">{{ $statistics['total_count'] }}</div>
         </div>
         <div class="bg-purple-50 p-4 rounded-lg">
-            <div class="text-sm font-medium text-purple-600">Average Cost</div>
+            <div class="text-sm font-medium text-purple-600">Rata-rata Biaya</div>
             <div class="text-2xl font-bold text-purple-900">Rp {{ number_format($statistics['average_cost'], 0, ',', '.') }}</div>
         </div>
         <div class="bg-yellow-50 p-4 rounded-lg">
@@ -89,7 +89,7 @@
             <div class="text-lg font-bold text-yellow-900">{{ $statistics['routine_count'] }} (Rp {{ number_format($statistics['routine_cost'], 0, ',', '.') }})</div>
         </div>
         <div class="bg-red-50 p-4 rounded-lg">
-            <div class="text-sm font-medium text-red-600">Repairs</div>
+            <div class="text-sm font-medium text-red-600">Perbaikan</div>
             <div class="text-lg font-bold text-red-900">{{ $statistics['repair_count'] }} (Rp {{ number_format($statistics['repair_cost'], 0, ',', '.') }})</div>
         </div>
         <div class="bg-indigo-50 p-4 rounded-lg">
@@ -114,7 +114,7 @@
                             <th wire:click="sortBy('service_date')" 
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 <div class="flex items-center space-x-1">
-                                    <span>Service Date</span>
+                                    <span>Tanggal Pemeliharaan</span>
                                     @if($sortBy === 'service_date')
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                             @if($sortDirection === 'asc')
@@ -126,13 +126,13 @@
                                     @endif
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mobil</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Pemeliharaan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
                             <th wire:click="sortBy('cost')" 
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                                 <div class="flex items-center space-x-1">
-                                    <span>Cost</span>
+                                    <span>Biaya</span>
                                     @if($sortBy === 'cost')
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                             @if($sortDirection === 'asc')
@@ -144,9 +144,9 @@
                                     @endif
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service Provider</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Next Service</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Provider</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jadwal Pemeliharaan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -218,15 +218,15 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">No maintenance records found</h3>
-                <p class="mt-1 text-sm text-gray-500">Get started by adding a new maintenance record.</p>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">Tidak ada catatan pemeliharaan</h3>
+                <p class="mt-1 text-sm text-gray-500">Mulai dengan menambahkan catatan pemeliharaan baru.</p>
                 <div class="mt-6">
                     <a href="{{ route('admin.maintenance.create') }}" 
                        class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
                         <svg class="-ml-1 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
                         </svg>
-                        Add Maintenance Record
+                        Tambah Catatan Pemeliharaan
                     </a>
                 </div>
             </div>

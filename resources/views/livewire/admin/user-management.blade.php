@@ -2,13 +2,13 @@
     <div class="mb-6">
         <div class="flex justify-between items-center">
             <div>
-                <h3 class="text-lg font-medium text-gray-900 mb-2">User Management</h3>
-                <p class="text-sm text-gray-600">Manage system users and their roles.</p>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Pengelolaan User</h3>
+                <p class="text-sm text-gray-600">Kelola pengguna sistem dan peran mereka.</p>
             </div>
             <button wire:click="openCreateModal" 
                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <x-icons.plus class="h-4 w-4 mr-2" />
-                Add User
+                Tambah User
             </button>
         </div>
     </div>
@@ -30,13 +30,13 @@
         <div>
             <input type="text" 
                    wire:model.live="search"
-                   placeholder="Search users..."
+                   placeholder="Cari pengguna..."
                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
         </div>
         <div>
             <select wire:model.live="roleFilter" 
                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                <option value="">All Roles</option>
+                <option value="">Semua Peran</option>
                 @foreach($roles as $key => $label)
                     <option value="{{ $key }}">{{ $label }}</option>
                 @endforeach
@@ -45,9 +45,9 @@
         <div>
             <select wire:model.live="statusFilter" 
                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+                <option value="">Semua Status</option>
+                <option value="active">Aktif</option>
+                <option value="inactive">Tidak Aktif</option>
             </select>
         </div>
     </div>
@@ -71,12 +71,12 @@
                                     <p class="text-sm font-medium text-gray-900">{{ $user->name }}</p>
                                     @if($user->id === auth()->id())
                                         <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                            You
+                                            Anda
                                         </span>
                                     @endif
                                     @if(!$user->is_active)
                                         <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                            Inactive
+                                            Tidak Aktif
                                         </span>
                                     @endif
                                 </div>

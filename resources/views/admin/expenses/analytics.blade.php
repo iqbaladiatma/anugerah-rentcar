@@ -2,16 +2,16 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Expense Analytics') }}
+                {{ __('Analisis Pengeluaran') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.expenses.create') }}" 
                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add Expense
+                    Tambah Pengeluaran
                 </a>
                 <a href="{{ route('admin.expenses.index') }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    Back to Expenses
+                    Kembali ke Pengeluaran
                 </a>
             </div>
         </div>

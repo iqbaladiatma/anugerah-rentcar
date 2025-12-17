@@ -18,7 +18,7 @@
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                                 </svg>
                                 <a href="{{ route('vehicles.catalog') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">
-                                    Vehicles
+                                    Kendaraan
                                 </a>
                             </div>
                         </li>
@@ -76,44 +76,44 @@
 
                         <!-- Vehicle Features -->
                         <div class="mb-8">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Vehicle Features</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Fitur Kendaraan</h3>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    Air Conditioning
+                                    Kondisi Udara
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    Manual Transmission
+                                    Transmisi Manual
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    5 Seats
+                                    5 Kursi
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    Power Steering
+                                    Steer
                                 </div>
                                 <div class="flex items-center text-sm text-gray-600">
                                     <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    Audio System
+                                    Sistem Audio
                                 </div>
                                 @if($car->driver_fee_per_day > 0)
                                     <div class="flex items-center text-sm text-blue-600">
                                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                         </svg>
-                                        Driver Available
+                                        Driver Tersedia
                                     </div>
                                 @endif
                             </div>
@@ -121,21 +121,21 @@
 
                         <!-- Pricing Information -->
                         <div class="mb-8">
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Pricing</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Harga</h3>
                             <div class="bg-gray-50 rounded-lg p-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <div class="text-2xl font-bold text-blue-600 mb-1">
                                             Rp {{ number_format($car->daily_rate, 0, ',', '.') }}
                                         </div>
-                                        <p class="text-sm text-gray-600">Per Day</p>
+                                        <p class="text-sm text-gray-600">Per Hari</p>
                                     </div>
                                     @if($car->weekly_rate && $car->weekly_rate < ($car->daily_rate * 7))
                                         <div>
                                             <div class="text-xl font-bold text-green-600 mb-1">
                                                 Rp {{ number_format($car->weekly_rate, 0, ',', '.') }}
                                             </div>
-                                            <p class="text-sm text-gray-600">Per Week (Save {{ number_format(($car->daily_rate * 7) - $car->weekly_rate, 0, ',', '.') }})</p>
+                                            <p class="text-sm text-gray-600">Per Pekan (Save {{ number_format(($car->daily_rate * 7) - $car->weekly_rate, 0, ',', '.') }})</p>
                                         </div>
                                     @endif
                                 </div>
@@ -151,14 +151,14 @@
 
                         <!-- Terms and Conditions -->
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Terms & Conditions</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Syarat & Ketentuan</h3>
                             <div class="text-sm text-gray-600 space-y-2">
-                                <p>• Valid driving license required</p>
-                                <p>• Minimum age 21 years</p>
-                                <p>• Deposit required for booking confirmation</p>
-                                <p>• Fuel to be returned at same level</p>
-                                <p>• Late return charges apply after grace period</p>
-                                <p>• Vehicle inspection required at pickup and return</p>
+                                <p>• SIM yang valid</p>
+                                <p>• Minimum umur 21 tahun</p>
+                                <p>• Deposit diperlukan untuk konfirmasi pemesanan</p>
+                                <p>• Bensin harus dikembalikan pada level yang sama</p>
+                                <p>• Denda dikenakan setelah periode grace</p>
+                                <p>• Pemeriksaan kendaraan diperlukan saat pengambilan dan pengembalian</p>
                             </div>
                         </div>
                     </div>
@@ -167,14 +167,14 @@
                 <!-- Booking Panel -->
                 <div class="lg:col-span-1 mt-8 lg:mt-0">
                     <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100 sticky top-4">
-                        <h3 class="text-xl font-bold text-gray-900 mb-6">Book This Vehicle</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Booking Kendaraan</h3>
                         
                         <form action="{{ route('booking.wizard') }}" method="GET" class="space-y-6">
                             <input type="hidden" name="car_id" value="{{ $car->id }}">
                             
                             <!-- Date Selection -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Pickup Date</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pengambilan</label>
                                 <input type="date" name="start_date" 
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                        min="{{ date('Y-m-d') }}" 
@@ -183,7 +183,7 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Return Date</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pengembalian</label>
                                 <input type="date" name="end_date" 
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                        min="{{ date('Y-m-d', strtotime('+1 day')) }}" 
@@ -197,49 +197,49 @@
                                     <svg class="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    <span class="text-sm font-medium text-green-800">Available for Booking</span>
+                                    <span class="text-sm font-medium text-green-800">Tersedia untuk Booking</span>
                                 </div>
                             </div>
 
                             <!-- Pricing Preview -->
                             <div class="bg-gray-50 rounded-lg p-4">
-                                <h4 class="font-medium text-gray-900 mb-3">Estimated Cost</h4>
+                                <h4 class="font-medium text-gray-900 mb-3">Biaya yang Diperkirakan</h4>
                                 <div class="space-y-2 text-sm">
                                     <div class="flex justify-between">
-                                        <span class="text-gray-600">Daily Rate</span>
+                                        <span class="text-gray-600">Harga Harian</span>
                                         <span class="font-medium">Rp {{ number_format($car->daily_rate, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span class="text-gray-600">Duration</span>
-                                        <span class="font-medium" id="durationDisplay">1 day</span>
+                                        <span class="text-gray-600">Durasi</span>
+                                        <span class="font-medium" id="durationDisplay">1 hari</span>
                                     </div>
                                     <div class="border-t pt-2">
                                         <div class="flex justify-between font-semibold">
-                                            <span>Estimated Total</span>
+                                            <span>Total yang Diperkirakan</span>
                                             <span class="text-blue-600" id="totalDisplay">Rp {{ number_format($car->daily_rate, 0, ',', '.') }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-2">
-                                    *Final price may vary based on additional services and discounts
+                                    *Biaya akhir mungkin berubah berdasarkan layanan tambahan dan diskon
                                 </p>
                             </div>
 
                             <!-- Book Now Button -->
                             <button type="submit" 
                                     class="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg shadow-md hover:shadow-lg">
-                                Book Now
+                                Booking Sekarang
                             </button>
 
                             <!-- Contact Info -->
                             <div class="text-center pt-4 border-t border-gray-200">
-                                <p class="text-sm text-gray-600 mb-2">Need help? Contact us:</p>
+                                <p class="text-sm text-gray-600 mb-2">Butuh bantuan? Hubungi kami:</p>
                                 <div class="space-y-1">
                                     <a href="tel:+6281234567890" class="flex items-center justify-center text-sm text-blue-600 hover:text-blue-800">
                                         <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
                                         </svg>
-                                        +62 812-3456-7890
+                                        +62 897-7777-451
                                     </a>
                                     <a href="https://wa.me/6281234567890" target="_blank" class="flex items-center justify-center text-sm text-green-600 hover:text-green-800">
                                         <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">

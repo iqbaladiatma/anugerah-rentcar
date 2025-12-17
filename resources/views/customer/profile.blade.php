@@ -3,8 +3,8 @@
         <!-- Header -->
         <div class="bg-gray-50 border-b">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h1 class="text-3xl font-bold text-gray-900">My Profile</h1>
-                <p class="mt-2 text-gray-600">Manage your account information and preferences</p>
+                <h1 class="text-3xl font-bold text-gray-900">Profil Saya</h1>
+                <p class="mt-2 text-gray-600">Kelola informasi akun dan preferensi Anda</p>
             </div>
         </div>
 
@@ -41,7 +41,7 @@
                                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    Premium Member
+                                    Anggota Premium
                                 </span>
                             @endif
                         </div>
@@ -56,7 +56,7 @@
                     <div class="grid grid-cols-1 gap-6">
                         <!-- Name -->
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
                             <input type="text" name="name" id="name" value="{{ old('name', $customer->name) }}" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             @error('name')
@@ -66,7 +66,7 @@
 
                         <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Alamat Email</label>
                             <input type="email" name="email" id="email" value="{{ old('email', $customer->email) }}" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             @error('email')
@@ -76,7 +76,7 @@
 
                         <!-- Phone -->
                         <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
                             <input type="tel" name="phone" id="phone" value="{{ old('phone', $customer->phone) }}" required
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             @error('phone')
@@ -86,7 +86,7 @@
 
                         <!-- Address -->
                         <div>
-                            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Alamat</label>
                             <textarea name="address" id="address" rows="3" required
                                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">{{ old('address', $customer->address) }}</textarea>
                             @error('address')
@@ -96,10 +96,10 @@
 
                         <!-- NIK (Read-only) -->
                         <div>
-                            <label for="nik" class="block text-sm font-medium text-gray-700">NIK (Identity Number)</label>
+                            <label for="nik" class="block text-sm font-medium text-gray-700">NIK (Nomor Induk Kependudukan)</label>
                             <input type="text" name="nik" id="nik" value="{{ $customer->nik }}" readonly
                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-500">
-                            <p class="mt-1 text-sm text-gray-500">NIK cannot be changed. Contact support if you need to update this information.</p>
+                            <p class="mt-1 text-sm text-gray-500">NIK tidak dapat diubah. Hubungi dukungan jika Anda perlu memperbarui informasi ini.</p>
                         </div>
                     </div>
 
@@ -107,7 +107,7 @@
                     <div class="mt-6 flex justify-end">
                         <button type="submit" 
                                 class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Update Profile
+                            Perbarui Profil
                         </button>
                     </div>
                 </form>
@@ -116,39 +116,39 @@
             <!-- Account Information -->
             <div class="mt-8 bg-white shadow rounded-lg">
                 <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-medium text-gray-900">Account Information</h3>
+                    <h3 class="text-lg font-medium text-gray-900">Informasi Akun</h3>
                 </div>
                 <div class="p-6">
                     <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
                         <div>
-                            <dt class="text-sm font-medium text-gray-500">Member Since</dt>
+                            <dt class="text-sm font-medium text-gray-500">Anggota Sejak</dt>
                             <dd class="mt-1 text-sm text-gray-900">{{ $customer->created_at->format('M d, Y') }}</dd>
                         </div>
                         <div>
-                            <dt class="text-sm font-medium text-gray-500">Total Bookings</dt>
+                            <dt class="text-sm font-medium text-gray-500">Total Pemesanan</dt>
                             <dd class="mt-1 text-sm text-gray-900">{{ $customer->bookings()->count() }}</dd>
                         </div>
                         <div>
-                            <dt class="text-sm font-medium text-gray-500">Account Status</dt>
+                            <dt class="text-sm font-medium text-gray-500">Status Akun</dt>
                             <dd class="mt-1">
                                 @if($customer->is_blacklisted)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Restricted
+                                        Dibatasi
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        Active
+                                        Aktif
                                     </span>
                                 @endif
                             </dd>
                         </div>
                         <div>
-                            <dt class="text-sm font-medium text-gray-500">Member Discount</dt>
+                            <dt class="text-sm font-medium text-gray-500">Diskon Anggota</dt>
                             <dd class="mt-1 text-sm text-gray-900">
                                 @if($customer->is_member)
                                     {{ $customer->getMemberDiscountPercentage() }}%
                                 @else
-                                    Not a member
+                                    Bukan anggota
                                 @endif
                             </dd>
                         </div>
@@ -159,56 +159,56 @@
             <!-- Document Upload Section -->
             <div class="mt-8 bg-white shadow rounded-lg">
                 <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-medium text-gray-900">Identity Documents</h3>
-                    <p class="mt-1 text-sm text-gray-500">Upload your KTP and driving license for verification</p>
+                    <h3 class="text-lg font-medium text-gray-900">Dokumen Identitas</h3>
+                    <p class="mt-1 text-sm text-gray-500">Unggah KTP dan SIM Anda untuk verifikasi</p>
                 </div>
                 <div class="p-6">
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                         <!-- KTP Photo -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">KTP (Identity Card)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">KTP (Kartu Tanda Penduduk)</label>
                             @if($customer->ktp_photo)
                                 <div class="mb-3">
                                     <img src="{{ asset('storage/' . $customer->ktp_photo) }}" 
                                          alt="KTP" class="h-32 w-full object-cover rounded-md border">
                                 </div>
-                                <p class="text-sm text-green-600 mb-2">✓ KTP uploaded</p>
+                                <p class="text-sm text-green-600 mb-2">✓ KTP diunggah</p>
                             @else
                                 <div class="mb-3 h-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center">
                                     <div class="text-center">
                                         <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                         </svg>
-                                        <p class="text-sm text-gray-500">No KTP uploaded</p>
+                                        <p class="text-sm text-gray-500">Tidak ada KTP yang diunggah</p>
                                     </div>
                                 </div>
                             @endif
                             <button class="text-blue-600 hover:text-blue-500 text-sm font-medium">
-                                {{ $customer->ktp_photo ? 'Update KTP' : 'Upload KTP' }}
+                                {{ $customer->ktp_photo ? 'Perbarui KTP' : 'Unggah KTP' }}
                             </button>
                         </div>
 
                         <!-- SIM Photo -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">SIM (Driving License)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">SIM (Surat Izin Mengemudi)</label>
                             @if($customer->sim_photo)
                                 <div class="mb-3">
                                     <img src="{{ asset('storage/' . $customer->sim_photo) }}" 
                                          alt="SIM" class="h-32 w-full object-cover rounded-md border">
                                 </div>
-                                <p class="text-sm text-green-600 mb-2">✓ SIM uploaded</p>
+                                <p class="text-sm text-green-600 mb-2">✓ SIM diunggah</p>
                             @else
                                 <div class="mb-3 h-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center">
                                     <div class="text-center">
                                         <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                                         </svg>
-                                        <p class="text-sm text-gray-500">No SIM uploaded</p>
+                                        <p class="text-sm text-gray-500">Tidak ada SIM yang diunggah</p>
                                     </div>
                                 </div>
                             @endif
                             <button class="text-blue-600 hover:text-blue-500 text-sm font-medium">
-                                {{ $customer->sim_photo ? 'Update SIM' : 'Upload SIM' }}
+                                {{ $customer->sim_photo ? 'Perbarui SIM' : 'Unggah SIM' }}
                             </button>
                         </div>
                     </div>
@@ -218,10 +218,10 @@
             <!-- Logout Section -->
             <div class="mt-8 bg-white shadow rounded-lg mb-24">
                 <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-medium text-red-600">Danger Zone</h3>
+                    <h3 class="text-lg font-medium text-red-600">Zona Bahaya</h3>
                 </div>
                 <div class="p-6">
-                    <p class="text-sm text-gray-500 mb-4">Once you log out, you will need to log in again to access your account.</p>
+                    <p class="text-sm text-gray-500 mb-4">Setelah Anda keluar, Anda perlu masuk lagi untuk mengakses akun Anda.</p>
                     <form method="POST" action="{{ route('customer.logout') }}">
                         @csrf
                         <button type="submit" 
@@ -229,7 +229,7 @@
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                             </svg>
-                            Log Out
+                            Keluar
                         </button>
                     </form>
                 </div>

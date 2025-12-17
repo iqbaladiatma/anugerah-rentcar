@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - Dashboard</title>
+    <title>{{ config('app.name', 'Laravel') }} - Dasbor</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -19,12 +19,12 @@
                         <h1 class="text-xl font-semibold text-gray-900">Anugerah Rentcar</h1>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <span class="text-sm text-gray-700">Welcome, {{ auth()->user()->name }}</span>
+                        <span class="text-sm text-gray-700">Selamat datang, {{ auth()->user()->name }}</span>
                         <span class="status-badge bg-primary-100 text-primary-800">{{ ucfirst(auth()->user()->role) }}</span>
                         <form method="POST" action="{{ route('logout') }}" class="inline">
                             @csrf
                             <button type="submit" class="btn-secondary text-sm">
-                                Logout
+                                Keluar
                             </button>
                         </form>
                     </div>
@@ -37,31 +37,31 @@
             <div class="px-4 py-6 sm:px-0">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="text-lg font-medium text-gray-900">Dashboard</h2>
+                        <h2 class="text-lg font-medium text-gray-900">Dasbor</h2>
                     </div>
                     <div class="card-body">
-                        <p class="text-gray-600">Welcome to the Anugerah Rentcar Management System!</p>
-                        <p class="text-sm text-gray-500 mt-2">You are logged in as: <strong>{{ auth()->user()->role }}</strong></p>
+                        <p class="text-gray-600">Selamat datang di Sistem Manajemen Anugerah Rentcar!</p>
+                        <p class="text-sm text-gray-500 mt-2">Anda masuk sebagai: <strong>{{ auth()->user()->role }}</strong></p>
                         
                         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="card bg-primary-50 border-primary-200">
                                 <div class="card-body">
-                                    <h3 class="text-lg font-medium text-primary-900">Fleet Management</h3>
-                                    <p class="text-sm text-primary-700 mt-1">Manage vehicles, maintenance, and availability</p>
+                                    <h3 class="text-lg font-medium text-primary-900">Manajemen Armada</h3>
+                                    <p class="text-sm text-primary-700 mt-1">Kelola kendaraan, perawatan, dan ketersediaan</p>
                                 </div>
                             </div>
                             
                             <div class="card bg-success-50 border-success-200">
                                 <div class="card-body">
-                                    <h3 class="text-lg font-medium text-success-900">Booking System</h3>
-                                    <p class="text-sm text-success-700 mt-1">Handle reservations and customer bookings</p>
+                                    <h3 class="text-lg font-medium text-success-900">Sistem Pemesanan</h3>
+                                    <p class="text-sm text-success-700 mt-1">Tangani reservasi dan pemesanan pelanggan</p>
                                 </div>
                             </div>
                             
                             <div class="card bg-warning-50 border-warning-200">
                                 <div class="card-body">
-                                    <h3 class="text-lg font-medium text-warning-900">Reports & Analytics</h3>
-                                    <p class="text-sm text-warning-700 mt-1">Generate reports and view business insights</p>
+                                    <h3 class="text-lg font-medium text-warning-900">Laporan & Analitik</h3>
+                                    <p class="text-sm text-warning-700 mt-1">Buat laporan dan lihat wawasan bisnis</p>
                                 </div>
                             </div>
                         </div>

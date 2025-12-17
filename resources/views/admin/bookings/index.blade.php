@@ -2,14 +2,14 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Booking Management') }}
+                {{ __('Manajemen Pemesanan') }}
             </h2>
             <a href="{{ route('admin.bookings.create') }}" 
                class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:border-indigo-900 focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150">
                 <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                New Booking
+                Pemesanan Baru
             </a>
         </div>
     </x-slot>
@@ -22,11 +22,11 @@
                     <nav class="-mb-px flex space-x-8" aria-label="Tabs">
                         <button onclick="showTab('list')" id="list-tab" 
                                 class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm">
-                            Booking List
+                            Daftar Pemesanan
                         </button>
                         <button onclick="showTab('search')" id="search-tab" 
                                 class="tab-button whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm">
-                            Advanced Search
+                            Pencarian Lanjutan
                         </button>
                     </nav>
                 </div>
@@ -46,27 +46,27 @@
     @push('scripts')
     <script>
         function showTab(tabName) {
-            // Hide all tab contents
+            // Sembunyikan semua konten tab
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.add('hidden');
             });
             
-            // Remove active class from all tabs
+            // Hapus kelas aktif dari semua tab
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active', 'border-indigo-500', 'text-indigo-600');
                 button.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
             });
             
-            // Show selected tab content
+            // Tampilkan konten tab yang dipilih
             document.getElementById(tabName + '-content').classList.remove('hidden');
             
-            // Add active class to selected tab
+            // Tambahkan kelas aktif ke tab yang dipilih
             const activeTab = document.getElementById(tabName + '-tab');
             activeTab.classList.add('active', 'border-indigo-500', 'text-indigo-600');
             activeTab.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
         }
         
-        // Initialize first tab as active
+        // Inisialisasi tab pertama sebagai aktif
         document.addEventListener('DOMContentLoaded', function() {
             const listTab = document.getElementById('list-tab');
             listTab.classList.add('border-indigo-500', 'text-indigo-600');

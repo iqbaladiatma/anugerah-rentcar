@@ -2,17 +2,17 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Edit Maintenance Record') }}
+                {{ __('Edit Record Pemeliharaan') }}
             </h2>
             <div class="flex space-x-2">
                 <a href="{{ route('admin.maintenance.show', $maintenance) }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     <x-icons.arrow-left class="w-4 h-4 inline mr-1" />
-                    Back to Details
+                    Kembali ke Detail
                 </a>
                 <a href="{{ route('admin.maintenance.index') }}" 
                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    Back to List
+                    Kembali ke Daftar
                 </a>
             </div>
         </div>
@@ -31,7 +31,7 @@
                             <div>
                                 <x-input-label for="car_id" :value="__('Vehicle')" />
                                 <select id="car_id" name="car_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                    <option value="">Select Vehicle</option>
+                                    <option value="">Pilih Kendaraan</option>
                                     @foreach($cars as $car)
                                         <option value="{{ $car->id }}" {{ (old('car_id', $maintenance->car_id) == $car->id) ? 'selected' : '' }}>
                                             {{ $car->license_plate }} - {{ $car->brand }} {{ $car->model }}
@@ -45,10 +45,10 @@
                             <div>
                                 <x-input-label for="maintenance_type" :value="__('Maintenance Type')" />
                                 <select id="maintenance_type" name="maintenance_type" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                    <option value="">Select Type</option>
-                                    <option value="routine" {{ old('maintenance_type', $maintenance->maintenance_type) == 'routine' ? 'selected' : '' }}>Routine Maintenance</option>
-                                    <option value="repair" {{ old('maintenance_type', $maintenance->maintenance_type) == 'repair' ? 'selected' : '' }}>Repair</option>
-                                    <option value="inspection" {{ old('maintenance_type', $maintenance->maintenance_type) == 'inspection' ? 'selected' : '' }}>Inspection</option>
+                                    <option value="">Pilih Type</option>
+                                    <option value="routine" {{ old('maintenance_type', $maintenance->maintenance_type) == 'routine' ? 'selected' : '' }}>Pemeliharaan Rutin</option>
+                                    <option value="repair" {{ old('maintenance_type', $maintenance->maintenance_type) == 'repair' ? 'selected' : '' }}>Perbaikan</option>
+                                    <option value="inspection" {{ old('maintenance_type', $maintenance->maintenance_type) == 'inspection' ? 'selected' : '' }}>Inspeksi</option>
                                 </select>
                                 <x-input-error :messages="$errors->get('maintenance_type')" class="mt-2" />
                             </div>
@@ -72,8 +72,12 @@
                             <!-- Cost -->
                             <div>
                                 <x-input-label for="cost" :value="__('Cost (IDR)')" />
-                                <x-text-input id="cost" name="cost" type="number" step="0.01" min="0" class="mt-1 block w-full" 
-                                              :value="old('cost', $maintenance->cost)" required />
+                                <div x-data="currency('{{ old('cost', $maintenance->cost) }}')">
+                                    <x-text-input id="cost_display" type="text" x-model="formatted"
+                                                 class="mt-1 block w-full" 
+                                                 placeholder="0" required />
+                                    <input type="hidden" id="cost" name="cost" x-model="raw">
+                                </div>
                                 <x-input-error :messages="$errors->get('cost')" class="mt-2" />
                             </div>
 
@@ -110,7 +114,7 @@
                                         <img src="{{ $maintenance->receipt_photo_url }}" 
                                              alt="Current Receipt" 
                                              class="h-32 w-auto rounded-lg shadow-sm">
-                                        <p class="mt-1 text-sm text-gray-500">Current receipt photo</p>
+                                        <p class="mt-1 text-sm text-gray-500">Foto Receipt</p>
                                     </div>
                                 </div>
                             @endif
@@ -123,7 +127,7 @@
                                 <p class="mt-1 text-sm text-gray-500">
                                     PNG, JPG up to 2MB. Leave empty to keep current photo.
                                     @if($maintenance->receipt_photo)
-                                        Uploading a new photo will replace the current one.
+                                        Upload a new photo will replace the current one.
                                     @endif
                                 </p>
                                 <x-input-error :messages="$errors->get('receipt_photo')" class="mt-2" />
@@ -136,7 +140,7 @@
                                 Cancel
                             </a>
                             <x-primary-button>
-                                {{ __('Update Maintenance Record') }}
+                                {{ __('Update Record Pemeliharaan') }}
                             </x-primary-button>
                         </div>
                     </form>
@@ -147,7 +151,7 @@
             <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">
-                        Recent Maintenance History for {{ $maintenance->car->license_plate }}
+                        Riwayat Pemeliharaan Terbaru untuk {{ $maintenance->car->license_plate }}
                     </h3>
                     
                     @php
@@ -186,7 +190,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-gray-500 text-sm">No other maintenance records found for this vehicle.</p>
+                        <p class="text-gray-500 text-sm">Tidak ada riwayat pemeliharaan lainnya untuk kendaraan ini.</p>
                     @endif
                 </div>
             </div>

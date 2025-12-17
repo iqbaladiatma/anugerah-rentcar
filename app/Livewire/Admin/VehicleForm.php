@@ -87,13 +87,13 @@ class VehicleForm extends Component
     }
 
     protected $messages = [
-        'license_plate.unique' => 'This license plate is already registered.',
-        'stnk_expiry.after' => 'STNK expiry date must be in the future.',
-        'last_oil_change.before_or_equal' => 'Last oil change date cannot be in the future.',
-        'photo_front.image' => 'Front photo must be an image file.',
-        'photo_side.image' => 'Side photo must be an image file.',
-        'photo_back.image' => 'Back photo must be an image file.',
-        '*.max' => 'The file size must not exceed 2MB.',
+        'license_plate.unique' => 'Plat nomor ini sudah terdaftar.',
+        'stnk_expiry.after' => 'Tanggal kadaluarsa STNK harus di masa depan.',
+        'last_oil_change.before_or_equal' => 'Tanggal ganti oli terakhir tidak boleh di masa depan.',
+        'photo_front.image' => 'Foto depan harus berupa file gambar.',
+        'photo_side.image' => 'Foto samping harus berupa file gambar.',
+        'photo_back.image' => 'Foto belakang harus berupa file gambar.',
+        '*.max' => 'Ukuran file tidak boleh melebihi 2MB.',
     ];
 
     public function mount(?Car $vehicle = null)
@@ -115,7 +115,7 @@ class VehicleForm extends Component
         $this->weekly_rate = 0;
         $this->driver_fee_per_day = 0;
         
-        if ($vehicle) {
+        if ($vehicle && $vehicle->exists) {
             $this->vehicle = $vehicle;
             $this->isEditing = true;
             $this->fillFromVehicle();
@@ -215,25 +215,23 @@ class VehicleForm extends Component
 
         if ($this->isEditing) {
             $this->vehicle->update($data);
-            session()->flash('success', 'Vehicle updated successfully.');
+            session()->flash('success', 'Kendaraan berhasil diperbarui.');
         } else {
             $vehicle = Car::create($data);
-            session()->flash('success', 'Vehicle created successfully.');
+            session()->flash('success', 'Kendaraan berhasil dibuat.');
             return redirect()->route('admin.vehicles.show', $vehicle);
         }
     }
-
-
 
     public function render()
     {
         return view('livewire.admin.vehicle-form', [
             'vehicle' => $this->vehicle,
             'statusOptions' => [
-                Car::STATUS_AVAILABLE => 'Available',
-                Car::STATUS_MAINTENANCE => 'Maintenance',
-                Car::STATUS_INACTIVE => 'Inactive',
-                ...$this->isEditing ? [Car::STATUS_RENTED => 'Rented'] : []
+                Car::STATUS_AVAILABLE => 'Tersedia',
+                Car::STATUS_MAINTENANCE => 'Perawatan',
+                Car::STATUS_INACTIVE => 'Tidak Aktif',
+                ...$this->isEditing ? [Car::STATUS_RENTED => 'Disewa'] : []
             ],
         ]);
     }

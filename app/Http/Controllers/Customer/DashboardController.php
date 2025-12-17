@@ -149,6 +149,70 @@ class DashboardController extends Controller
     }
 
     /**
+     * Show payment confirmation page.
+     */
+    public function showPayment(Booking $booking)
+    {
+        $customer = auth('customer')->user();
+        
+        // Ensure the booking belongs to the authenticated customer
+        if ($booking->customer_id !== $customer->id) {
+            abort(403, 'Unauthorized access to booking.');
+        }
+
+        // Only allow payment upload for pending payments
+        if ($booking->payment_status !== 'pending') {
+            return back()->with('error', 'Payment confirmation is only available for pending payments.');
+        }
+
+        return view('customer.payment-confirmation', compact('booking'));
+    }
+
+    /**
+     * Submit payment proof.
+     */
+    public function submitPayment(Request $request, Booking $booking)
+    {
+        $customer = auth('customer')->user();
+        
+        // Ensure the booking belongs to the authenticated customer
+        if ($booking->customer_id !== $customer->id) {
+            abort(403, 'Unauthorized access to booking.');
+        }
+
+        $request->validate([
+            'payment_proof' => ['required', 'image', 'max:5120'], // 5MB max
+            'payment_type' => ['required', 'in:deposit,full'],
+            'notes' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        // Store payment proof
+        $path = $request->file('payment_proof')->store('payment-proofs', 'public');
+
+        // Calculate paid amount based on payment type
+        $paidAmount = $request->payment_type === 'full' 
+            ? $booking->total_amount 
+            : $booking->deposit_amount;
+
+        // Update booking with payment proof
+
+        $booking->update([
+            'payment_proof' => $path,
+            'payment_notes' => $request->notes,
+            'payment_type' => $request->payment_type,
+            'paid_amount' => $paidAmount,
+            'payment_status' => Booking::PAYMENT_VERIFYING,
+        ]);
+
+        $message = $request->payment_type === 'full'
+            ? 'Bukti pembayaran lunas berhasil diupload. Menunggu verifikasi admin.'
+            : 'Bukti pembayaran deposit berhasil diupload. Sisanya dibayar setelah mobil dikembalikan.';
+
+        return redirect()->route('customer.bookings.show', $booking)
+            ->with('success', $message);
+    }
+
+    /**
      * Show booking modification form.
      */
     public function editBooking(Booking $booking)

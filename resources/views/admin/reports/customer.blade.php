@@ -1,7 +1,7 @@
 <x-admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Customer Reports') }}
+            {{ __('Laporan Pelanggan') }}
         </h2>
     </x-slot>
 
@@ -10,33 +10,33 @@
             <!-- Filters -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Report Filters</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Filter Laporan</h3>
                     <form method="GET" action="{{ route('admin.reports.customer') }}" class="grid grid-cols-1 md:grid-cols-5 gap-4">
                         <div>
-                            <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                            <label for="start_date" class="block text-sm font-medium text-gray-700">Tanggal Mulai</label>
                             <input type="date" name="start_date" id="start_date" 
                                    value="{{ request('start_date', now()->subYear()->format('Y-m-d')) }}"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>
                         <div>
-                            <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
+                            <label for="end_date" class="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
                             <input type="date" name="end_date" id="end_date" 
                                    value="{{ request('end_date', now()->format('Y-m-d')) }}"
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>
                         <div>
-                            <label for="member_status" class="block text-sm font-medium text-gray-700">Member Status</label>
+                            <label for="member_status" class="block text-sm font-medium text-gray-700">Status Member</label>
                             <select name="member_status" id="member_status" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                <option value="all" {{ request('member_status') === 'all' ? 'selected' : '' }}>All Customers</option>
-                                <option value="members" {{ request('member_status') === 'members' ? 'selected' : '' }}>Members Only</option>
-                                <option value="non_members" {{ request('member_status') === 'non_members' ? 'selected' : '' }}>Non-Members Only</option>
+                                <option value="all" {{ request('member_status') === 'all' ? 'selected' : '' }}>Semua Pelanggan</option>
+                                <option value="members" {{ request('member_status') === 'members' ? 'selected' : '' }}>Member Hanya</option>
+                                <option value="non_members" {{ request('member_status') === 'non_members' ? 'selected' : '' }}>Non-Member Hanya</option>
                             </select>
                         </div>
                         <div class="flex items-end">
                             <button type="submit" 
                                     class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                Generate Report
+                                Generate Laporan
                             </button>
                         </div>
                         <div class="flex items-end space-x-2">
@@ -63,27 +63,27 @@
                     <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
                         <div class="text-center">
                             <div class="text-2xl font-bold text-blue-600">{{ number_format($reportData['summary']['total_customers']) }}</div>
-                            <div class="text-sm text-gray-500">Total Customers</div>
+                            <div class="text-sm text-gray-500">Total Pelanggan</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-green-600">{{ number_format($reportData['summary']['active_customers']) }}</div>
-                            <div class="text-sm text-gray-500">Active Customers</div>
+                            <div class="text-sm text-gray-500">Pelanggan Aktif</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-purple-600">{{ number_format($reportData['summary']['member_customers']) }}</div>
-                            <div class="text-sm text-gray-500">Members</div>
+                            <div class="text-sm text-gray-500">Member Hanya</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-red-600">{{ number_format($reportData['summary']['blacklisted_customers']) }}</div>
-                            <div class="text-sm text-gray-500">Blacklisted</div>
+                            <div class="text-sm text-gray-500">Pelanggan Diblokir</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-indigo-600">{{ number_format($reportData['summary']['total_bookings']) }}</div>
-                            <div class="text-sm text-gray-500">Total Bookings</div>
+                            <div class="text-sm text-gray-500">Total Peminjaman</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-yellow-600">Rp {{ number_format($reportData['summary']['total_revenue'], 0, ',', '.') }}</div>
-                            <div class="text-sm text-gray-500">Total Revenue</div>
+                            <div class="text-sm text-gray-500">Total Pendapatan</div>
                         </div>
                     </div>
                 </div>
@@ -92,18 +92,18 @@
             <!-- Customer Details -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Customer Details</h3>
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Detail Pelanggan</h3>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelanggan</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bookings</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Value</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frequency</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Booking</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Peminjaman</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pendapatan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nilai Rata-rata</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frekuensi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Peminjaman Terakhir</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -123,7 +123,7 @@
                                                 <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Member</span>
                                             @endif
                                             @if($customerData['customer']->is_blacklisted)
-                                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Blacklisted</span>
+                                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Pelanggan Diblokir</span>
                                             @endif
                                         </div>
                                     </td>
@@ -150,7 +150,7 @@
                                 @empty
                                 <tr>
                                     <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                        No customers found for the selected criteria.
+                                        Tidak ada pelanggan ditemukan untuk kriteria yang dipilih.
                                     </td>
                                 </tr>
                                 @endforelse

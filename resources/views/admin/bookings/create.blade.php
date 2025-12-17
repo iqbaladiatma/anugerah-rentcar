@@ -2,14 +2,14 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Create New Booking') }}
+                {{ __('Buat Pemesanan Baru') }}
             </h2>
             <a href="{{ route('admin.bookings.index') }}" 
                class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                 <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Back to Bookings
+                Kembali ke Pemesanan
             </a>
         </div>
     </x-slot>
@@ -26,16 +26,16 @@
                 <div class="bg-white shadow rounded-lg p-6">
                     <div class="flex items-center justify-between">
                         <div class="text-sm text-gray-600">
-                            Please review all booking details and pricing before creating the booking.
+                            Mohon tinjau semua detail pemesanan dan harga sebelum membuat pemesanan.
                         </div>
                         <div class="flex space-x-3">
                             <a href="{{ route('admin.bookings.index') }}" 
                                class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Cancel
+                                Batal
                             </a>
                             <button type="submit" 
                                     class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Create Booking
+                                Buat Pemesanan
                             </button>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
 
             if (hasErrors) {
                 e.preventDefault();
-                alert('Please fill in all required booking details and ensure pricing is calculated.');
+                alert('Harap isi semua detail pemesanan yang diperlukan dan pastikan harga telah dihitung.');
                 return false;
             }
         });

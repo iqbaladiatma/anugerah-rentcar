@@ -3,13 +3,13 @@
     <div class="mb-6">
         <div class="flex justify-between items-center">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900">Vehicle Management</h2>
-                <p class="text-gray-600">Manage your fleet of rental vehicles</p>
+                <h2 class="text-2xl font-bold text-gray-900">Manajemen Kendaraan</h2>
+                <p class="text-gray-600">Kelola armada kendaraan sewaan Anda</p>
             </div>
             <a href="{{ route('admin.vehicles.create') }}" 
                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
                 <x-icons.plus class="w-5 h-5" />
-                Add Vehicle
+                Tambah Kendaraan
             </a>
         </div>
     </div>
@@ -19,10 +19,10 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <!-- Search -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Cari</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="search"
-                       placeholder="License plate, brand, model..."
+                       placeholder="Plat nomor, merek, model..."
                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
             </div>
 
@@ -31,7 +31,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select wire:model.live="status" 
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">All Status</option>
+                    <option value="">Semua Status</option>
                     @foreach($statusOptions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                     @endforeach
@@ -44,14 +44,14 @@
                     <input type="checkbox" 
                            wire:model.live="showMaintenanceDue"
                            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                    <span class="ml-2 text-sm text-gray-700">Maintenance Due Only</span>
+                    <span class="ml-2 text-sm text-gray-700">Hanya Perlu Perawatan</span>
                 </label>
             </div>
 
             <!-- Results Count -->
             <div class="flex items-end justify-end">
                 <span class="text-sm text-gray-600">
-                    {{ $vehicles->total() }} vehicles found
+                    {{ $vehicles->total() }} kendaraan ditemukan
                 </span>
             </div>
         </div>
@@ -66,7 +66,7 @@
                         <th wire:click="sortBy('license_plate')" 
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                             <div class="flex items-center gap-1">
-                                License Plate
+                                Plat Nomor
                                 @if($sortBy === 'license_plate')
                                     @if($sortDirection === 'asc')
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -81,7 +81,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Vehicle Info
+                            Info Kendaraan
                         </th>
                         <th wire:click="sortBy('status')" 
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
@@ -103,7 +103,7 @@
                         <th wire:click="sortBy('daily_rate')" 
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                             <div class="flex items-center gap-1">
-                                Daily Rate
+                                Tarif Harian
                                 @if($sortBy === 'daily_rate')
                                     @if($sortDirection === 'asc')
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -118,10 +118,10 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Notifications
+                            Notifikasi
                         </th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            Aksi
                         </th>
                     </tr>
                 </thead>
@@ -182,22 +182,22 @@
                                                     @else bg-yellow-100 text-yellow-800
                                                     @endif">
                                                     @if($notification['type'] === 'oil_change')
-                                                        Oil Change Due
+                                                        Ganti Oli Diperlukan
                                                     @elseif($notification['type'] === 'stnk_expiry')
-                                                        STNK Expiring
+                                                        STNK Kadaluarsa
                                                     @endif
                                                 </span>
                                             </div>
                                         @endforeach
                                     </div>
                                 @else
-                                    <span class="text-gray-400">No issues</span>
+                                    <span class="text-gray-400">Tidak ada masalah</span>
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('admin.vehicles.show', $vehicle) }}" 
-                                       class="text-blue-600 hover:text-blue-900">View</a>
+                                       class="text-blue-600 hover:text-blue-900">Lihat</a>
                                     <a href="{{ route('admin.vehicles.edit', $vehicle) }}" 
                                        class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </div>
@@ -208,8 +208,8 @@
                             <td colspan="6" class="px-6 py-12 text-center">
                                 <div class="text-gray-500">
                                     <x-icons.car class="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                                    <p class="text-lg font-medium">No vehicles found</p>
-                                    <p class="text-sm">Get started by adding your first vehicle to the fleet.</p>
+                                    <p class="text-lg font-medium">Tidak ada kendaraan ditemukan</p>
+                                    <p class="text-sm">Mulai dengan menambahkan kendaraan pertama Anda ke armada.</p>
                                 </div>
                             </td>
                         </tr>

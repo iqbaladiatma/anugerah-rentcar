@@ -2,7 +2,7 @@
     <!-- Quick Actions -->
     <div class="mb-6">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-medium text-gray-900">Maintenance Scheduler</h3>
+            <h3 class="text-lg font-medium text-gray-900">Jadwal Pemeliharaan</h3>
             <button wire:click="toggleScheduleForm" 
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 @if($showScheduleForm)
@@ -11,7 +11,7 @@
                     <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
                     </svg>
-                    Schedule Maintenance
+                    Jadwal Pemeliharaan
                 @endif
             </button>
         </div>
@@ -19,15 +19,15 @@
         <!-- Schedule Form -->
         @if($showScheduleForm)
             <div class="bg-gray-50 p-6 rounded-lg mb-6">
-                <h4 class="text-md font-medium text-gray-900 mb-4">Schedule New Maintenance</h4>
+                <h4 class="text-md font-medium text-gray-900 mb-4">Jadwal Pemeliharaan Baru</h4>
                 
                 <form wire:submit="scheduleMaintenance">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- Vehicle Selection -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mobil</label>
                             <select wire:model="carId" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                <option value="">Select Vehicle</option>
+                                <option value="">Pilih Mobil</option>
                                 @foreach($cars as $car)
                                     <option value="{{ $car->id }}">{{ $car->license_plate }} - {{ $car->brand }} {{ $car->model }}</option>
                                 @endforeach
@@ -37,7 +37,7 @@
 
                         <!-- Maintenance Type -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Pemeliharaan</label>
                             <select wire:model="maintenanceType" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                 @foreach($maintenanceTypes as $key => $label)
                                     <option value="{{ $key }}">{{ $label }}</option>
@@ -48,7 +48,7 @@
 
                         <!-- Scheduled Date -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Scheduled Date</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Pemeliharaan</label>
                             <input type="date" wire:model="scheduledDate" 
                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             @error('scheduledDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -56,7 +56,7 @@
 
                         <!-- Estimated Cost -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Estimated Cost (IDR)</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Biaya Pemeliharaan (IDR)</label>
                             <input type="number" wire:model="estimatedCost" step="0.01" min="0"
                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             @error('estimatedCost') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -64,7 +64,7 @@
 
                         <!-- Service Provider -->
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Service Provider</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Pemasangan</label>
                             <input type="text" wire:model="serviceProvider" 
                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             @error('serviceProvider') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -72,7 +72,7 @@
 
                         <!-- Description -->
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
                             <textarea wire:model="description" rows="3"
                                       class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                             @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -86,7 +86,7 @@
                         </button>
                         <button type="submit" 
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Schedule Maintenance
+                            Jadwal Pemeliharaan
                         </button>
                     </div>
                 </form>
@@ -105,7 +105,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-lg font-medium text-red-900">Overdue Maintenance</h3>
+                    <h3 class="text-lg font-medium text-red-900">Pemeliharaan Terlambat</h3>
                     <p class="text-2xl font-bold text-red-600">{{ $overdueMaintenance->count() }}</p>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                             </div>
                             <button wire:click="quickScheduleOilChange({{ $maintenance->car_id }})"
                                     class="text-xs bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded">
-                                Schedule
+                                Jadwal Pemeliharaan
                             </button>
                         </div>
                     @endforeach
@@ -136,7 +136,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-lg font-medium text-yellow-900">Due Soon (7 days)</h3>
+                    <h3 class="text-lg font-medium text-yellow-900">Pemeliharaan Segera (7 hari)</h3>
                     <p class="text-2xl font-bold text-yellow-600">{{ $dueSoonMaintenance->count() }}</p>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                             </div>
                             <button wire:click="quickScheduleOilChange({{ $maintenance->car_id }})"
                                     class="text-xs bg-yellow-600 hover:bg-yellow-700 text-white px-2 py-1 rounded">
-                                Schedule
+                                Jadwal Pemeliharaan
                             </button>
                         </div>
                     @endforeach
@@ -167,7 +167,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-lg font-medium text-green-900">Upcoming Scheduled</h3>
+                    <h3 class="text-lg font-medium text-green-900">Pemeliharaan Upcoming</h3>
                     <p class="text-2xl font-bold text-green-600">{{ $upcomingMaintenance->count() }}</p>
                 </div>
             </div>
@@ -192,8 +192,8 @@
     <!-- Quick Actions for Vehicles -->
     <div class="bg-white shadow overflow-hidden sm:rounded-md">
         <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Quick Actions</h3>
-            <p class="mt-1 text-sm text-gray-500">Schedule common maintenance tasks for your vehicles</p>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Aksi Cepat</h3>
+            <p class="mt-1 text-sm text-gray-500">Jadwal tugas pemeliharaan umum untuk mobil Anda</p>
         </div>
 
         <div class="divide-y divide-gray-200">
@@ -222,7 +222,7 @@
                     <div class="flex space-x-2">
                         <button wire:click="quickScheduleOilChange({{ $car->id }})"
                                 class="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-1 px-3 rounded">
-                            Oil Change
+                            Pemeliharaan Oli
                         </button>
                         @if($car->stnk_expiry)
                             <button wire:click="quickScheduleStnkRenewal({{ $car->id }})"
@@ -240,7 +240,7 @@
     @if($upcomingMaintenance->count() > 0)
         <div class="mt-6 bg-white shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Upcoming Maintenance Schedule</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Jadwal Pemeliharaan Upcoming</h3>
             </div>
             <div class="divide-y divide-gray-200">
                 @foreach($upcomingMaintenance as $maintenance)
