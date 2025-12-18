@@ -12,14 +12,15 @@
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                    Tambah Kendaraan Baru
+                    Edit Kendaraan - <?php echo e($car->license_plate); ?>
+
                 </h1>
                 <p class="mt-1 text-sm text-gray-500">
-                    Tambahkan kendaraan baru ke armada rental Anda dengan informasi lengkap dan foto.
+                    Update kendaraan informasi, foto, dan detail pemeliharaan.
                 </p>
             </div>
             <div class="flex items-center space-x-3">
-                <a href="<?php echo e(route('admin.vehicles.index')); ?>" 
+                <a href="<?php echo e(route('admin.vehicles.show', $car)); ?>" 
                    class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     <?php if (isset($component)) { $__componentOriginaldaf5ec6ced2e3a1b979bb241323f28e7 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginaldaf5ec6ced2e3a1b979bb241323f28e7 = $attributes; } ?>
@@ -52,11 +53,11 @@
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('admin.vehicle-form', []);
+[$__name, $__params] = $__split('admin.vehicle-form', ['vehicle' => $car]);
 
 $key = null;
 
-$key ??= \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::generateKey('lw-1773101980-0', null);
+$key ??= \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::generateKey('lw-2400679163-0', null);
 
 $__html = app('livewire')->mount($__name, $__params, $key);
 
@@ -78,4 +79,4 @@ if (isset($__slots)) unset($__slots);
 <?php if (isset($__componentOriginal91fdd17964e43374ae18c674f95cdaa3)): ?>
 <?php $component = $__componentOriginal91fdd17964e43374ae18c674f95cdaa3; ?>
 <?php unset($__componentOriginal91fdd17964e43374ae18c674f95cdaa3); ?>
-<?php endif; ?><?php /**PATH C:\laragon\www\anugerah-rentcar\resources\views/admin/vehicles/create.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH C:\laragon\www\anugerah-rentcar\resources\views/admin/vehicles/edit.blade.php ENDPATH**/ ?>

@@ -140,18 +140,18 @@
     <!-- Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Trend Chart -->
-        <div class="bg-white p-6 rounded-lg shadow">
+        <div class="bg-white p-6 rounded-lg shadow" x-data="trendChart(@js($trendData))">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Tren 12 Bulan</h3>
             <div class="h-64">
-                <canvas id="trendChart" width="400" height="200"></canvas>
+                <canvas x-ref="canvas" width="400" height="200"></canvas>
             </div>
         </div>
 
         <!-- Category Breakdown -->
-        <div class="bg-white p-6 rounded-lg shadow">
+        <div class="bg-white p-6 rounded-lg shadow" x-data="categoryChart(@js($categoryBreakdown))">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Penjelasan Kategori</h3>
             <div class="h-64">
-                <canvas id="categoryChart" width="400" height="200"></canvas>
+                <canvas x-ref="canvas" width="400" height="200"></canvas>
             </div>
         </div>
     </div>
@@ -221,93 +221,6 @@
     </div>
     @endif
 
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Trend Chart
-            const trendCtx = document.getElementById('trendChart').getContext('2d');
-            const trendData = @json($trendData);
-            
-            new Chart(trendCtx, {
-                type: 'line',
-                data: {
-                    labels: trendData.map(item => item.short_month),
-                    datasets: [{
-                        label: 'Monthly Expenses',
-                        data: trendData.map(item => item.total),
-                        borderColor: 'rgb(59, 130, 246)',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return new Intl.NumberFormat('id-ID').format(value);
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return 'Amount: ' + new Intl.NumberFormat('id-ID', {
-                                        style: 'currency',
-                                        currency: 'IDR'
-                                    }).format(context.parsed.y);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Category Chart
-            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-            const categoryData = @json($categoryBreakdown);
-            
-            new Chart(categoryCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: categoryData.map(item => item.label),
-                    datasets: [{
-                        data: categoryData.map(item => item.total),
-                        backgroundColor: [
-                            '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = new Intl.NumberFormat('id-ID', {
-                                        style: 'currency',
-                                        currency: 'IDR'
-                                    }).format(context.parsed);
-                                    const percentage = ((context.parsed / categoryData.reduce((sum, item) => sum + item.total, 0)) * 100).toFixed(1);
-                                    return `${label}: ${value} (${percentage}%)`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script>
-    @endpush
-
     <!-- Flash Messages -->
     @if (session()->has('info'))
         <div class="fixed top-4 right-4 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded z-50"
@@ -317,4 +230,116 @@
             {{ session('info') }}
         </div>
     @endif
+
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @endpush
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('trendChart', (data) => ({
+                chart: null,
+                init() {
+                    this.renderChart(data);
+                    
+                    this.$watch('data', (newData) => {
+                        this.renderChart(newData);
+                    });
+                },
+                renderChart(chartData) {
+                    if (this.chart) {
+                        this.chart.destroy();
+                    }
+
+                    const ctx = this.$refs.canvas.getContext('2d');
+                    
+                    this.chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: chartData.map(item => item.short_month),
+                            datasets: [{
+                                label: 'Monthly Expenses',
+                                data: chartData.map(item => item.total),
+                                borderColor: 'rgb(59, 130, 246)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return new Intl.NumberFormat('id-ID').format(value);
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            return 'Amount: ' + new Intl.NumberFormat('id-ID', {
+                                                style: 'currency',
+                                                currency: 'IDR'
+                                            }).format(context.parsed.y);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }));
+
+            Alpine.data('categoryChart', (data) => ({
+                chart: null,
+                init() {
+                    this.renderChart(data);
+                },
+                renderChart(chartData) {
+                    if (this.chart) {
+                        this.chart.destroy();
+                    }
+
+                    const ctx = this.$refs.canvas.getContext('2d');
+                    
+                    this.chart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: chartData.map(item => item.label),
+                            datasets: [{
+                                data: chartData.map(item => item.total),
+                                backgroundColor: [
+                                    '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const label = context.label || '';
+                                            const value = new Intl.NumberFormat('id-ID', {
+                                                style: 'currency',
+                                                currency: 'IDR'
+                                            }).format(context.parsed);
+                                            const percentage = ((context.parsed / chartData.reduce((sum, item) => sum + item.total, 0)) * 100).toFixed(1);
+                                            return `${label}: ${value} (${percentage}%)`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }));
+        });
+    </script>
 </div>

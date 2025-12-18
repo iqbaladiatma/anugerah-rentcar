@@ -12,11 +12,10 @@
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                    Vehicle Management
+                    Armada Kendaraan
                 </h1>
                 <p class="mt-1 text-sm text-gray-500">
-                    Manage your fleet of rental vehicles, track maintenance, and monitor availability.
-                </p>
+                    Kelola armada kendaraan sewaan Anda, lacak pemeliharaan, dan pantau ketersediaan</p>
             </div>
             <div class="flex items-center space-x-3">
                 <a href="<?php echo e(route('admin.vehicles.maintenance-due')); ?>" 
@@ -41,7 +40,7 @@
 <?php $component = $__componentOriginal50223666bec62b112c67eeabf671c0cf; ?>
 <?php unset($__componentOriginal50223666bec62b112c67eeabf671c0cf); ?>
 <?php endif; ?>
-                    Maintenance Due
+                    Pemeliharaan yang Harus Dilakukan
                 </a>
                 <a href="<?php echo e(route('admin.vehicles.create')); ?>" 
                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -65,7 +64,7 @@
 <?php $component = $__componentOriginal52632fe7b137108a4c1d9fb6383ade19; ?>
 <?php unset($__componentOriginal52632fe7b137108a4c1d9fb6383ade19); ?>
 <?php endif; ?>
-                    Add Vehicle
+                    Tambah Kendaraan
                 </a>
             </div>
         </div>

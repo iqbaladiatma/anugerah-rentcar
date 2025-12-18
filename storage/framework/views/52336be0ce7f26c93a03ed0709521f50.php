@@ -138,16 +138,16 @@
                             <h3 class="text-lg font-bold text-green-900">Pemilik Kendaraan Terbaik</h3>
                         </div>
                         <div class="space-y-2">
-                            <div class="text-xl font-bold text-gray-900"><?php echo e($reportData['summary']['best_performer']->brand); ?> <?php echo e($reportData['summary']['best_performer']->model); ?></div>
-                            <div class="text-sm text-gray-600"><?php echo e($reportData['summary']['best_performer']->license_plate); ?></div>
+                            <div class="text-xl font-bold text-gray-900"><?php echo e($reportData['summary']['best_performer']['vehicle']->brand); ?> <?php echo e($reportData['summary']['best_performer']['vehicle']->model); ?></div>
+                            <div class="text-sm text-gray-600"><?php echo e($reportData['summary']['best_performer']['vehicle']->license_plate); ?></div>
                             <div class="grid grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <div class="text-xs text-gray-500">Revenue</div>
-                                    <div class="text-lg font-bold text-green-600">Rp <?php echo e(number_format($reportData['summary']['best_performer']->revenue ?? 0, 0, ',', '.')); ?></div>
+                                    <div class="text-lg font-bold text-green-600">Rp <?php echo e(number_format($reportData['summary']['best_performer']['revenue'] ?? 0, 0, ',', '.')); ?></div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-500">Net Profit</div>
-                                    <div class="text-lg font-bold text-green-600">Rp <?php echo e(number_format($reportData['summary']['best_performer']->net_profit ?? 0, 0, ',', '.')); ?></div>
+                                    <div class="text-lg font-bold text-green-600">Rp <?php echo e(number_format($reportData['summary']['best_performer']['net_profit'] ?? 0, 0, ',', '.')); ?></div>
                                 </div>
                             </div>
                         </div>
@@ -164,17 +164,17 @@
                             <h3 class="text-lg font-bold text-red-900">Perlu Perhatian</h3>
                         </div>
                         <div class="space-y-2">
-                            <div class="text-xl font-bold text-gray-900"><?php echo e($reportData['summary']['worst_performer']->brand); ?> <?php echo e($reportData['summary']['worst_performer']->model); ?></div>
-                            <div class="text-sm text-gray-600"><?php echo e($reportData['summary']['worst_performer']->license_plate); ?></div>
+                            <div class="text-xl font-bold text-gray-900"><?php echo e($reportData['summary']['worst_performer']['vehicle']->brand); ?> <?php echo e($reportData['summary']['worst_performer']['vehicle']->model); ?></div>
+                            <div class="text-sm text-gray-600"><?php echo e($reportData['summary']['worst_performer']['vehicle']->license_plate); ?></div>
                             <div class="grid grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <div class="text-xs text-gray-500">Revenue</div>
-                                    <div class="text-lg font-bold text-gray-600">Rp <?php echo e(number_format($reportData['summary']['worst_performer']->revenue ?? 0, 0, ',', '.')); ?></div>
+                                    <div class="text-lg font-bold text-gray-600">Rp <?php echo e(number_format($reportData['summary']['worst_performer']['revenue'] ?? 0, 0, ',', '.')); ?></div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-500">Net Profit</div>
-                                    <div class="text-lg font-bold <?php echo e(($reportData['summary']['worst_performer']->net_profit ?? 0) >= 0 ? 'text-green-600' : 'text-red-600'); ?>">
-                                        Rp <?php echo e(number_format($reportData['summary']['worst_performer']->net_profit ?? 0, 0, ',', '.')); ?>
+                                    <div class="text-lg font-bold <?php echo e(($reportData['summary']['worst_performer']['net_profit'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600'); ?>">
+                                        Rp <?php echo e(number_format($reportData['summary']['worst_performer']['net_profit'] ?? 0, 0, ',', '.')); ?>
 
                                     </div>
                                 </div>
@@ -205,37 +205,37 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $reportData['vehicles']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vehicle): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $reportData['vehicles']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr class="<?php echo e($loop->iteration % 2 == 0 ? 'bg-gray-50' : ''); ?>">
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900"><?php echo e($vehicle->brand); ?> <?php echo e($vehicle->model); ?></div>
-                                        <div class="text-sm text-gray-500"><?php echo e($vehicle->license_plate); ?></div>
+                                        <div class="text-sm font-medium text-gray-900"><?php echo e($data['vehicle']->brand); ?> <?php echo e($data['vehicle']->model); ?></div>
+                                        <div class="text-sm text-gray-500"><?php echo e($data['vehicle']->license_plate); ?></div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        Rp <?php echo e(number_format($vehicle->revenue ?? 0, 0, ',', '.')); ?>
+                                        Rp <?php echo e(number_format($data['revenue'] ?? 0, 0, ',', '.')); ?>
 
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">
-                                        Rp <?php echo e(number_format($vehicle->maintenance_costs ?? 0, 0, ',', '.')); ?>
+                                        Rp <?php echo e(number_format($data['maintenance_costs'] ?? 0, 0, ',', '.')); ?>
 
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold <?php echo e(($vehicle->net_profit ?? 0) >= 0 ? 'text-green-600' : 'text-red-600'); ?>">
-                                        Rp <?php echo e(number_format($vehicle->net_profit ?? 0, 0, ',', '.')); ?>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold <?php echo e(($data['net_profit'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600'); ?>">
+                                        Rp <?php echo e(number_format($data['net_profit'] ?? 0, 0, ',', '.')); ?>
 
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm <?php echo e(($vehicle->profit_margin ?? 0) >= 0 ? 'text-green-600' : 'text-red-600'); ?>">
-                                        <?php echo e(number_format($vehicle->profit_margin ?? 0, 1)); ?>%
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm <?php echo e(($data['profit_margin'] ?? 0) >= 0 ? 'text-green-600' : 'text-red-600'); ?>">
+                                        <?php echo e(number_format($data['profit_margin'] ?? 0, 1)); ?>%
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        <?php echo e(number_format($vehicle->total_bookings ?? 0)); ?>
+                                        <?php echo e(number_format($data['vehicle']->bookings->count() ?? 0)); ?>
 
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(($vehicle->net_profit ?? 0) > 0): ?>
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(($data['net_profit'] ?? 0) > 0): ?>
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                 Profitable
                                             </span>
-                                        <?php elseif(($vehicle->net_profit ?? 0) == 0): ?>
+                                        <?php elseif(($data['net_profit'] ?? 0) == 0): ?>
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
                                                 Break Even
                                             </span>

@@ -95,7 +95,7 @@
     <div class="header">
         <div class="company-name">Anugerah Rentcar</div>
         <div class="report-title">Analisis Keuntungan</div>
-        <div class="period">Periode: {{ $reportData['period']['start_date'] }} to {{ $reportData['period']['end_date'] }}</div>
+        <div class="period">Periode: <?php echo e($reportData['period']['start_date']); ?> to <?php echo e($reportData['period']['end_date']); ?></div>
     </div>
 
     <div class="summary-box">
@@ -103,31 +103,47 @@
         <div class="summary-grid">
             <div class="summary-item">
                 <span>Total Kendaraan:</span>
-                <span>{{ number_format($reportData['summary']['total_vehicles']) }}</span>
+                <span><?php echo e(number_format($reportData['summary']['total_vehicles'])); ?></span>
             </div>
             <div class="summary-item">
                 <span>Kendaraan Profitable:</span>
-                <span>{{ number_format($reportData['summary']['profitable_vehicles']) }}</span>
+                <span><?php echo e(number_format($reportData['summary']['profitable_vehicles'])); ?></span>
             </div>
             <div class="summary-item">
                 <span>Total Pendapatan:</span>
-                <span>Rp {{ number_format($reportData['summary']['total_revenue'], 0, ',', '.') }}</span>
+                <span>Rp <?php echo e(number_format($reportData['summary']['total_revenue'], 0, ',', '.')); ?></span>
             </div>
             <div class="summary-item">
                 <span>Total Biaya Pemeliharaan:</span>
-                <span>Rp {{ number_format($reportData['summary']['total_maintenance_costs'], 0, ',', '.') }}</span>
+                <span>Rp <?php echo e(number_format($reportData['summary']['total_maintenance_costs'], 0, ',', '.')); ?></span>
             </div>
             <div class="summary-item">
                 <span>Total Laba:</span>
-                <span>Rp {{ number_format($reportData['summary']['total_net_profit'], 0, ',', '.') }}</span>
+                <span>Rp <?php echo e(number_format($reportData['summary']['total_net_profit'], 0, ',', '.')); ?></span>
+            </div>
+            <div class="summary-item">
+                <span>Margin Laba:</span>
+                <span><?php echo e(number_format($reportData['summary']['average_profit_margin'], 2)); ?>%</span>
+            </div>
+        </div>
+    </div>    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if: ?>
+(isset($reportData['summary']['best_performer']))
+    <div class="highlight-box">
+        <strong>Pemilik Kendaraan Terbaik:</strong> 
+        <?php echo e($reportData['summary']['best_performer']->license_plate); ?> 
+        - Laba: Rp <?php echo e(number_format($reportData['summary']['best_performer']->net_profit ?? 0, 0, ',', '.')); ?>
 
-    @if(isset($reportData['summary']['worst_performer']))
+    </div>
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($reportData['summary']['worst_performer'])): ?>
     <div class="highlight-box">
         <strong>Pemilik Kendaraan yang Memerlukan Perhatian:</strong> 
-        {{ $reportData['summary']['worst_performer']->license_plate }} 
-        - Laba: Rp {{ number_format($reportData['summary']['worst_performer']->net_profit ?? 0, 0, ',', '.') }}
+        <?php echo e($reportData['summary']['worst_performer']->license_plate); ?> 
+        - Laba: Rp <?php echo e(number_format($reportData['summary']['worst_performer']->net_profit ?? 0, 0, ',', '.')); ?>
+
     </div>
-    @endif
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
     <table>
         <thead>
@@ -144,8 +160,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($reportData['vehicles'] as $vehicle)
-            @php
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $reportData['vehicles']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vehicle): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php
                 $profitMargin = $vehicle->profit_margin ?? 0;
                 $performanceClass = $profitMargin >= 30 ? 'profit-excellent' : 
                                    ($profitMargin >= 15 ? 'profit-good' : 
@@ -153,27 +169,28 @@
                 $performance = $profitMargin >= 30 ? 'Excellent' : 
                               ($profitMargin >= 15 ? 'Good' : 
                               ($profitMargin >= 5 ? 'Average' : 'Poor'));
-            @endphp
+            ?>
             <tr>
-                <td>{{ $vehicle->license_plate }}</td>
-                <td>{{ $vehicle->brand }} {{ $vehicle->model }} ({{ $vehicle->year }})</td>
-                <td class="text-right">Rp {{ number_format($vehicle->revenue ?? 0, 0, ',', '.') }}</td>
-                <td class="text-right">Rp {{ number_format($vehicle->maintenance_costs ?? 0, 0, ',', '.') }}</td>
+                <td><?php echo e($vehicle->license_plate); ?></td>
+                <td><?php echo e($vehicle->brand); ?> <?php echo e($vehicle->model); ?> (<?php echo e($vehicle->year); ?>)</td>
+                <td class="text-right">Rp <?php echo e(number_format($vehicle->revenue ?? 0, 0, ',', '.')); ?></td>
+                <td class="text-right">Rp <?php echo e(number_format($vehicle->maintenance_costs ?? 0, 0, ',', '.')); ?></td>
                 <td class="text-right">
-                    <span class="{{ ($vehicle->net_profit ?? 0) >= 0 ? 'profit-excellent' : 'profit-poor' }}">
-                        Rp {{ number_format($vehicle->net_profit ?? 0, 0, ',', '.') }}
+                    <span class="<?php echo e(($vehicle->net_profit ?? 0) >= 0 ? 'profit-excellent' : 'profit-poor'); ?>">
+                        Rp <?php echo e(number_format($vehicle->net_profit ?? 0, 0, ',', '.')); ?>
+
                     </span>
                 </td>
                 <td class="text-center">
-                    <span class="{{ $performanceClass }}">{{ number_format($profitMargin, 2) }}%</span>
+                    <span class="<?php echo e($performanceClass); ?>"><?php echo e(number_format($profitMargin, 2)); ?>%</span>
                 </td>
-                <td class="text-center">{{ number_format($vehicle->utilization_rate ?? 0, 2) }}%</td>
-                <td class="text-right">Rp {{ number_format($vehicle->revenue_per_day ?? 0, 0, ',', '.') }}</td>
+                <td class="text-center"><?php echo e(number_format($vehicle->utilization_rate ?? 0, 2)); ?>%</td>
+                <td class="text-right">Rp <?php echo e(number_format($vehicle->revenue_per_day ?? 0, 0, ',', '.')); ?></td>
                 <td class="text-center">
-                    <span class="{{ $performanceClass }}">{{ $performance }}</span>
+                    <span class="<?php echo e($performanceClass); ?>"><?php echo e($performance); ?></span>
                 </td>
             </tr>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </tbody>
     </table>
 
@@ -187,4 +204,4 @@
         </ul>
     </div>
 </body>
-</html>
+</html><?php /**PATH C:\laragon\www\anugerah-rentcar\resources\views/admin/reports/pdf/profitability.blade.php ENDPATH**/ ?>

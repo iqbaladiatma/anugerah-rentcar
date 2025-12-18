@@ -18,34 +18,30 @@
                     <form method="POST" action="{{ route('admin.expenses.store') }}" enctype="multipart/form-data">
                         @csrf
 
-                        <!-- Category -->
+                        <!-- Hidden Category (Default to 'other') -->
+                        <input type="hidden" name="category" value="other">
+
+                        <!-- TANGGAL PENGELUARAN -->
                         <div class="mb-4">
-                            <x-input-label for="category" :value="__('Category')" />
-                            <select id="category" name="category" 
-                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
-                                    required>
-                                <option value="">Pilih Category</option>
-                                @foreach($categories as $key => $label)
-                                    <option value="{{ $key }}" {{ old('category') == $key ? 'selected' : '' }}>
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                            <x-input-label for="expense_date" :value="__('TANGGAL PENGELUARAN *')" />
+                            <x-text-input id="expense_date" name="expense_date" type="date" 
+                                         class="mt-1 block w-full" :value="old('expense_date', date('Y-m-d'))" 
+                                         max="{{ date('Y-m-d') }}" required />
+                            <x-input-error :messages="$errors->get('expense_date')" class="mt-2" />
                         </div>
 
-                        <!-- Description -->
+                        <!-- NAMA PENGELUARAN -->
                         <div class="mb-4">
-                            <x-input-label for="description" :value="__('Deskripsi')" />
+                            <x-input-label for="description" :value="__('NAMA PENGELUARAN *')" />
                             <x-text-input id="description" name="description" type="text" 
                                          class="mt-1 block w-full" :value="old('description')" 
-                                         placeholder="Enter expense description" required />
+                                         placeholder="Nama Pengeluaran wajib di isi." required />
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
-                        <!-- Amount -->
+                        <!-- NOMINAL -->
                         <div class="mb-4">
-                            <x-input-label for="amount" :value="__('Amount (IDR)')" />
+                            <x-input-label for="amount" :value="__('NOMINAL *')" />
                             <div x-data="currency('{{ old('amount') }}')">
                                 <x-text-input id="amount_display" type="text" x-model="formatted"
                                              class="mt-1 block w-full" 
@@ -55,28 +51,7 @@
                             <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                         </div>
 
-                        <!-- Expense Date -->
-                        <div class="mb-4">
-                            <x-input-label for="expense_date" :value="__('Expense Date')" />
-                            <x-text-input id="expense_date" name="expense_date" type="date" 
-                                         class="mt-1 block w-full" :value="old('expense_date', date('Y-m-d'))" 
-                                         max="{{ date('Y-m-d') }}" required />
-                            <x-input-error :messages="$errors->get('expense_date')" class="mt-2" />
-                        </div>
-
-                        <!-- Receipt Photo -->
-                        <div class="mb-6">
-                            <x-input-label for="receipt_photo" :value="__('Receipt Photo (Optional)')" />
-                            <input id="receipt_photo" name="receipt_photo" type="file" 
-                                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                   accept="image/jpeg,image/png,image/jpg" />
-                            <p class="mt-1 text-sm text-gray-500">
-                                Upload receipt photo (JPEG, PNG, JPG, max 2MB)
-                            </p>
-                            <x-input-error :messages="$errors->get('receipt_photo')" class="mt-2" />
-                        </div>
-
-                        <div class="flex items-center justify-end">
+                        <div class="flex items-center justify-end mt-6">
                             <a href="{{ route('admin.expenses.index') }}" 
                                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">
                                 Cancel

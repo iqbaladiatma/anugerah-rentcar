@@ -131,20 +131,6 @@
             <div class="summary-item">
                 <span>Top 10% Customer Value:</span>
                 <span>Rp {{ number_format($reportData['summary']['top_10_percent_value'], 0, ',', '.') }}</span>
-            </div>
-            <div class="summary-item">
-                <span>Average Booking Frequency:</span>
-                <span>{{ number_format($reportData['summary']['average_booking_frequency'], 1) }} days</span>
-            </div>
-        </div>
-    </div>    @i
-f(isset($reportData['summary']['highest_ltv_customer']))
-    <div class="highlight-box">
-        <strong>Highest Value Customer:</strong> 
-        {{ $reportData['summary']['highest_ltv_customer']->name }} 
-        - LTV: Rp {{ number_format($reportData['summary']['highest_ltv_customer']->lifetime_value ?? 0, 0, ',', '.') }}
-    </div>
-    @endif
 
     <table>
         <thead>

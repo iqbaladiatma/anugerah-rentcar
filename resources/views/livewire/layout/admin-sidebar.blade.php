@@ -38,10 +38,8 @@
             <!-- Logo -->
             <div class="flex h-16 shrink-0 items-center">
                 <div class="flex items-center space-x-3">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
-                        <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0V5.25a1.5 1.5 0 013 0v13.5zM15.75 18.75a1.5 1.5 0 01-3 0V5.25a1.5 1.5 0 013 0v13.5z" />
-                        </svg>
+                    <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-black p-2">
+                        <img src="{{ asset('ini.jpg') }}" alt="Anugerah Rentcar Logo" class="h-full w-full object-contain">
                     </div>
                     <div>
                         <h1 class="text-lg font-semibold text-gray-900">Anugerah Rentcar</h1>

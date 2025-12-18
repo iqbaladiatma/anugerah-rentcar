@@ -26,39 +26,34 @@ class ReportService
     }
 
     /**
-     * Get revenue analytics and trends.
+     * Get revenue analytics.
      */
     public function getRevenueAnalytics(Carbon $startDate, Carbon $endDate): array
     {
+        $growthData = $this->calculateRevenueGrowth($startDate, $endDate);
+        
         $bookings = Booking::where('booking_status', 'completed')
             ->whereBetween('start_date', [$startDate, $endDate])
             ->get();
 
         $dailyRevenue = $bookings->groupBy(function($booking) {
             return $booking->start_date->format('Y-m-d');
-        })->map(function($dayBookings) {
-            return $dayBookings->sum('total_amount');
-        });
+        })->map(function($dayBookings, $date) {
+            return [
+                'date' => $date,
+                'revenue' => $dayBookings->sum('total_amount')
+            ];
+        })->values();
 
-        $weeklyRevenue = $bookings->groupBy(function($booking) {
-            return $booking->start_date->format('Y-W');
-        })->map(function($weekBookings) {
-            return $weekBookings->sum('total_amount');
-        });
-
-        return [
-            'total_revenue' => $bookings->sum('total_amount'),
-            'average_daily_revenue' => $dailyRevenue->avg(),
-            'highest_daily_revenue' => $dailyRevenue->max(),
-            'lowest_daily_revenue' => $dailyRevenue->min(),
-            'daily_trend' => $dailyRevenue->toArray(),
-            'weekly_trend' => $weeklyRevenue->toArray(),
-            'revenue_growth' => $this->calculateRevenueGrowth($startDate, $endDate),
-        ];
+        return array_merge($growthData, [
+            'total_bookings' => $bookings->count(),
+            'average_revenue_per_booking' => $bookings->count() > 0 ? $bookings->avg('total_amount') : 0,
+            'daily_revenue' => $dailyRevenue,
+        ]);
     }
 
     /**
-     * Get customer analytics and behavior patterns.
+     * Get revenue analytics and trends.
      */
     public function getCustomerAnalytics(Carbon $startDate, Carbon $endDate): array
     {

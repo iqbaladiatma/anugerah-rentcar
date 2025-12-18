@@ -3,8 +3,8 @@
     <div class="mb-6">
         <div class="flex justify-between items-center">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900">Vehicle Management</h2>
-                <p class="text-gray-600">Manage your fleet of rental vehicles</p>
+                <h2 class="text-2xl font-bold text-gray-900">Manajemen Kendaraan</h2>
+                <p class="text-gray-600">Kelola armada kendaraan sewaan Anda</p>
             </div>
             <a href="<?php echo e(route('admin.vehicles.create')); ?>" 
                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
@@ -28,7 +28,7 @@
 <?php $component = $__componentOriginal52632fe7b137108a4c1d9fb6383ade19; ?>
 <?php unset($__componentOriginal52632fe7b137108a4c1d9fb6383ade19); ?>
 <?php endif; ?>
-                Add Vehicle
+                Tambah Kendaraan
             </a>
         </div>
     </div>
@@ -38,10 +38,10 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <!-- Search -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Cari</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="search"
-                       placeholder="License plate, brand, model..."
+                       placeholder="Plat nomor, merek, model..."
                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
             </div>
 
@@ -50,7 +50,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select wire:model.live="status" 
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">All Status</option>
+                    <option value="">Semua Status</option>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $statusOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($value); ?>"><?php echo e($label); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -63,14 +63,14 @@
                     <input type="checkbox" 
                            wire:model.live="showMaintenanceDue"
                            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                    <span class="ml-2 text-sm text-gray-700">Maintenance Due Only</span>
+                    <span class="ml-2 text-sm text-gray-700">Hanya Perlu Perawatan</span>
                 </label>
             </div>
 
             <!-- Results Count -->
             <div class="flex items-end justify-end">
                 <span class="text-sm text-gray-600">
-                    <?php echo e($vehicles->total()); ?> vehicles found
+                    <?php echo e($vehicles->total()); ?> kendaraan ditemukan
                 </span>
             </div>
         </div>
@@ -85,7 +85,7 @@
                         <th wire:click="sortBy('license_plate')" 
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                             <div class="flex items-center gap-1">
-                                License Plate
+                                Plat Nomor
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($sortBy === 'license_plate'): ?>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($sortDirection === 'asc'): ?>
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -100,7 +100,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Vehicle Info
+                            Info Kendaraan
                         </th>
                         <th wire:click="sortBy('status')" 
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
@@ -122,7 +122,7 @@
                         <th wire:click="sortBy('daily_rate')" 
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
                             <div class="flex items-center gap-1">
-                                Daily Rate
+                                Tarif Harian
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($sortBy === 'daily_rate'): ?>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($sortDirection === 'asc'): ?>
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -137,10 +137,10 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Notifications
+                            Notifikasi
                         </th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
+                            Aksi
                         </th>
                     </tr>
                 </thead>
@@ -206,22 +206,22 @@
                                                     <?php else: ?> bg-yellow-100 text-yellow-800
                                                     <?php endif; ?>">
                                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($notification['type'] === 'oil_change'): ?>
-                                                        Oil Change Due
+                                                        Ganti Oli Diperlukan
                                                     <?php elseif($notification['type'] === 'stnk_expiry'): ?>
-                                                        STNK Expiring
+                                                        STNK Kadaluarsa
                                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                                 </span>
                                             </div>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                     </div>
                                 <?php else: ?>
-                                    <span class="text-gray-400">No issues</span>
+                                    <span class="text-gray-400">Tidak ada masalah</span>
                                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="<?php echo e(route('admin.vehicles.show', $vehicle)); ?>" 
-                                       class="text-blue-600 hover:text-blue-900">View</a>
+                                       class="text-blue-600 hover:text-blue-900">Lihat</a>
                                     <a href="<?php echo e(route('admin.vehicles.edit', $vehicle)); ?>" 
                                        class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </div>
@@ -251,8 +251,8 @@
 <?php $component = $__componentOriginal76aa02719abeb9a1a42530834e80b874; ?>
 <?php unset($__componentOriginal76aa02719abeb9a1a42530834e80b874); ?>
 <?php endif; ?>
-                                    <p class="text-lg font-medium">No vehicles found</p>
-                                    <p class="text-sm">Get started by adding your first vehicle to the fleet.</p>
+                                    <p class="text-lg font-medium">Tidak ada kendaraan ditemukan</p>
+                                    <p class="text-sm">Mulai dengan menambahkan kendaraan pertama Anda ke armada.</p>
                                 </div>
                             </td>
                         </tr>

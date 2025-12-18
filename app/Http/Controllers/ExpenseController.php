@@ -71,7 +71,7 @@ class ExpenseController extends Controller
         $validated = $request->validate([
             'category' => 'required|in:salary,utilities,supplies,marketing,other',
             'description' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0|max:999999.99',
+            'amount' => 'required|numeric|min:0|max:9999999999.99',
             'expense_date' => 'required|date|before_or_equal:today',
             'receipt_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -117,7 +117,7 @@ class ExpenseController extends Controller
         $validated = $request->validate([
             'category' => 'required|in:salary,utilities,supplies,marketing,other',
             'description' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0|max:999999.99',
+            'amount' => 'required|numeric|min:0|max:9999999999.99',
             'expense_date' => 'required|date|before_or_equal:today',
             'receipt_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);

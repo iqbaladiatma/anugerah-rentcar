@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+        <link rel="icon" type="image/png" href="<?php echo e(asset('logo.png')); ?>">
 
         <title><?php echo e(config('app.name', 'Anugerah Rentcar')); ?> - Panel Admin</title>
 
