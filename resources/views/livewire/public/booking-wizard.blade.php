@@ -6,7 +6,7 @@
                 @for ($i = 1; $i <= $totalSteps; $i++)
                     <div class="flex items-center {{ $i < $totalSteps ? 'flex-1' : '' }}">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 
-                            {{ $currentStep >= $i ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-300 text-gray-500' }}">
+                            {{ $currentStep >= $i ? 'bg-accent-500 border-accent-500 text-white' : 'border-gray-300 text-gray-500' }}">
                             @if ($currentStep > $i)
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -16,17 +16,17 @@
                             @endif
                         </div>
                         @if ($i < $totalSteps)
-                            <div class="flex-1 h-0.5 mx-4 {{ $currentStep > $i ? 'bg-blue-600' : 'bg-gray-300' }}"></div>
+                            <div class="flex-1 h-0.5 mx-4 {{ $currentStep > $i ? 'bg-accent-500' : 'bg-gray-300' }}"></div>
                         @endif
                     </div>
                 @endfor
             </div>
             <div class="flex justify-between mt-2 text-sm">
-                <span class="{{ $currentStep >= 1 ? 'text-blue-600 font-medium' : 'text-gray-500' }}">Vehicle Selection</span>
-                <span class="{{ $currentStep >= 2 ? 'text-blue-600 font-medium' : 'text-gray-500' }}">Pricing Details</span>
-                <span class="{{ $currentStep >= 3 ? 'text-blue-600 font-medium' : 'text-gray-500' }}">Customer Info</span>
-                <span class="{{ $currentStep >= 4 ? 'text-blue-600 font-medium' : 'text-gray-500' }}">Documents</span>
-                <span class="{{ $currentStep >= 5 ? 'text-blue-600 font-medium' : 'text-gray-500' }}">Confirmation</span>
+                <span class="{{ $currentStep >= 1 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Vehicle Selection</span>
+                <span class="{{ $currentStep >= 2 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Pricing Details</span>
+                <span class="{{ $currentStep >= 3 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Customer Info</span>
+                <span class="{{ $currentStep >= 4 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Documents</span>
+                <span class="{{ $currentStep >= 5 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Confirmation</span>
             </div>
         </div>
 
@@ -65,13 +65,13 @@
                                     <div>
                                         <label class="block text-xs text-gray-500 mb-1">Pickup Date</label>
                                         <input type="date" wire:model.live="startDate" 
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                                min="{{ date('Y-m-d') }}">
                                     </div>
                                     <div>
                                         <label class="block text-xs text-gray-500 mb-1">Return Date</label>
                                         <input type="date" wire:model.live="endDate" 
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                                min="{{ $startDate }}">
                                     </div>
                                 </div>
@@ -80,27 +80,27 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Pickup Location</label>
                                 <input type="text" wire:model="pickupLocation" 
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                        placeholder="Enter pickup location">
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Return Location</label>
                                 <input type="text" wire:model="returnLocation" 
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                        placeholder="Enter return location">
                             </div>
 
                             <div class="space-y-3">
                                 <label class="flex items-center">
                                     <input type="checkbox" wire:model.live="withDriver" 
-                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                           class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
                                     <span class="ml-2 text-sm text-gray-700">With Driver</span>
                                 </label>
 
                                 <label class="flex items-center">
                                     <input type="checkbox" wire:model.live="isOutOfTown" 
-                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                           class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
                                     <span class="ml-2 text-sm text-gray-700">Out of Town Trip</span>
                                 </label>
 
@@ -108,7 +108,7 @@
                                     <div class="ml-6">
                                         <label class="block text-xs text-gray-500 mb-1">Additional Fee</label>
                                         <input type="number" wire:model.live="outOfTownFee" 
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                                placeholder="Enter additional fee" min="0">
                                     </div>
                                 @endif
@@ -121,7 +121,7 @@
                             <div class="space-y-4 max-h-96 overflow-y-auto">
                                 @forelse ($availableCars as $availableCar)
                                     <div class="border rounded-lg p-4 cursor-pointer transition-all
-                                        {{ $selectedCarId == $availableCar->id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300' }}"
+                                        {{ $selectedCarId == $availableCar->id ? 'border-accent-500 bg-accent-50' : 'border-gray-200 hover:border-gray-300' }}"
                                          wire:click="$set('selectedCarId', {{ $availableCar->id }})">
                                         <div class="flex items-center space-x-4">
                                             @if ($availableCar->photo_front)
@@ -139,10 +139,10 @@
                                             <div class="flex-1">
                                                 <h4 class="font-medium text-gray-900">{{ $availableCar->brand }} {{ $availableCar->model }}</h4>
                                                 <p class="text-sm text-gray-500">{{ $availableCar->year }} • {{ $availableCar->color }}</p>
-                                                <p class="text-lg font-bold text-blue-600">Rp {{ number_format($availableCar->daily_rate, 0, ',', '.') }}/day</p>
+                                                <p class="text-lg font-bold text-accent-600">Rp {{ number_format($availableCar->daily_rate, 0, ',', '.') }}/day</p>
                                             </div>
                                             @if ($selectedCarId == $availableCar->id)
-                                                <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg class="w-5 h-5 text-accent-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                                 </svg>
                                             @endif
@@ -176,7 +176,7 @@
 
                 @if ($currentStep < $totalSteps)
                     <button type="button" wire:click="nextStep" 
-                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            class="px-6 py-2 bg-accent-500 text-white rounded-lg hover:bg-accent-600 transition-colors font-medium">
                         Next →
                     </button>
                 @else
@@ -273,7 +273,7 @@
                                     <div class="border-t pt-3">
                                         <div class="flex justify-between text-lg font-bold">
                                             <span>Total Amount</span>
-                                            <span class="text-blue-600">Rp {{ number_format($pricingData['total_amount'] ?? 0, 0, ',', '.') }}</span>
+                                            <span class="text-accent-600">Rp {{ number_format($pricingData['total_amount'] ?? 0, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="flex justify-between text-sm text-gray-600 mt-1">
                                             <span>Deposit Required</span>
@@ -282,12 +282,9 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
-                                    <div class="flex items-start">
-                                        <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 text-accent-600 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                                        </svg>
-                                        <div class="text-sm text-blue-800">
+                                    <div class="text-sm text-accent-800">
                                             <p class="font-medium">Payment Information</p>
                                             <p class="mt-1">A deposit is required to secure your booking. The remaining balance can be paid upon vehicle pickup.</p>
                                         </div>
@@ -297,7 +294,7 @@
                         </div>
                     @else
                         <div class="text-center py-8">
-                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4"></div>
                             <p class="text-gray-600">Calculating pricing...</p>
                         </div>
                     @endif
@@ -315,13 +312,13 @@
                                 <button type="button" 
                                         wire:click="$set('isExistingCustomer', false)"
                                         class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors
-                                            {{ !$isExistingCustomer ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
+                                            {{ !$isExistingCustomer ? 'bg-white text-accent-600 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
                                     New Customer
                                 </button>
                                 <button type="button" 
                                         wire:click="$set('isExistingCustomer', true)"
                                         class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors
-                                            {{ $isExistingCustomer ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
+                                            {{ $isExistingCustomer ? 'bg-white text-accent-600 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
                                     Existing Customer
                                 </button>
                             </div>
@@ -334,17 +331,17 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                                         <input type="email" wire:model="customerEmail" 
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                                placeholder="Enter your email">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
                                         <input type="password" wire:model="customerPassword" 
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                                placeholder="Enter your password">
                                     </div>
                                     <button type="button" wire:click="authenticateCustomer" 
-                                            class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                                            class="w-full bg-accent-500 text-white py-2 px-4 rounded-lg hover:bg-accent-600 transition-colors font-medium">
                                         Login & Continue
                                     </button>
                                 </div>

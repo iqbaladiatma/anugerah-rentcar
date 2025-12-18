@@ -1,22 +1,21 @@
 <x-public-layout>
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-accent-50 to-accent-100 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <!-- Logo and Header -->
             <div class="text-center mb-8">
                 <div class="flex justify-center mb-4">
-                    <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
-                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-                            <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
-                        </svg>
-                    </div>
+                    <img 
+                        src="{{ asset('ini.jpg') }}" 
+                        alt="Anugerah Rentcar Logo" 
+                        class="w-32 h-32 lg:w-12 lg:h-12 min-w-[40px] min-h-[40px] lg:min-w-[48px] lg:min-h-[48px] object-contain rounded-xl group-hover:scale-105 transition-transform duration-200 flex-shrink-0"
+                    >
                 </div>
                 <h2 class="text-3xl font-bold text-gray-900 mb-2">
                     Buat Akun Baru
                 </h2>
                 <p class="text-gray-600">
                     Atau 
-                    <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                    <a href="{{ route('login') }}" class="font-medium text-accent-600 hover:text-accent-500">
                         masuk ke akun yang sudah ada
                     </a>
                 </p>
@@ -33,7 +32,7 @@
                             Nama Lengkap
                         </label>
                         <input id="name" name="name" type="text" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-colors" 
                                placeholder="Masukkan nama lengkap Anda" value="{{ old('name') }}">
                         @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -46,7 +45,7 @@
                             Alamat Email
                         </label>
                         <input id="email" name="email" type="email" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-colors" 
                                placeholder="Masukkan alamat email Anda" value="{{ old('email') }}">
                         @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -59,7 +58,7 @@
                             Password
                         </label>
                         <input id="password" name="password" type="password" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-colors" 
                                placeholder="Buat password yang kuat (min. 8 karakter)">
                         @error('password')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -72,20 +71,20 @@
                             Konfirmasi Password
                         </label>
                         <input id="password_confirmation" name="password_confirmation" type="password" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-colors" 
                                placeholder="Konfirmasi password Anda">
                     </div>
 
                     <!-- Info Message -->
-                    <div class="rounded-lg bg-blue-50 p-4 border border-blue-200">
+                    <div class="rounded-lg bg-accent-50 p-4 border border-accent-200">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                <svg class="h-5 w-5 text-accent-400" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <p class="text-sm text-blue-700">
+                                <p class="text-sm text-accent-700">
                                     Setelah mendaftar, Anda akan diminta melengkapi biodata lengkap untuk dapat menggunakan semua fitur.
                                 </p>
                             </div>
@@ -113,7 +112,7 @@
                     <!-- Register Button -->
                     <div>
                         <button type="submit" 
-                                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                class="w-full bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2">
                             <span class="flex items-center justify-center">
                                 <svg class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
@@ -133,7 +132,7 @@
                 <div class="mt-6 text-center space-y-2">
                     <div class="text-sm text-gray-600">
                         Sudah punya akun? 
-                        <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                        <a href="{{ route('login') }}" class="font-medium text-accent-600 hover:text-accent-500">
                             Masuk di sini
                         </a>
                     </div>

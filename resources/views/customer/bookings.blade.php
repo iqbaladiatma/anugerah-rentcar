@@ -1,34 +1,36 @@
 <x-public-layout>
-    <div class="bg-white">
+    <div class="bg-white min-h-screen">
         <!-- Header -->
-        <div class="bg-gray-50 border-b">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h1 class="text-3xl font-bold text-gray-900">Pesanan Saya</h1>
-                <p class="mt-2 text-gray-600">Lihat dan kelola pemesanan sewa Anda</p>
+        <div class="bg-gradient-to-r from-accent-500 to-accent-600 text-white">
+            <div class="container-custom section-padding-sm">
+                <div class="animate-fade-in">
+                    <h1 class="heading-lg text-white mb-4">Pesanan Saya</h1>
+                    <p class="text-xl text-accent-100">Lihat dan kelola pemesanan sewa Anda</p>
+                </div>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="container-custom section-padding-sm">
             @if($bookings->count() > 0)
-                <div class="space-y-6">
+                <div class="space-y-6 animate-fade-in">
                     @foreach($bookings as $booking)
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
+                        <div class="card-hover">
+                            <div class="p-6 lg:p-8">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                                     <div>
-                                        <h3 class="text-lg font-semibold text-gray-900">
+                                        <h3 class="heading-sm text-secondary-900 mb-2">
                                             Pemesanan #{{ $booking->booking_number }}
                                         </h3>
-                                        <p class="text-sm text-gray-500">
+                                        <p class="text-secondary-600">
                                             Dipesan pada {{ $booking->created_at->format('M d, Y') }}
                                         </p>
                                     </div>
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                                        @if($booking->booking_status === 'active') bg-green-100 text-green-800
-                                        @elseif($booking->booking_status === 'completed') bg-blue-100 text-blue-800
-                                        @elseif($booking->booking_status === 'pending') bg-yellow-100 text-yellow-800
-                                        @elseif($booking->booking_status === 'confirmed') bg-purple-100 text-purple-800
-                                        @else bg-gray-100 text-gray-800 @endif">
+                                    <span class="inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold
+                                        @if($booking->booking_status === 'active') badge-success
+                                        @elseif($booking->booking_status === 'completed') badge-info
+                                        @elseif($booking->booking_status === 'pending') badge-warning
+                                        @elseif($booking->booking_status === 'confirmed') badge-success
+                                        @else badge-info @endif">
                                         {{ ucfirst($booking->booking_status) }}
                                     </span>
                                 </div>
@@ -37,12 +39,12 @@
                                     <!-- Vehicle Info -->
                                     <div class="flex items-center space-x-4">
                                         @if($booking->car->photo_front)
-                                            <img class="h-16 w-16 rounded-lg object-cover" 
+                                            <img class="h-20 w-20 rounded-xl object-cover shadow-soft" 
                                                  src="{{ asset('storage/' . $booking->car->photo_front) }}" 
                                                  alt="{{ $booking->car->brand }} {{ $booking->car->model }}">
                                         @else
-                                            <div class="h-16 w-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                                                <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <div class="h-20 w-20 bg-secondary-100 rounded-xl flex items-center justify-center">
+                                                <svg class="w-10 h-10 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
                                                     <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
                                                 </svg>
@@ -138,7 +140,7 @@
                                             </a>
                                         @endif
                                         <a href="{{ route('customer.bookings.show', $booking) }}" 
-                                           class="text-blue-600 hover:text-blue-500 text-sm font-medium">
+                                           class="text-accent-600 hover:text-accent-500 text-sm font-medium">
                                             Lihat Detail
                                         </a>
                                     </div>
@@ -160,7 +162,7 @@
                     <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada pesanan</h3>
                     <p class="mt-1 text-sm text-gray-500">Mulai dengan memesan kendaraan pertama Anda.</p>
                     <div class="mt-6">
-                        <a href="{{ route('vehicles.catalog') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                        <a href="{{ route('vehicles.catalog') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent-500 hover:bg-accent-600">
                             Jelajahi Kendaraan
                         </a>
                     </div>

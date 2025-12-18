@@ -1,44 +1,48 @@
 <x-public-layout>
-    <div class="bg-white">
+    <div class="bg-white min-h-screen">
         <!-- Header -->
-        <div class="bg-gray-50 border-b">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h1 class="text-3xl font-bold text-gray-900">Profil Saya</h1>
-                <p class="mt-2 text-gray-600">Kelola informasi akun dan preferensi Anda</p>
+        <div class="bg-gradient-to-r from-accent-500 to-accent-600 text-white">
+            <div class="container-custom section-padding-sm">
+                <div class="animate-fade-in">
+                    <h1 class="heading-lg text-white mb-4">Profil Saya</h1>
+                    <p class="text-xl text-accent-100">Kelola informasi akun dan preferensi Anda</p>
+                </div>
             </div>
         </div>
 
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-4xl mx-auto responsive-padding section-padding-sm">
             @if(session('success'))
-                <div class="mb-6 rounded-md bg-green-50 p-4">
-                    <div class="flex">
+                <div class="mb-8 card-accent p-6 animate-slide-up">
+                    <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
+                            <div class="w-10 h-10 bg-accent-500 rounded-xl flex items-center justify-center">
+                                <svg class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
                         </div>
-                        <div class="ml-3">
-                            <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                        <div class="ml-4">
+                            <p class="font-semibold text-accent-800">{{ session('success') }}</p>
                         </div>
                     </div>
                 </div>
             @endif
 
-            <div class="bg-white shadow rounded-lg">
+            <div class="card animate-fade-in">
                 <!-- Profile Header -->
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center">
-                        <div class="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center">
-                            <span class="text-xl font-semibold text-blue-600">
+                <div class="px-6 lg:px-8 py-6 border-b border-secondary-100">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+                        <div class="h-20 w-20 bg-gradient-to-r from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center shadow-medium">
+                            <span class="text-2xl font-bold text-white">
                                 {{ strtoupper(substr($customer->name, 0, 2)) }}
                             </span>
                         </div>
-                        <div class="ml-4">
-                            <h2 class="text-xl font-semibold text-gray-900">{{ $customer->name }}</h2>
-                            <p class="text-sm text-gray-500">{{ $customer->email }}</p>
+                        <div class="flex-1">
+                            <h2 class="heading-sm text-secondary-900 mb-2">{{ $customer->name }}</h2>
+                            <p class="text-secondary-600 mb-3">{{ $customer->email }}</p>
                             @if($customer->is_member)
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 mt-1">
-                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <span class="badge-success">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
                                     Anggota Premium
@@ -58,7 +62,7 @@
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
                             <input type="text" name="name" id="name" value="{{ old('name', $customer->name) }}" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500">
                             @error('name')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -68,7 +72,7 @@
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">Alamat Email</label>
                             <input type="email" name="email" id="email" value="{{ old('email', $customer->email) }}" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500">
                             @error('email')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -78,7 +82,7 @@
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700">Nomor Telepon</label>
                             <input type="tel" name="phone" id="phone" value="{{ old('phone', $customer->phone) }}" required
-                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500">
                             @error('phone')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -88,7 +92,7 @@
                         <div>
                             <label for="address" class="block text-sm font-medium text-gray-700">Alamat</label>
                             <textarea name="address" id="address" rows="3" required
-                                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">{{ old('address', $customer->address) }}</textarea>
+                                      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-accent-500 focus:border-accent-500">{{ old('address', $customer->address) }}</textarea>
                             @error('address')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -106,7 +110,7 @@
                     <!-- Submit Button -->
                     <div class="mt-6 flex justify-end">
                         <button type="submit" 
-                                class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                class="bg-accent-500 text-white px-4 py-2 rounded-md hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500">
                             Perbarui Profil
                         </button>
                     </div>
@@ -183,7 +187,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <button class="text-blue-600 hover:text-blue-500 text-sm font-medium">
+                            <button class="text-accent-600 hover:text-accent-500 text-sm font-medium">
                                 {{ $customer->ktp_photo ? 'Perbarui KTP' : 'Unggah KTP' }}
                             </button>
                         </div>
@@ -207,7 +211,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <button class="text-blue-600 hover:text-blue-500 text-sm font-medium">
+                            <button class="text-accent-600 hover:text-accent-500 text-sm font-medium">
                                 {{ $customer->sim_photo ? 'Perbarui SIM' : 'Unggah SIM' }}
                             </button>
                         </div>

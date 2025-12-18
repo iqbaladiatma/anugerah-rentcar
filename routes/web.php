@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicVehicleController;
 use App\Http\Controllers\Auth\UnifiedLoginController;
+use App\Http\Controllers\HomeController;
 
-// Public routes
-Route::view('/', 'public.home')->name('home');
+// Public routes - Homepage with auto-redirect for authenticated users
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/kendaraan', [PublicVehicleController::class, 'catalog'])->name('vehicles.catalog');
 Route::get('/kendaraan/{car}', [PublicVehicleController::class, 'show'])->name('vehicles.show');
 Route::post('/kendaraan/cari', [PublicVehicleController::class, 'search'])->name('vehicles.search');

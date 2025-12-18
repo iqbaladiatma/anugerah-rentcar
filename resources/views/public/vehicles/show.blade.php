@@ -1,12 +1,12 @@
 <x-public-layout>
     <div class="bg-white min-h-screen">
         <!-- Breadcrumb -->
-        <div class="bg-gray-50 border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="bg-secondary-50 border-b border-secondary-100">
+            <div class="container-custom py-4">
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="flex items-center space-x-4">
                         <li>
-                            <a href="{{ route('home') }}" class="text-gray-500 hover:text-gray-700">
+                            <a href="{{ route('home') }}" class="text-secondary-500 hover:text-accent-500 transition-colors p-2 rounded-lg hover:bg-accent-50">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
                                 </svg>
@@ -14,20 +14,20 @@
                         </li>
                         <li>
                             <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-5 h-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                <a href="{{ route('vehicles.catalog') }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+                                <a href="{{ route('vehicles.catalog') }}" class="ml-4 text-sm font-medium text-secondary-600 hover:text-accent-500 transition-colors px-2 py-1 rounded-lg hover:bg-accent-50">
                                     Kendaraan
                                 </a>
                             </div>
                         </li>
                         <li>
                             <div class="flex items-center">
-                                <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-5 h-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                <span class="ml-4 text-sm font-medium text-gray-900">{{ $car->brand }} {{ $car->model }}</span>
+                                <span class="ml-4 text-sm font-semibold text-secondary-900 px-2 py-1 bg-accent-100 rounded-lg">{{ $car->brand }} {{ $car->model }}</span>
                             </div>
                         </li>
                     </ol>
@@ -35,18 +35,19 @@
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="container-custom section-padding-sm">
             <div class="lg:grid lg:grid-cols-3 lg:gap-8">
                 <!-- Vehicle Images and Details -->
                 <div class="lg:col-span-2">
                     <!-- Image Gallery -->
-                    <div class="mb-8">
-                        <div class="grid grid-cols-1 gap-4">
+                    <div class="mb-8 animate-fade-in">
+                        <div class="grid grid-cols-1 gap-6">
                             @if($car->photo_front)
-                                <div class="aspect-w-16 aspect-h-9">
+                                <div class="relative overflow-hidden rounded-2xl shadow-medium hover:shadow-large transition-all duration-300">
                                     <img src="{{ asset('storage/' . $car->photo_front) }}" 
                                          alt="{{ $car->brand }} {{ $car->model }} - Front"
-                                         class="w-full h-96 object-cover rounded-xl shadow-lg">
+                                         class="w-full h-96 lg:h-[500px] object-cover hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-secondary-900/20 to-transparent"></div>
                                 </div>
                             @endif
                             
@@ -109,7 +110,7 @@
                                     Sistem Audio
                                 </div>
                                 @if($car->driver_fee_per_day > 0)
-                                    <div class="flex items-center text-sm text-blue-600">
+                                    <div class="flex items-center text-sm text-accent-600">
                                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                         </svg>
@@ -125,7 +126,7 @@
                             <div class="bg-gray-50 rounded-lg p-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <div class="text-2xl font-bold text-blue-600 mb-1">
+                                        <div class="text-2xl font-bold text-accent-600 mb-1">
                                             Rp {{ number_format($car->daily_rate, 0, ',', '.') }}
                                         </div>
                                         <p class="text-sm text-gray-600">Per Hari</p>
@@ -176,7 +177,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pengambilan</label>
                                 <input type="date" name="start_date" 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                        min="{{ date('Y-m-d') }}" 
                                        value="{{ request('start_date', date('Y-m-d')) }}"
                                        required id="startDate">
@@ -185,7 +186,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pengembalian</label>
                                 <input type="date" name="end_date" 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                        min="{{ date('Y-m-d', strtotime('+1 day')) }}" 
                                        value="{{ request('end_date', date('Y-m-d', strtotime('+1 day'))) }}"
                                        required id="endDate">
@@ -216,7 +217,7 @@
                                     <div class="border-t pt-2">
                                         <div class="flex justify-between font-semibold">
                                             <span>Total yang Diperkirakan</span>
-                                            <span class="text-blue-600" id="totalDisplay">Rp {{ number_format($car->daily_rate, 0, ',', '.') }}</span>
+                                            <span class="text-accent-600" id="totalDisplay">Rp {{ number_format($car->daily_rate, 0, ',', '.') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -227,7 +228,7 @@
 
                             <!-- Book Now Button -->
                             <button type="submit" 
-                                    class="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg shadow-md hover:shadow-lg">
+                                    class="w-full bg-accent-500 text-white py-4 px-6 rounded-lg hover:bg-accent-600 transition-colors font-semibold text-lg shadow-md hover:shadow-lg">
                                 Booking Sekarang
                             </button>
 
@@ -235,7 +236,7 @@
                             <div class="text-center pt-4 border-t border-gray-200">
                                 <p class="text-sm text-gray-600 mb-2">Butuh bantuan? Hubungi kami:</p>
                                 <div class="space-y-1">
-                                    <a href="tel:+6281234567890" class="flex items-center justify-center text-sm text-blue-600 hover:text-blue-800">
+                                    <a href="tel:+6281234567890" class="flex items-center justify-center text-sm text-accent-600 hover:text-accent-700">
                                         <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
                                         </svg>

@@ -5,7 +5,7 @@
             @for ($i = 1; $i <= $totalSteps; $i++)
                 <div class="flex items-center {{ $i < $totalSteps ? 'flex-1' : '' }}">
                     <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 
-                        {{ $currentStep >= $i ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-300 text-gray-500' }}">
+                        {{ $currentStep >= $i ? 'bg-accent-500 border-accent-500 text-white' : 'border-gray-300 text-gray-500' }}">
                         @if ($currentStep > $i)
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -14,7 +14,7 @@
                             {{ $i }}
                         @endif
                     </div>
-                    <div class="ml-3 text-sm font-medium {{ $currentStep >= $i ? 'text-blue-600' : 'text-gray-500' }}">
+                    <div class="ml-3 text-sm font-medium {{ $currentStep >= $i ? 'text-accent-600' : 'text-gray-500' }}">
                         @switch($i)
                             @case(1) Booking Details @break
                             @case(2) Customer Info @break
@@ -23,7 +23,7 @@
                         @endswitch
                     </div>
                     @if ($i < $totalSteps)
-                        <div class="flex-1 h-0.5 mx-4 {{ $currentStep > $i ? 'bg-blue-600' : 'bg-gray-300' }}"></div>
+                        <div class="flex-1 h-0.5 mx-4 {{ $currentStep > $i ? 'bg-accent-500' : 'bg-gray-300' }}"></div>
                     @endif
                 </div>
             @endfor
@@ -48,12 +48,12 @@
             <div class="flex-1">
                 <h3 class="text-lg font-bold text-gray-900">{{ $car->brand }} {{ $car->model }}</h3>
                 <p class="text-sm text-gray-600">{{ $car->year }} • {{ $car->color }} • {{ $car->license_plate }}</p>
-                <p class="text-sm text-blue-600 font-medium">
+                <p class="text-sm text-accent-600 font-medium">
                     {{ $startDate->format('M d, Y') }} - {{ $endDate->format('M d, Y') }} ({{ $duration }} days)
                 </p>
             </div>
             <div class="text-right">
-                <div class="text-2xl font-bold text-blue-600">
+                <div class="text-2xl font-bold text-accent-600">
                     Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}
                 </div>
                 <p class="text-sm text-gray-500">Total Biaya</p>
@@ -72,7 +72,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengambilan *</label>
                         <input type="text" wire:model="pickupLocation" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                placeholder="Enter pickup address">
                         @error('pickupLocation') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
@@ -80,7 +80,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengembalian *</label>
                         <input type="text" wire:model="returnLocation" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                placeholder="Enter return address">
                         @error('returnLocation') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
@@ -134,7 +134,7 @@
                         <div class="border-t pt-2">
                             <div class="flex justify-between text-lg font-bold">
                                 <span>Total Biaya</span>
-                                <span class="text-blue-600">Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}</span>
+                                <span class="text-accent-600">Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Cari Pelanggan *</label>
                         <input type="text" wire:model.debounce.300ms="customerSearch" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                placeholder="Cari nama, no hp, atau NIK...">
                         
                         @if(count($existingCustomers) > 0)
@@ -173,7 +173,7 @@
                                 @foreach($existingCustomers as $customer)
                                     <label class="flex items-center p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0">
                                         <input type="radio" wire:model="existingCustomerId" value="{{ $customer->id }}"
-                                               class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                               class="w-4 h-4 text-accent-600 border-gray-300 focus:ring-accent-500">
                                         <div class="ml-3">
                                             <div class="font-medium text-gray-900">{{ $customer->name }}</div>
                                             <div class="text-sm text-gray-600">{{ $customer->phone }} • {{ $customer->nik }}</div>
@@ -194,7 +194,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
                             <input type="text" wire:model="customerName" 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                    placeholder="Masukkan nama lengkap">
                             @error('customerName') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
@@ -202,7 +202,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon *</label>
                             <input type="tel" wire:model="customerPhone" 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                    placeholder="Masukkan nomor telepon">
                             @error('customerPhone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
@@ -210,7 +210,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Email (Opsional)</label>
                             <input type="email" wire:model="customerEmail" 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                    placeholder="Masukkan email">
                             @error('customerEmail') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
@@ -218,7 +218,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">NIK (Nomor Induk Kependudukan) *</label>
                             <input type="text" wire:model="customerNik" maxlength="16"
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                    placeholder="16-digit NIK">
                             @error('customerNik') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
@@ -226,7 +226,7 @@
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Alamat *</label>
                             <textarea wire:model="customerAddress" rows="3"
-                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                       placeholder="Masukkan alamat"></textarea>
                             @error('customerAddress') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>

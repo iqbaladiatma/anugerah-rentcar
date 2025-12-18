@@ -8,14 +8,14 @@
                        wire:model.live.debounce.300ms="search" 
                        id="search"
                        placeholder="Nama, telepon, email, atau NIK..."
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
             </div>
             
             <div>
                 <label for="memberStatus" class="block text-sm font-medium text-gray-700 mb-1">Status Anggota</label>
                 <select wire:model.live="memberStatus" 
                         id="memberStatus"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
                     @foreach($memberStatusOptions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                     @endforeach
@@ -26,7 +26,7 @@
                 <label for="blacklistStatus" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select wire:model.live="blacklistStatus" 
                         id="blacklistStatus"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
                     @foreach($blacklistStatusOptions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                     @endforeach
@@ -153,7 +153,7 @@
                                             Daftar Hitam
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-100 text-accent-800">
                                             Aktif
                                         </span>
                                     @endif
@@ -177,12 +177,12 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end space-x-2">
                                     <a href="{{ route('admin.customers.show', $customer) }}" 
-                                       class="text-blue-600 hover:text-blue-900">
+                                       class="text-accent-600 hover:text-accent-800">
                                         Lihat
                                     </a>
                                     
                                     <a href="{{ route('admin.customers.edit', $customer) }}" 
-                                       class="text-indigo-600 hover:text-indigo-900">
+                                       class="text-accent-600 hover:text-accent-800">
                                         Edit
                                     </a>
                                     
@@ -296,7 +296,7 @@
                             </button>
                             <button type="button"
                                     @click="showBlacklistModal = false"
-                                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                                 Batal
                             </button>
                         </div>

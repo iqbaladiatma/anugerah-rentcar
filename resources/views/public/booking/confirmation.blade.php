@@ -10,12 +10,12 @@
                 </div>
                 <h1 class="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
                 <p class="text-lg text-gray-600">Your reservation has been successfully created</p>
-                <p class="text-sm text-gray-500 mt-2">Booking Number: <span class="font-mono font-bold text-blue-600">{{ $booking->booking_number }}</span></p>
+                <p class="text-sm text-gray-500 mt-2">Booking Number: <span class="font-mono font-bold text-accent-600">{{ $booking->booking_number }}</span></p>
             </div>
 
             <!-- Booking Details Card -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
-                <div class="px-6 py-4 bg-blue-600 text-white">
+                <div class="px-6 py-4 bg-accent-500 text-white">
                     <h2 class="text-xl font-semibold">Booking Details</h2>
                 </div>
                 
@@ -136,7 +136,7 @@
                                     <div class="border-t pt-2">
                                         <div class="flex justify-between font-bold text-lg">
                                             <span>Total Amount</span>
-                                            <span class="text-blue-600">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span>
+                                            <span class="text-accent-600">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="flex justify-between text-sm text-gray-600 mt-1">
                                             <span>Deposit Required</span>
@@ -205,8 +205,8 @@
                                     <span class="text-gray-600">Phone:</span>
                                     <span class="font-medium ml-2">+62 123 456 7890</span>
                                 </div>
-                                <div class="mt-3 p-2 bg-blue-50 rounded">
-                                    <p class="text-xs text-blue-800">
+                                <div class="mt-3 p-2 bg-accent-50 rounded">
+                                    <p class="text-xs text-accent-800">
                                         <strong>Deposit Amount:</strong> Rp {{ number_format($booking->deposit_amount, 0, ',', '.') }}
                                     </p>
                                 </div>
@@ -214,12 +214,12 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div class="mt-6 p-4 bg-accent-50 border border-accent-200 rounded-lg">
                         <div class="flex items-start">
-                            <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5 text-accent-600 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                             </svg>
-                            <div class="text-sm text-blue-800">
+                            <div class="text-sm text-accent-800">
                                 <p class="font-medium">Important Payment Information</p>
                                 <ul class="mt-1 list-disc list-inside space-y-1">
                                     <li>Deposit payment is required to confirm your booking</li>
@@ -277,7 +277,7 @@
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{{ route('customer.bookings') }}" 
-                   class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                   class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent-500 hover:bg-accent-600 transition-colors">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
@@ -297,9 +297,9 @@
             <div class="mt-8 text-center">
                 <p class="text-sm text-gray-600">
                     Need help? Contact our support team at 
-                    <a href="tel:+621234567890" class="text-blue-600 hover:text-blue-500 font-medium">+62 123 456 7890</a>
+                    <a href="tel:+621234567890" class="text-accent-600 hover:text-accent-500 font-medium">+62 123 456 7890</a>
                     or 
-                    <a href="mailto:support@anugerahrentcar.com" class="text-blue-600 hover:text-blue-500 font-medium">support@anugerahrentcar.com</a>
+                    <a href="mailto:support@anugerahrentcar.com" class="text-accent-600 hover:text-accent-500 font-medium">support@anugerahrentcar.com</a>
                 </p>
             </div>
         </div>

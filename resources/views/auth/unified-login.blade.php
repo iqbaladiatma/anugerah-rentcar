@@ -1,46 +1,45 @@
 <x-public-layout>
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             <!-- Logo and Header -->
-            <div class="text-center mb-8">
-                <div class="flex justify-center mb-4">
-                    <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
-                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
-                            <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
-                        </svg>
-                    </div>
+            <div class="text-center mb-8 animate-fade-in">
+                <div class="flex justify-center mb-6">
+                    <img 
+                        src="{{ asset('ini.jpg') }}" 
+                        alt="Anugerah Rentcar Logo" 
+                        class="w-32 h-32 lg:w-12 lg:h-12 min-w-[40px] min-h-[40px] lg:min-w-[48px] lg:min-h-[48px] object-contain rounded-xl group-hover:scale-105 transition-transform duration-200 flex-shrink-0"
+                    >
                 </div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-3">
                     Masuk ke Anugerah Rentcar
                 </h2>
-                <p class="text-gray-600">
+                <p class="text-gray-600 text-lg">
                     Masuk dengan akun Admin atau Customer Anda
                 </p>
             </div>
 
             <!-- Login Form -->
-            <div class="bg-white rounded-xl shadow-xl p-8">
+            <div class="card p-8 lg:p-10 animate-slide-up">
                 <form class="space-y-6" action="{{ route('login') }}" method="POST">
                     @csrf
                     
                     <!-- Email Field -->
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="email" class="form-label">
                             Alamat Email
                         </label>
                         <input id="email" name="email" type="email" autocomplete="email" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                               class="form-input" 
                                placeholder="Masukkan email Anda" value="{{ old('email') }}">
                     </div>
 
                     <!-- Password Field -->
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="password" class="form-label">
                             Password
                         </label>
                         <input id="password" name="password" type="password" autocomplete="current-password" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                               class="form-input" 
                                placeholder="Masukkan password Anda">
                     </div>
 
@@ -73,14 +72,14 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
                             <input id="remember" name="remember" type="checkbox" 
-                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                   class="h-4 w-4 text-accent-600 focus:ring-accent-500 border-gray-300 rounded">
                             <label for="remember" class="ml-2 block text-sm text-gray-700">
                                 Ingat saya
                             </label>
                         </div>
 
                         <div class="text-sm">
-                            <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                            <a href="#" class="font-medium text-accent-600 hover:text-accent-500">
                                 Lupa password?
                             </a>
                         </div>
@@ -89,7 +88,7 @@
                     <!-- Login Button -->
                     <div>
                         <button type="submit" 
-                                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                class="w-full bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2">
                             <span class="flex items-center justify-center">
                                 <svg class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
@@ -100,30 +99,11 @@
                     </div>
                 </form>
 
-                <!-- Info Box -->
-                <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-blue-800">
-                                Informasi Login
-                            </h3>
-                            <div class="mt-2 text-sm text-blue-700">
-                                <p>Gunakan email dan password yang sama untuk akses Admin atau Customer. Sistem akan otomatis mengarahkan Anda ke dashboard yang sesuai.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Links -->
                 <div class="mt-6 text-center space-y-2">
                     <div class="text-sm text-gray-600">
                         Belum punya akun customer? 
-                        <a href="{{ route('customer.register') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                        <a href="{{ route('customer.register') }}" class="font-medium text-accent-600 hover:text-accent-500">
                             Daftar sekarang
                         </a>
                     </div>

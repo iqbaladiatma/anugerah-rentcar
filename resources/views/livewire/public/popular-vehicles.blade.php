@@ -56,7 +56,7 @@
                 <div class="mt-auto">
                     <div class="mb-4">
                         <div class="flex items-baseline mb-1">
-                            <span class="text-2xl font-bold text-blue-600">
+                            <span class="text-2xl font-bold text-accent-600">
                                 Rp {{ number_format($vehicle->daily_rate, 0, ',', '.') }}
                             </span>
                             <span class="text-sm text-gray-500 ml-1">/day</span>
@@ -76,7 +76,7 @@
                         </a>
                         <button 
                             onclick="openBookingModal({{ $vehicle->id }}, '{{ $vehicle->brand }} {{ $vehicle->model }}', {{ $vehicle->daily_rate }})"
-                            class="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-all font-semibold shadow-md hover:shadow-lg text-sm">
+                            class="flex-1 bg-accent-500 text-white px-4 py-2.5 rounded-lg hover:bg-accent-600 transition-all font-semibold shadow-md hover:shadow-lg text-sm">
                             Book Now
                         </button>
                     </div>
@@ -99,7 +99,7 @@
     <div class="text-center mt-8">
         <a 
             href="{{ route('vehicles.catalog') }}" 
-            class="inline-flex items-center px-6 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-md hover:shadow-lg"
+            class="inline-flex items-center px-6 py-3 border-2 border-accent-500 text-accent-600 font-semibold rounded-lg hover:bg-accent-500 hover:text-white transition-all shadow-md hover:shadow-lg"
         >
             Lihat Semua Kendaraan
             <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

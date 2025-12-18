@@ -5,7 +5,7 @@
         <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-md bg-blue-500">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-md bg-accent-500">
                         @include('components.icons.truck', ['class' => 'h-5 w-5 text-white'])
                     </div>
                 </div>
@@ -94,7 +94,7 @@
             <div class="p-6">
                 <div class="flex items-center justify-between">
                     <h3 class="text-base font-semibold leading-6 text-gray-900">Pemesanan Terbaru</h3>
-                    <a href="{{ route('admin.bookings.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">Lihat semua</a>
+                    <a href="{{ route('admin.bookings.index') }}" class="text-sm font-medium text-accent-600 hover:text-accent-500">Lihat semua</a>
                 </div>
                 <div class="mt-6 flow-root">
                     @if($this->recentBookings->count() > 0)
@@ -117,7 +117,7 @@
                                             @php
                                                 $statusColors = [
                                                     'pending' => 'bg-yellow-100 text-yellow-800',
-                                                    'confirmed' => 'bg-blue-100 text-blue-800',
+                                                    'confirmed' => 'bg-accent-100 text-accent-800',
                                                     'active' => 'bg-green-100 text-green-800',
                                                     'completed' => 'bg-gray-100 text-gray-800',
                                                     'cancelled' => 'bg-red-100 text-red-800',
@@ -175,7 +175,7 @@
                                                 $iconColors = [
                                                     'high' => 'bg-red-100 text-red-600',
                                                     'medium' => 'bg-yellow-100 text-yellow-600',
-                                                    'low' => 'bg-blue-100 text-blue-600',
+                                                    'low' => 'bg-accent-100 text-accent-600',
                                                 ];
                                             @endphp
                                             <div class="flex h-6 w-6 items-center justify-center rounded-full {{ $iconColors[$notification['priority']] ?? 'bg-gray-100 text-gray-600' }}">
@@ -188,7 +188,7 @@
                                         </div>
                                         @if(isset($notification['action_url']))
                                             <div class="flex-shrink-0">
-                                                <a href="{{ $notification['action_url'] }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">
+                                                <a href="{{ $notification['action_url'] }}" class="text-sm font-medium text-accent-600 hover:text-accent-500">
                                                     Lihat
                                                 </a>
                                             </div>
@@ -216,9 +216,9 @@
         <div class="p-6">
             <h3 class="text-base font-semibold leading-6 text-gray-900">Aksi Cepat</h3>
             <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <a href="{{ route('admin.bookings.create') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                <a href="{{ route('admin.bookings.create') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-accent-500">
                     <div class="flex-shrink-0">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-500">
                             @include('components.icons.plus', ['class' => 'h-6 w-6 text-white'])
                         </div>
                     </div>
@@ -229,7 +229,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('admin.bookings.index') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                <a href="{{ route('admin.bookings.index') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-accent-500">
                     <div class="flex-shrink-0">
                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
                             @include('components.icons.arrow-right', ['class' => 'h-6 w-6 text-white'])
@@ -242,7 +242,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('admin.bookings.index') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                <a href="{{ route('admin.bookings.index') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-accent-500">
                     <div class="flex-shrink-0">
                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-600">
                             @include('components.icons.arrow-left', ['class' => 'h-6 w-6 text-white'])
@@ -255,7 +255,7 @@
                     </div>
                 </a>
 
-                <a href="{{ route('admin.availability.timeline') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                <a href="{{ route('admin.availability.timeline') }}" class="relative group rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-accent-500">
                     <div class="flex-shrink-0">
                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-600">
                             @include('components.icons.calendar', ['class' => 'h-6 w-6 text-white'])
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     stops: [0, 90, 100]
                 }
             },
-            colors: ['#3B82F6'],
+            colors: ['#f97316'],
             grid: {
                 borderColor: '#E5E7EB',
                 strokeDashArray: 3

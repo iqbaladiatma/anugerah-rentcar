@@ -1,16 +1,16 @@
 <x-admin-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="animate-fade-in">
+                <h1 class="heading-lg text-secondary-900">
                     Dashboard
                 </h1>
-                <p class="mt-1 text-sm text-gray-500">
+                <p class="text-body mt-2">
                     Selamat datang kembali, {{ auth()->user()->name }}! Berikut adalah aktivitas bisnis rental Anda hari ini.
                 </p>
             </div>
             <div class="flex items-center space-x-3">
-                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                <span class="inline-flex items-center rounded-xl bg-accent-50 px-4 py-2 text-sm font-medium text-accent-700 border border-accent-200">
                     {{ now()->locale('id')->isoFormat('dddd, D MMMM Y') }}
                 </span>
             </div>

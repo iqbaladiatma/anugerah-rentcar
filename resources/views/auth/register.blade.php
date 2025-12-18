@@ -13,129 +13,110 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
+<body class="bg-white min-h-screen">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full">
+        <div class="max-w-md w-full animate-fade-in">
             <!-- Logo and Header -->
             <div class="text-center mb-8">
-                <div class="flex justify-center mb-4">
-                    <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
-                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div class="flex justify-center mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-r from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center shadow-medium">
+                        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
                             <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
                         </svg>
                     </div>
                 </div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                <h2 class="text-3xl lg:text-4xl font-bold text-secondary-900 mb-3">
                     Daftar Admin
                 </h2>
-                <p class="text-gray-600">
+                <p class="text-secondary-600 text-lg">
                     Sistem Manajemen Rental Mobil Anugerah Rentcar
                 </p>
             </div>
 
             <!-- Register Form -->
-            <div class="bg-white rounded-xl shadow-xl p-8">
+            <div class="card p-8 lg:p-10 animate-slide-up">
                 <form class="space-y-6" action="{{ route('register') }}" method="POST">
                     @csrf
                     
                     <!-- Name Field -->
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                            Nama Lengkap
-                        </label>
-                        <input id="name" name="name" type="text" autocomplete="name" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
-                               placeholder="Masukkan nama lengkap" value="{{ old('name') }}">
+                        <label for="name" class="form-label">Nama Lengkap</label>
+                        <input id="name" name="name" type="text" autocomplete="name" required class="form-input" placeholder="Masukkan nama lengkap" value="{{ old('name') }}">
                         @error('name')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <x-input-error :messages="$message" class="mt-2" />
                         @enderror
                     </div>
 
                     <!-- Email Field -->
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                            Alamat Email
-                        </label>
-                        <input id="email" name="email" type="email" autocomplete="email" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
-                               placeholder="Masukkan email" value="{{ old('email') }}">
+                        <label for="email" class="form-label">Alamat Email</label>
+                        <input id="email" name="email" type="email" autocomplete="email" required class="form-input" placeholder="Masukkan email" value="{{ old('email') }}">
                         @error('email')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <x-input-error :messages="$message" class="mt-2" />
                         @enderror
                     </div>
 
                     <!-- Phone Field -->
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
-                            Nomor Telepon
-                        </label>
-                        <input id="phone" name="phone" type="text" autocomplete="tel" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
-                               placeholder="Masukkan nomor telepon" value="{{ old('phone') }}">
+                        <label for="phone" class="form-label">Nomor Telepon</label>
+                        <input id="phone" name="phone" type="text" autocomplete="tel" required class="form-input" placeholder="Masukkan nomor telepon" value="{{ old('phone') }}">
                         @error('phone')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <x-input-error :messages="$message" class="mt-2" />
                         @enderror
                     </div>
 
                     <!-- Role Field -->
                     <div>
-                        <label for="role" class="block text-sm font-medium text-gray-700 mb-2">
-                            Peran
-                        </label>
-                        <select id="role" name="role" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                        <label for="role" class="form-label">Peran</label>
+                        <select id="role" name="role" required class="form-input">
                             <option value="">Pilih Peran</option>
                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
                             <option value="staff" {{ old('role') == 'staff' ? 'selected' : '' }}>Staff</option>
                             <option value="driver" {{ old('role') == 'driver' ? 'selected' : '' }}>Driver</option>
                         </select>
                         @error('role')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <x-input-error :messages="$message" class="mt-2" />
                         @enderror
                     </div>
 
                     <!-- Password Field -->
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                            Password
-                        </label>
-                        <input id="password" name="password" type="password" autocomplete="new-password" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
-                               placeholder="Masukkan password">
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="new-password" required class="form-input" placeholder="Masukkan password">
                         @error('password')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <x-input-error :messages="$message" class="mt-2" />
                         @enderror
                     </div>
 
                     <!-- Confirm Password Field -->
                     <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">
-                            Konfirmasi Password
-                        </label>
-                        <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
-                               placeholder="Konfirmasi password">
+                        <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                        <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required class="form-input" placeholder="Konfirmasi password">
                     </div>
 
                     <!-- Register Button -->
                     <div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <button type="submit" class="btn-primary w-full text-lg">
                             Daftar Sekarang
                         </button>
                     </div>
                 </form>
 
                 <!-- Links -->
-                <div class="mt-6 text-center space-y-2">
-                    <div class="text-sm text-gray-600">
+                <div class="mt-8 text-center space-y-3">
+                    <div class="text-secondary-600">
                         Sudah punya akun? 
-                        <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                        <a href="{{ route('login') }}" class="font-medium text-accent-600 hover:text-accent-500 transition-colors">
                             Masuk di sini
                         </a>
                     </div>
-                    <div class="text-sm">
-                        <a href="{{ route('home') }}" class="text-gray-500 hover:text-gray-700">
-                            ← Kembali ke Beranda
+                    <div>
+                        <a href="{{ route('home') }}" class="text-secondary-500 hover:text-secondary-700 transition-colors flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                            </svg>
+                            Kembali ke Beranda
                         </a>
                     </div>
                 </div>

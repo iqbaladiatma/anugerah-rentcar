@@ -1,66 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Vehicle Availability Timeline Styles */
-.timeline-cell {
-    transition: all 0.2s ease-in-out;
-}
-
-.timeline-cell:hover {
-    transform: scale(1.05);
-    z-index: 10;
-}
-
-.timeline-booking-block {
-    background: linear-gradient(135deg, var(--tw-bg-opacity) 0%, rgba(255,255,255,0.1) 100%);
-    border-left: 3px solid currentColor;
-}
-
-.timeline-available-block {
-    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-}
-
-.timeline-maintenance-block {
-    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
-    background-image: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 2px,
-        rgba(255,255,255,0.3) 2px,
-        rgba(255,255,255,0.3) 4px
-    );
-}
-
-.timeline-date-header {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.timeline-vehicle-row:hover {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-}
-
-/* Booking details popup animation */
-.booking-popup {
-    animation: fadeInScale 0.2s ease-out;
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.9);
+/* Modern Minimalist Base Styles */
+@layer base {
+    html {
+        scroll-behavior: smooth;
     }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+    
+    body {
+        @apply bg-white text-secondary-800 font-sans antialiased;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+        line-height: 1.6;
+    }
+    
+    * {
+        @apply border-secondary-100;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply text-secondary-900 font-semibold;
+    }
+    
+    h1 { @apply text-3xl md:text-4xl lg:text-5xl; }
+    h2 { @apply text-2xl md:text-3xl lg:text-4xl; }
+    h3 { @apply text-xl md:text-2xl lg:text-3xl; }
+    h4 { @apply text-lg md:text-xl lg:text-2xl; }
+    h5 { @apply text-base md:text-lg lg:text-xl; }
+    h6 { @apply text-sm md:text-base lg:text-lg; }
+}
+
+/* Modern Components */
+@layer components {
+    /* Buttons - Modern Minimalist Design */
+    .btn-primary {
+        @apply bg-accent-500 hover:bg-accent-600 active:bg-accent-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 shadow-soft hover:shadow-medium hover:scale-105 active:scale-95 focus:ring-2 focus:ring-accent-300 focus:outline-none;
+    }
+    
+    .btn-secondary {
+        @apply bg-secondary-800 hover:bg-secondary-700 active:bg-secondary-900 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 shadow-soft hover:shadow-medium hover:scale-105 active:scale-95 focus:ring-2 focus:ring-secondary-300 focus:outline-none;
+    }
+    
+    .btn-outline {
+        @apply border-2 border-secondary-200 hover:border-accent-500 hover:bg-accent-50 text-secondary-700 hover:text-accent-600 px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:shadow-soft hover:scale-105 active:scale-95 focus:ring-2 focus:ring-accent-300 focus:outline-none;
+    }
+    
+    .btn-ghost {
+        @apply text-secondary-600 hover:text-accent-600 hover:bg-accent-50 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 active:scale-95 focus:ring-2 focus:ring-accent-300 focus:outline-none;
+    }
+    
+    /* Cards - Modern Minimalist Design */
+    .card {
+        @apply bg-white rounded-2xl shadow-soft border border-secondary-100 overflow-hidden backdrop-blur-sm;
+    }
+    
+    .card-hover {
+        @apply card hover:shadow-medium hover:border-accent-200 transition-all duration-300 hover:-translate-y-2 hover:scale-105;
+    }
+    
+    .card-accent {
+        @apply bg-gradient-to-br from-accent-50 to-accent-100 border-accent-200 rounded-2xl shadow-soft;
+    }
+    
+    .card-secondary {
+        @apply bg-gradient-to-br from-secondary-50 to-secondary-100 border-secondary-200 rounded-2xl shadow-soft;
+    }
+    
+    /* Form Elements - Modern Minimalist Design */
+    .form-input {
+        @apply w-full px-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-accent-300 focus:border-accent-500 transition-all duration-200 bg-white text-secondary-900 placeholder-secondary-400 hover:border-secondary-300;
+    }
+    
+    .form-label {
+        @apply block text-sm font-semibold text-secondary-700 mb-2;
+    }
+    
+    .form-select {
+        @apply w-full px-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-accent-300 focus:border-accent-500 transition-all duration-200 bg-white text-secondary-900 hover:border-secondary-300;
+    }
+    
+    .form-textarea {
+        @apply w-full px-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-accent-300 focus:border-accent-500 transition-all duration-200 bg-white text-secondary-900 placeholder-secondary-400 hover:border-secondary-300 resize-none;
+    }
+    
+    .form-checkbox {
+        @apply h-5 w-5 text-accent-600 focus:ring-accent-500 border-secondary-300 rounded transition-all duration-200;
+    }
+    
+    .form-radio {
+        @apply h-5 w-5 text-accent-600 focus:ring-accent-500 border-secondary-300 transition-all duration-200;
+    }
+    
+    /* Navigation - Modern Minimalist Design */
+    .nav-link {
+        @apply text-secondary-600 hover:text-accent-500 px-4 py-2 rounded-xl font-medium transition-all duration-200 hover:bg-accent-50 hover:scale-105 active:scale-95;
+    }
+    
+    .nav-link-active {
+        @apply text-accent-600 bg-accent-100 px-4 py-2 rounded-xl font-semibold shadow-soft border border-accent-200;
+    }
+    
+    .nav-brand {
+        @apply flex items-center space-x-3 group;
+    }
+    
+    .nav-logo {
+        @apply w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-soft;
+    }
+    
+    .nav-title {
+        @apply text-xl lg:text-2xl font-bold text-secondary-900 group-hover:text-accent-600 transition-colors duration-200;
+    }
+    
+    /* Layout Components */
+    .container-responsive {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    
+    .section-padding {
+        @apply py-12 sm:py-16 lg:py-20;
+    }
+    
+    /* Typography */
+    .heading-xl {
+        @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-secondary-900 leading-tight;
+    }
+    
+    .heading-lg {
+        @apply text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-900 leading-tight;
+    }
+    
+    .heading-md {
+        @apply text-2xl sm:text-3xl font-bold text-secondary-900 leading-tight;
+    }
+    
+    .heading-sm {
+        @apply text-xl sm:text-2xl font-semibold text-secondary-800 leading-tight;
+    }
+    
+    .text-body {
+        @apply text-base sm:text-lg text-secondary-600 leading-relaxed;
+    }
+    
+    /* Grid Layouts */
+    .grid-responsive {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+    }
+    
+    .grid-2-col {
+        @apply grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12;
+    }
+    
+    /* Mobile Navigation - Modern Minimalist Design */
+    .mobile-nav {
+        @apply fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-secondary-100 z-50 lg:hidden shadow-large;
+    }
+    
+    .mobile-nav-item {
+        @apply flex flex-col items-center justify-center py-3 px-2 text-xs font-medium transition-all duration-200 hover:scale-110 active:scale-95;
+    }
+    
+    .mobile-nav-active {
+        @apply text-accent-500 bg-accent-50 rounded-xl mx-1 shadow-soft;
+    }
+    
+    .mobile-nav-inactive {
+        @apply text-secondary-500 hover:text-accent-500 hover:bg-accent-50 rounded-xl mx-1;
+    }
+    
+    .mobile-nav-icon {
+        @apply w-6 h-6 mb-1;
+    }
+    
+    .mobile-nav-label {
+        @apply text-xs font-medium;
+    }
+    
+    /* Modern Layout Components */
+    .container-modern {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    
+    .section-padding {
+        @apply py-12 lg:py-20;
+    }
+    
+    .hero-gradient {
+        background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+    }
+    
+    .accent-gradient {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    }
+    
+    /* Responsive Grid */
+    .grid-responsive {
+        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+    }
+    
+    .grid-responsive-2 {
+        @apply grid grid-cols-1 lg:grid-cols-2 gap-8;
+    }
+    
+    /* Text Styles */
+    .heading-xl {
+        @apply text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 leading-tight;
+    }
+    
+    .heading-lg {
+        @apply text-3xl md:text-4xl font-bold text-secondary-900 leading-tight;
+    }
+    
+    .heading-md {
+        @apply text-2xl md:text-3xl font-semibold text-secondary-800;
+    }
+    
+    .text-body {
+        @apply text-base md:text-lg text-secondary-600 leading-relaxed;
+    }
+    
+    /* Container */
+    .container-custom {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    
+    /* Spacing */
+    .section-padding {
+        @apply py-12 md:py-16 lg:py-20;
+    }
+    
+    .section-padding-sm {
+        @apply py-8 md:py-12 lg:py-16;
+    }
+    
+    /* Text */
+    .text-gradient {
+        @apply bg-gradient-to-r from-accent-500 to-accent-600 bg-clip-text text-transparent;
+    }
+    
+    /* Responsive Utilities - Modern Minimalist Design */
+    .responsive-text {
+        @apply text-base md:text-lg lg:text-xl;
+    }
+    
+    .responsive-heading {
+        @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+    }
+    
+    .responsive-subheading {
+        @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+    }
+    
+    .responsive-padding {
+        @apply px-4 sm:px-6 lg:px-8;
+    }
+    
+    .responsive-margin {
+        @apply mx-4 sm:mx-6 lg:mx-8;
+    }
+    
+    .responsive-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8;
+    }
+    
+    .responsive-flex {
+        @apply flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8;
+    }
+    
+    /* Status Badges */
+    .badge {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    }
+    
+    .badge-success {
+        @apply badge bg-accent-100 text-accent-800 border border-accent-200;
+    }
+    
+    .badge-warning {
+        @apply badge bg-accent-50 text-accent-700 border border-accent-200;
+    }
+    
+    .badge-info {
+        @apply badge bg-secondary-100 text-secondary-800 border border-secondary-200;
+    }
+    
+    .badge-error {
+        @apply badge bg-accent-200 text-accent-900 border border-accent-300;
     }
 }
 
-/* Loading animation */
-.timeline-loading {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
+/* Utilities */
+@layer utilities {
+    .shadow-soft {
+        box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+    }
+    
+    .shadow-medium {
+        box-shadow: 0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .shadow-large {
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Alpine.js cloak - hides elements until Alpine is ready */
+[x-cloak] {
+    display: none !important;
 }
 
 @keyframes loading {

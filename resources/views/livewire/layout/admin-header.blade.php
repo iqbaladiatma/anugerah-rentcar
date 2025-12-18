@@ -1,16 +1,4 @@
 <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-    <!-- Mobile menu button -->
-    <button type="button" 
-            class="-m-2.5 p-2.5 text-gray-700 lg:hidden" 
-            wire:click="$dispatch('toggleSidebar')">
-        <span class="sr-only">Buka bilah sisi</span>
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-    </button>
-
-    <!-- Separator -->
-    <div class="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true"></div>
 
     <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <!-- Search -->
@@ -23,7 +11,7 @@
                 </div>
                 <input type="text" 
                        placeholder="Cari pelanggan, kendaraan, pemesanan..." 
-                       class="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                       class="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent-500 sm:text-sm sm:leading-6">
             </div>
         </div>
 
@@ -51,7 +39,7 @@
                         class="-m-1.5 flex items-center p-1.5 hover:bg-gray-50 rounded-md"
                         @click="open = !open">
                     <span class="sr-only">Buka menu pengguna</span>
-                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-accent-500 to-accent-600">
                         <span class="text-sm font-medium text-white">
                             {{ substr(auth()->user()->name, 0, 1) }}
                         </span>

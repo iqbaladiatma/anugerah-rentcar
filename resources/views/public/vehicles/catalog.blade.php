@@ -1,37 +1,41 @@
 <x-public-layout>
     <div class="bg-white min-h-screen">
         <!-- Header -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <h1 class="text-4xl font-bold mb-4">Katalog Kendaraan</h1>
-                <p class="text-xl text-blue-100">Pilih dari berbagai koleksi kendaraan rental berkualitas kami</p>
-                
-                @if(request()->hasAny(['start_date', 'end_date']))
-                    <div class="mt-4 bg-blue-500 bg-opacity-50 rounded-lg p-4">
-                        <p class="text-sm">
-                            <span class="font-medium">Menampilkan kendaraan tersedia untuk:</span>
-                            {{ request('start_date') ? \Carbon\Carbon::parse(request('start_date'))->format('d M Y') : 'Tidak ditentukan' }}
-                            -
-                            {{ request('end_date') ? \Carbon\Carbon::parse(request('end_date'))->format('d M Y') : 'Tidak ditentukan' }}
-                            @if(request('start_date') && request('end_date'))
-                                ({{ \Carbon\Carbon::parse(request('start_date'))->diffInDays(\Carbon\Carbon::parse(request('end_date'))) + 1 }} hari)
-                            @endif
-                        </p>
-                    </div>
-                @endif
+        <div class="bg-gradient-to-r from-accent-500 to-accent-600 text-white">
+            <div class="container-custom section-padding-sm">
+                <div class="animate-fade-in">
+                    <h1 class="heading-lg text-white mb-4">Katalog Kendaraan</h1>
+                    <p class="text-xl text-accent-100">Pilih dari berbagai koleksi kendaraan rental berkualitas kami</p>
+                    
+                    @if(request()->hasAny(['start_date', 'end_date']))
+                        <div class="mt-6 bg-accent-400 bg-opacity-30 rounded-xl p-4 border border-accent-300">
+                            <p class="text-accent-50">
+                                <span class="font-semibold">Menampilkan kendaraan tersedia untuk:</span>
+                                {{ request('start_date') ? \Carbon\Carbon::parse(request('start_date'))->format('d M Y') : 'Tidak ditentukan' }}
+                                -
+                                {{ request('end_date') ? \Carbon\Carbon::parse(request('end_date'))->format('d M Y') : 'Tidak ditentukan' }}
+                                @if(request('start_date') && request('end_date'))
+                                    ({{ \Carbon\Carbon::parse(request('start_date'))->diffInDays(\Carbon\Carbon::parse(request('end_date'))) + 1 }} hari)
+                                @endif
+                            </p>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="container-custom section-padding-sm">
             <div class="lg:grid lg:grid-cols-4 lg:gap-8">
                 <!-- Filters Sidebar -->
                 <div class="lg:col-span-1">
-                    <div class="bg-white rounded-xl shadow-lg p-6 sticky top-4 border border-gray-100">
+                    <div class="card p-6 sticky top-4 animate-slide-up">
                         <div class="flex items-center mb-6">
-                            <svg class="w-5 h-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"/>
-                            </svg>
-                            <h3 class="text-lg font-semibold text-gray-900">Filter Pencarian</h3>
+                            <div class="w-8 h-8 bg-gradient-to-r from-accent-500 to-accent-600 rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="heading-sm">Filter Pencarian</h3>
                         </div>
                         
                         <form method="GET" action="{{ route('vehicles.catalog') }}" class="space-y-6" id="filterForm">
@@ -47,13 +51,13 @@
                                     <div>
                                         <label class="block text-xs text-gray-500 mb-1">Tanggal Ambil</label>
                                         <input type="date" name="start_date" value="{{ request('start_date') }}" 
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent text-sm"
                                                min="{{ date('Y-m-d') }}" id="startDate">
                                     </div>
                                     <div>
                                         <label class="block text-xs text-gray-500 mb-1">Tanggal Kembali</label>
                                         <input type="date" name="end_date" value="{{ request('end_date') }}" 
-                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent text-sm"
                                                min="{{ date('Y-m-d') }}" id="endDate">
                                     </div>
                                 </div>
@@ -68,7 +72,7 @@
                                     </svg>
                                     Merek Kendaraan
                                 </label>
-                                <select name="brand" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                                <select name="brand" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent text-sm">
                                     <option value="">Semua Merek</option>
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand }}" {{ request('brand') === $brand ? 'selected' : '' }}>
@@ -87,7 +91,7 @@
                                     </svg>
                                     Rentang Harga
                                 </label>
-                                <select name="max_price" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                                <select name="max_price" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent text-sm">
                                     <option value="">Semua Harga</option>
                                     @foreach($priceRanges as $range)
                                         <option value="{{ $range['value'] }}" {{ request('max_price') == $range['value'] ? 'selected' : '' }}>
@@ -102,7 +106,7 @@
                                 <label class="flex items-center space-x-3 cursor-pointer">
                                     <input type="checkbox" name="with_driver" value="1" 
                                            {{ request('with_driver') === '1' ? 'checked' : '' }}
-                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                           class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
                                     <span class="text-sm font-medium text-gray-700">
                                         <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
@@ -113,7 +117,7 @@
                             </div>
 
                             <div class="space-y-3 pt-4 border-t border-gray-200">
-                                <button type="submit" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md hover:shadow-lg">
+                                <button type="submit" class="w-full bg-accent-500 text-white py-3 px-4 rounded-lg hover:bg-accent-600 transition-colors font-medium shadow-md hover:shadow-lg">
                                     <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
                                     </svg>
@@ -220,7 +224,7 @@
                                                 <span>5 Seats</span>
                                             </div>
                                             @if($vehicle->driver_fee_per_day > 0)
-                                                <div class="flex items-center text-sm text-blue-600 font-medium">
+                                                <div class="flex items-center text-sm text-accent-600 font-medium">
                                                     <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                                     </svg>
@@ -233,7 +237,7 @@
                                         <div class="mt-auto">
                                             <div class="mb-4">
                                                 <div class="flex items-baseline mb-1">
-                                                    <span class="text-2xl font-bold text-blue-600">
+                                                    <span class="text-2xl font-bold text-accent-600">
                                                         Rp {{ number_format($vehicle->daily_rate, 0, ',', '.') }}
                                                     </span>
                                                     <span class="text-sm text-gray-500 ml-1">/day</span>
@@ -258,7 +262,7 @@
                                                 </a>
                                                 <button 
                                                     onclick="openBookingModal({{ $vehicle->id }}, '{{ $vehicle->brand }} {{ $vehicle->model }}', {{ $vehicle->daily_rate }}, '{{ request('start_date') }}', '{{ request('end_date') }}')"
-                                                    class="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-all font-semibold shadow-md hover:shadow-lg text-sm">
+                                                    class="flex-1 bg-accent-500 text-white px-4 py-2.5 rounded-lg hover:bg-accent-600 transition-all font-semibold shadow-md hover:shadow-lg text-sm">
                                                     Book Now
                                                 </button>
                                             </div>
@@ -283,7 +287,7 @@
                                 
                                 @if(request()->hasAny(['start_date', 'end_date', 'brand', 'max_price', 'with_driver']))
                                     <a href="{{ route('vehicles.catalog') }}" 
-                                       class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                       class="inline-flex items-center px-4 py-2 bg-accent-500 text-white rounded-lg hover:bg-accent-600 transition-colors">
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                         </svg>
@@ -302,7 +306,7 @@
     <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" onclick="closeBookingModal(event)">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all" onclick="event.stopPropagation()">
             <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 rounded-t-2xl">
+            <div class="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-4 rounded-t-2xl">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xl font-bold">Pesan Kendaraan</h3>
                     <button onclick="closeBookingModal()" class="text-white hover:text-gray-200 transition-colors">
@@ -316,15 +320,15 @@
             <!-- Modal Content -->
             <div class="p-6">
                 <!-- Vehicle Info -->
-                <div class="bg-blue-50 rounded-lg p-4 mb-6">
+                <div class="bg-accent-50 rounded-lg p-4 mb-6">
                     <div class="flex items-center mb-2">
-                        <svg class="w-5 h-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 text-accent-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
                             <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z"/>
                         </svg>
                         <span class="font-semibold text-gray-900" id="modalVehicleName"></span>
                     </div>
-                    <div class="text-2xl font-bold text-blue-600" id="modalVehiclePrice"></div>
+                    <div class="text-2xl font-bold text-accent-600" id="modalVehiclePrice"></div>
                 </div>
 
                 @auth('customer')
@@ -334,15 +338,15 @@
                         
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
-                            <input type="date" id="modalStartDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" min="{{ date('Y-m-d') }}">
+                            <input type="date" id="modalStartDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent" min="{{ date('Y-m-d') }}">
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
-                            <input type="date" id="modalEndDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" min="{{ date('Y-m-d') }}">
+                            <input type="date" id="modalEndDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent" min="{{ date('Y-m-d') }}">
                         </div>
 
-                        <button onclick="proceedToBooking()" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg">
+                        <button onclick="proceedToBooking()" class="w-full bg-accent-500 text-white py-3 px-4 rounded-lg hover:bg-accent-600 transition-colors font-semibold shadow-md hover:shadow-lg">
                             Lanjutkan Pemesanan
                         </button>
                     </div>
@@ -362,14 +366,14 @@
                         </div>
 
                         <div class="space-y-3">
-                            <a href="{{ route('login') }}" class="block w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg">
+                            <a href="{{ route('login') }}" class="block w-full bg-accent-500 text-white py-3 px-4 rounded-lg hover:bg-accent-600 transition-colors font-semibold shadow-md hover:shadow-lg">
                                 <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                                 </svg>
                                 Masuk ke Akun
                             </a>
                             
-                            <a href="{{ route('customer.register') }}" class="block w-full bg-white border-2 border-blue-600 text-blue-600 py-3 px-4 rounded-lg hover:bg-blue-50 transition-colors font-semibold">
+                            <a href="{{ route('customer.register') }}" class="block w-full bg-white border-2 border-accent-500 text-accent-600 py-3 px-4 rounded-lg hover:bg-accent-50 transition-colors font-semibold">
                                 <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                                 </svg>
@@ -378,7 +382,7 @@
                         </div>
 
                         <p class="text-sm text-gray-500 mt-4">
-                            Sudah punya akun? <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium">Masuk di sini</a>
+                            Sudah punya akun? <a href="{{ route('login') }}" class="text-accent-600 hover:text-accent-600 font-medium">Masuk di sini</a>
                         </p>
                     </div>
                 @endauth

@@ -4,14 +4,14 @@
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pick Up</label>
             <input type="date" wire:model.live="startDate" 
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                    min="{{ date('Y-m-d') }}">
             @error('startDate') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Drop Off</label>
             <input type="date" wire:model.live="endDate" 
-                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                    min="{{ date('Y-m-d', strtotime('+1 day')) }}">
             @error('endDate') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
         </div>
@@ -21,20 +21,20 @@
     <div class="flex flex-wrap gap-4">
         @if($car->driver_fee_per_day > 0)
             <label class="flex items-center space-x-2">
-                <input type="checkbox" wire:model.live="withDriver" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                <input type="checkbox" wire:model.live="withDriver" class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
                 <span class="text-sm text-gray-700">Dengan Driver (+Rp {{ number_format($car->driver_fee_per_day, 0, ',', '.') }}/hari)</span>
             </label>
         @endif
         
         <label class="flex items-center space-x-2">
-            <input type="checkbox" wire:model.live="outOfTown" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+            <input type="checkbox" wire:model.live="outOfTown" class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
             <span class="text-sm text-gray-700">Luar Kota (+Rp 100,000)</span>
         </label>
     </div>
 
     <!-- Loading State -->
     <div wire:loading wire:target="startDate,endDate,withDriver,outOfTown" class="flex items-center justify-center py-4">
-        <div class="flex items-center space-x-2 text-blue-600">
+        <div class="flex items-center space-x-2 text-accent-600">
             <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -95,7 +95,7 @@
                     @endif
                 </p>
                 <a href="{{ route('vehicles.catalog') }}?start_date={{ $startDate }}&end_date={{ $endDate }}" 
-                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                   class="inline-flex items-center px-4 py-2 bg-accent-500 text-white rounded-lg hover:bg-accent-600 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
                     </svg>
@@ -107,22 +107,22 @@
 
     <!-- Booking Form -->
     @if($showBookingForm && $availability && $availability['is_available'])
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-4">
-            <h4 class="text-lg font-semibold text-blue-900 mb-4">Lengkapi Pemesanan Anda</h4>
+        <div class="bg-accent-50 border border-accent-200 rounded-lg p-6 mt-4">
+            <h4 class="text-lg font-semibold text-accent-900 mb-4">Lengkapi Pemesanan Anda</h4>
             
             <form wire:submit="submitBooking" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pick Up</label>
                         <input type="text" wire:model="pickupLocation" 
-                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                placeholder="Masukkan Lokasi Pick Up">
                         @error('pickupLocation') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Drop Off</label>
                         <input type="text" wire:model="returnLocation" 
-                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                                placeholder="Masukkan Lokasi Drop Off">
                         @error('returnLocation') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
@@ -131,14 +131,14 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Catatan Khusus (Opsional)</label>
                     <textarea wire:model="notes" rows="3"
-                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                               placeholder="Catatan Khusus (Opsional)"></textarea>
                     @error('notes') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
                 
                 <div class="flex space-x-3">
                     <button type="submit" 
-                            class="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            class="flex-1 bg-accent-500 text-white py-3 px-4 rounded-lg hover:bg-accent-600 transition-colors font-medium">
                         <span wire:loading.remove wire:target="submitBooking">Lanjutkan ke Pemesanan</span>
                         <span wire:loading wire:target="submitBooking" class="flex items-center justify-center">
                             <svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">

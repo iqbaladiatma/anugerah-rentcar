@@ -7,7 +7,7 @@
                 <p class="text-gray-600">Kelola armada kendaraan sewaan Anda</p>
             </div>
             <a href="{{ route('admin.vehicles.create') }}" 
-               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+               class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
                 <x-icons.plus class="w-5 h-5" />
                 Tambah Kendaraan
             </a>
@@ -23,14 +23,14 @@
                 <input type="text" 
                        wire:model.live.debounce.300ms="search"
                        placeholder="Plat nomor, merek, model..."
-                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent-500 focus:border-accent-500">
             </div>
 
             <!-- Status Filter -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select wire:model.live="status" 
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent-500 focus:border-accent-500">
                     <option value="">Semua Status</option>
                     @foreach($statusOptions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
@@ -43,7 +43,7 @@
                 <label class="flex items-center">
                     <input type="checkbox" 
                            wire:model.live="showMaintenanceDue"
-                           class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                           class="rounded border-gray-300 text-accent-600 focus:ring-accent-500">
                     <span class="ml-2 text-sm text-gray-700">Hanya Perlu Perawatan</span>
                 </label>
             </div>
@@ -147,7 +147,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full
                                         @if($vehicle->status === 'available') bg-green-100 text-green-800
-                                        @elseif($vehicle->status === 'rented') bg-blue-100 text-blue-800
+                                        @elseif($vehicle->status === 'rented') bg-accent-100 text-accent-800
                                         @elseif($vehicle->status === 'maintenance') bg-yellow-100 text-yellow-800
                                         @else bg-gray-100 text-gray-800
                                         @endif">
@@ -197,9 +197,9 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('admin.vehicles.show', $vehicle) }}" 
-                                       class="text-blue-600 hover:text-blue-900">Lihat</a>
+                                       class="text-accent-600 hover:text-accent-800">Lihat</a>
                                     <a href="{{ route('admin.vehicles.edit', $vehicle) }}" 
-                                       class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                       class="text-accent-600 hover:text-accent-800">Edit</a>
                                 </div>
                             </td>
                         </tr>

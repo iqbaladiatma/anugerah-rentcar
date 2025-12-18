@@ -3,7 +3,7 @@
     <div class="bg-white shadow rounded-lg p-6">
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center space-x-4">
-                <select wire:model="quick_filter" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <select wire:model="quick_filter" class="rounded-md border-gray-300 shadow-sm focus:border-accent-500 focus:ring-accent-500">
                     @foreach($this->getQuickFilterOptions() as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                     @endforeach
@@ -13,20 +13,20 @@
             <div class="flex items-center space-x-3">
                 @if($show_actions)
                     <div class="flex items-center space-x-2">
-                        <select wire:model="bulk_action" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <select wire:model="bulk_action" class="rounded-md border-gray-300 shadow-sm focus:border-accent-500 focus:ring-accent-500">
                             @foreach($this->getBulkActionOptions() as $value => $label)
                                 <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
                         </select>
                         <button wire:click="processBulkAction" type="button" 
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-accent-500 hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500">
                             Terapkan
                         </button>
                     </div>
                 @endif
 
                 <a href="{{ route('admin.bookings.create') }}" 
-                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-accent-500 hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500">
                     <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
@@ -45,7 +45,7 @@
                         <tr>
                             <th class="px-6 py-3 text-left">
                                 <input type="checkbox" wire:model="select_all" 
-                                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                       class="h-4 w-4 text-accent-600 focus:ring-accent-500 border-gray-300 rounded">
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Detail Pemesanan
@@ -75,7 +75,7 @@
                             <tr class="hover:bg-gray-50 {{ $this->isOverdue($booking) ? 'bg-red-50' : '' }}">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <input type="checkbox" wire:model="selected_bookings" value="{{ $booking->id }}" 
-                                           class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                           class="h-4 w-4 text-accent-600 focus:ring-accent-500 border-gray-300 rounded">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
@@ -83,7 +83,7 @@
                                             <div class="text-sm font-medium text-gray-900">{{ $booking->booking_number }}</div>
                                             <div class="text-sm text-gray-500">Dibuat {{ $booking->created_at->format('d M Y') }}</div>
                                             @if($booking->with_driver && $booking->driver)
-                                                <div class="text-xs text-blue-600">Sopir: {{ $booking->driver->name }}</div>
+                                                <div class="text-xs text-accent-600">Sopir: {{ $booking->driver->name }}</div>
                                             @endif
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                                     <div class="flex items-center justify-end space-x-2">
                                         <!-- View Button -->
                                         <a href="{{ route('admin.bookings.show', $booking) }}" 
-                                           class="text-indigo-600 hover:text-indigo-900">
+                                           class="text-accent-600 hover:text-accent-800">
                                             Lihat
                                         </a>
 
@@ -139,7 +139,7 @@
 
                                         @if($booking->booking_status === 'confirmed')
                                             <button wire:click="activateBooking({{ $booking->id }})" 
-                                                    class="text-blue-600 hover:text-blue-900">
+                                                    class="text-accent-600 hover:text-accent-800">
                                                 Keluar
                                             </button>
                                         @endif
@@ -185,7 +185,7 @@
                 <p class="mt-1 text-sm text-gray-500">Mulai dengan membuat pemesanan baru.</p>
                 <div class="mt-6">
                     <a href="{{ route('admin.bookings.create') }}" 
-                       class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                       class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent-500 hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500">
                         <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
@@ -241,7 +241,7 @@
                     <div class="mt-4">
                         <label for="cancellation_reason" class="block text-sm font-medium text-gray-700">Alasan Pembatalan (Opsional)</label>
                         <textarea wire:model="cancellation_reason" id="cancellation_reason" rows="3" 
-                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent-500 focus:ring-accent-500"
                                   placeholder="Masukkan alasan pembatalan..."></textarea>
                     </div>
                     <div class="items-center px-4 py-3 text-center">

@@ -4,9 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+        
+        @php
+            $settings = \App\Models\Setting::current();
+        @endphp
+        
+        @if($settings->company_logo)
+            <link rel="icon" type="image/png" href="{{ asset('storage/' . $settings->company_logo) }}">
+        @else
+            <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpg') }}">
+        @endif
 
-        <title>{{ config('app.name', 'Anugerah Rentcar') }} - Panel Admin</title>
+        <title>{{ $settings->company_name ?? config('app.name', 'Anugerah Rentcar') }} - Panel Admin</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -18,7 +27,7 @@
         <!-- Livewire Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased bg-gray-50">
+    <body class="font-sans antialiased bg-white">
         <div class="min-h-screen">
             <!-- Bilah Sisi -->
             <livewire:layout.admin-sidebar />
