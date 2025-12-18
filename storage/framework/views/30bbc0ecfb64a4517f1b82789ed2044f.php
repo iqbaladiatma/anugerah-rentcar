@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-        <title>{{ config('app.name', 'Anugerah Rentcar') }} - Rental Mobil Terpercaya</title>
+        <title><?php echo e(config('app.name', 'Anugerah Rentcar')); ?> - Rental Mobil Terpercaya</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="{{ asset('ini.jpg') }}">
-        <link rel="apple-touch-icon" href="{{ asset('ini.jpg') }}">
+        <link rel="icon" type="image/png" href="<?php echo e(asset('ini.jpg')); ?>">
+        <link rel="apple-touch-icon" href="<?php echo e(asset('ini.jpg')); ?>">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @livewireStyles
+        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+        <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
+
     </head>
     <body class="font-sans antialiased bg-white">
         <!-- Navigation -->
@@ -26,9 +27,9 @@
                 <div class="flex justify-between items-center h-14 sm:h-16 lg:h-20">
                     <!-- Logo -->
                     <div class="flex-shrink-0">
-                        <a href="{{ route('home') }}" class="flex items-center group">
+                        <a href="<?php echo e(route('home')); ?>" class="flex items-center group">
                             <img 
-                                src="{{ asset('ini.jpg') }}" 
+                                src="<?php echo e(asset('ini.jpg')); ?>" 
                                 alt="Anugerah Rentcar Logo" 
                                 class="w-10 h-10 lg:w-12 lg:h-12 min-w-[40px] min-h-[40px] lg:min-w-[48px] lg:min-h-[48px] object-contain rounded-xl group-hover:scale-105 transition-transform duration-200 flex-shrink-0"
                             >
@@ -38,39 +39,39 @@
 
                     <!-- Desktop Navigation Links -->
                     <div class="hidden lg:flex lg:items-center lg:ml-10 lg:space-x-8">
-                        @auth('customer')
-                            <a href="{{ route('customer.dashboard') }}" class="{{ request()->routeIs('customer.dashboard') ? 'nav-link-active' : 'nav-link' }}">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard('customer')->check()): ?>
+                            <a href="<?php echo e(route('customer.dashboard')); ?>" class="<?php echo e(request()->routeIs('customer.dashboard') ? 'nav-link-active' : 'nav-link'); ?>">
                                 Dashboard
                             </a>
-                            <a href="{{ route('customer.bookings') }}" class="{{ request()->routeIs('customer.bookings*') ? 'nav-link-active' : 'nav-link' }}">
+                            <a href="<?php echo e(route('customer.bookings')); ?>" class="<?php echo e(request()->routeIs('customer.bookings*') ? 'nav-link-active' : 'nav-link'); ?>">
                                 Pemesanan Saya
                             </a>
-                            <a href="{{ route('vehicles.catalog') }}" class="{{ request()->routeIs('vehicles.*') ? 'nav-link-active' : 'nav-link' }}">
+                            <a href="<?php echo e(route('vehicles.catalog')); ?>" class="<?php echo e(request()->routeIs('vehicles.*') ? 'nav-link-active' : 'nav-link'); ?>">
                                 Kendaraan
                             </a>
-                        @else
-                            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'nav-link-active' : 'nav-link' }}">
+                        <?php else: ?>
+                            <a href="<?php echo e(route('home')); ?>" class="<?php echo e(request()->routeIs('home') ? 'nav-link-active' : 'nav-link'); ?>">
                                 Beranda
                             </a>
-                            <a href="{{ route('vehicles.catalog') }}" class="{{ request()->routeIs('vehicles.*') ? 'nav-link-active' : 'nav-link' }}">
+                            <a href="<?php echo e(route('vehicles.catalog')); ?>" class="<?php echo e(request()->routeIs('vehicles.*') ? 'nav-link-active' : 'nav-link'); ?>">
                                 Kendaraan
                             </a>
-                            <a href="{{ route('home') }}#about" class="nav-link">
+                            <a href="<?php echo e(route('home')); ?>#about" class="nav-link">
                                 Tentang Kami
                             </a>
-                            <a href="{{ route('home') }}#contact" class="nav-link">
+                            <a href="<?php echo e(route('home')); ?>#contact" class="nav-link">
                                 Kontak
                             </a>
-                        @endauth
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
 
                     <!-- Right side navigation (Desktop only) -->
                     <div class="hidden lg:flex lg:items-center lg:space-x-4">
-                        @auth('customer')
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard('customer')->check()): ?>
                             <!-- Customer is logged in -->
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = !open" class="flex items-center text-sm font-medium text-secondary-700 hover:text-accent-500 focus:outline-none focus:text-accent-500 transition-colors px-3 py-2 rounded-lg hover:bg-primary-200">
-                                    <span class="hidden sm:block">{{ auth('customer')->user()->name }}</span>
+                                    <span class="hidden sm:block"><?php echo e(auth('customer')->user()->name); ?></span>
                                     <span class="sm:hidden">Menu</span>
                                     <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -78,33 +79,33 @@
                                 </button>
 
                                 <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-primary-500 rounded-xl shadow-medium py-2 z-50 border border-secondary-100">
-                                    <a href="{{ route('customer.dashboard') }}" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-200 hover:text-accent-500 transition-colors">
+                                    <a href="<?php echo e(route('customer.dashboard')); ?>" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-200 hover:text-accent-500 transition-colors">
                                         Dashboard
                                     </a>
-                                    <a href="{{ route('customer.bookings') }}" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-200 hover:text-accent-500 transition-colors">
+                                    <a href="<?php echo e(route('customer.bookings')); ?>" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-200 hover:text-accent-500 transition-colors">
                                         Pemesanan Saya
                                     </a>
-                                    <a href="{{ route('customer.profile') }}" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-200 hover:text-accent-500 transition-colors">
+                                    <a href="<?php echo e(route('customer.profile')); ?>" class="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-200 hover:text-accent-500 transition-colors">
                                         Profil
                                     </a>
                                     <div class="border-t border-secondary-100 my-2"></div>
-                                    <form method="POST" action="{{ route('customer.logout') }}">
-                                        @csrf
+                                    <form method="POST" action="<?php echo e(route('customer.logout')); ?>">
+                                        <?php echo csrf_field(); ?>
                                         <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-secondary-700 hover:bg-primary-200 hover:text-accent-500 transition-colors">
                                             Keluar
                                         </button>
                                     </form>
                                 </div>
                             </div>
-                        @else
+                        <?php else: ?>
                             <!-- Customer is not logged in -->
-                            <a href="{{ route('login') }}" class="nav-link">
+                            <a href="<?php echo e(route('login')); ?>" class="nav-link">
                                 Masuk
                             </a>
-                            <a href="{{ route('customer.register') }}" class="btn-primary text-sm">
+                            <a href="<?php echo e(route('customer.register')); ?>" class="btn-primary text-sm">
                                 Daftar
                             </a>
-                        @endauth
+                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -113,7 +114,8 @@
 
         <!-- Page Content -->
         <main>
-            {{ $slot }}
+            <?php echo e($slot); ?>
+
         </main>
 
         <!-- Footer -->
@@ -125,7 +127,7 @@
                         <div class="flex items-center mb-6">
                             <div class="w-12 h-12 rounded-xl flex items-center justify-center">
                                 <img 
-                                    src="{{ asset('ini.jpg') }}" 
+                                    src="<?php echo e(asset('ini.jpg')); ?>" 
                                     alt="Anugerah Rentcar Logo" 
                                     class="w-10 h-10 lg:w-12 lg:h-12 min-w-[40px] min-h-[40px] lg:min-w-[48px] lg:min-h-[48px] object-contain rounded-xl group-hover:scale-105 transition-transform duration-200 flex-shrink-0"
                                 >
@@ -159,10 +161,10 @@
                     <div>
                         <h3 class="text-xl font-semibold mb-6 text-primary-500">Tautan Cepat</h3>
                         <ul class="space-y-3">
-                            <li><a href="{{ route('vehicles.catalog') }}" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Jelajahi Kendaraan</a></li>
-                            <li><a href="{{ route('terms') }}" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Syarat & Ketentuan</a></li>
-                            <li><a href="{{ route('terms') }}#faq" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">FAQ</a></li>
-                            <li><a href="{{ route('home') }}#contact" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Hubungi Kami</a></li>
+                            <li><a href="<?php echo e(route('vehicles.catalog')); ?>" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Jelajahi Kendaraan</a></li>
+                            <li><a href="<?php echo e(route('terms')); ?>" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Syarat & Ketentuan</a></li>
+                            <li><a href="<?php echo e(route('terms')); ?>#faq" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">FAQ</a></li>
+                            <li><a href="<?php echo e(route('home')); ?>#contact" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Hubungi Kami</a></li>
                         </ul>
                     </div>
 
@@ -200,19 +202,58 @@
                 </div>
 
                 <div class="border-t border-secondary-800 mt-12 pt-8 text-center">
-                    <p class="text-secondary-400 text-base">&copy; {{ date('Y') }} Anugerah Rentcar. Semua hak dilindungi.</p>
+                    <p class="text-secondary-400 text-base">&copy; <?php echo e(date('Y')); ?> Anugerah Rentcar. Semua hak dilindungi.</p>
                 </div>
             </div>
         </footer>
 
-        <x-customer-bottom-nav-test />
+        <?php if (isset($component)) { $__componentOriginald8de4041c965810409d7e86b42ce6acb = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald8de4041c965810409d7e86b42ce6acb = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.customer-bottom-nav-test','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('customer-bottom-nav-test'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald8de4041c965810409d7e86b42ce6acb)): ?>
+<?php $attributes = $__attributesOriginald8de4041c965810409d7e86b42ce6acb; ?>
+<?php unset($__attributesOriginald8de4041c965810409d7e86b42ce6acb); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald8de4041c965810409d7e86b42ce6acb)): ?>
+<?php $component = $__componentOriginald8de4041c965810409d7e86b42ce6acb; ?>
+<?php unset($__componentOriginald8de4041c965810409d7e86b42ce6acb); ?>
+<?php endif; ?>
         
-        @guest('customer')
-            <x-guest-bottom-nav />
-        @endguest
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard('customer')->guest()): ?>
+            <?php if (isset($component)) { $__componentOriginal75320a85ec0e09bd704db10c2ae3e357 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal75320a85ec0e09bd704db10c2ae3e357 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.guest-bottom-nav','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('guest-bottom-nav'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal75320a85ec0e09bd704db10c2ae3e357)): ?>
+<?php $attributes = $__attributesOriginal75320a85ec0e09bd704db10c2ae3e357; ?>
+<?php unset($__attributesOriginal75320a85ec0e09bd704db10c2ae3e357); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal75320a85ec0e09bd704db10c2ae3e357)): ?>
+<?php $component = $__componentOriginal75320a85ec0e09bd704db10c2ae3e357; ?>
+<?php unset($__componentOriginal75320a85ec0e09bd704db10c2ae3e357); ?>
+<?php endif; ?>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-        @livewireScripts
+        <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
+
         <script src="//unpkg.com/alpinejs" defer></script>
-        @stack('scripts')
+        <?php echo $__env->yieldPushContent('scripts'); ?>
     </body>
-</html>
+</html><?php /**PATH C:\laragon\www\anugerah-rentcar\resources\views/layouts/public.blade.php ENDPATH**/ ?>

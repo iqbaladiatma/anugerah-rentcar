@@ -19,6 +19,7 @@ class VehicleController extends Controller
     {
         $this->fileUploadService = $fileUploadService;
     }
+    
     /**
      * Display a listing of vehicles.
      */
@@ -110,18 +111,18 @@ class VehicleController extends Controller
     /**
      * Show the form for editing the specified vehicle.
      */
-    public function edit(Car $car): View
+    public function edit(Car $vehicle): View
     {
-        return view('admin.vehicles.edit', compact('car'));
+        return view('admin.vehicles.edit', ['car' => $vehicle]);
     }
 
     /**
      * Update the specified vehicle in storage.
      */
-    public function update(Request $request, Car $car): RedirectResponse
+    public function update(Request $request, Car $vehicle): RedirectResponse
     {
         $validated = $request->validate([
-            'license_plate' => ['required', 'string', 'max:20', Rule::unique('cars')->ignore($car->id)],
+            'license_plate' => ['required', 'string', 'max:20', Rule::unique('cars')->ignore($vehicle->id)],
             'brand' => 'required|string|max:50',
             'model' => 'required|string|max:50',
             'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
@@ -145,8 +146,8 @@ class VehicleController extends Controller
         foreach ($photoFields as $field) {
             if ($request->hasFile($field)) {
                 // Delete old photo if exists
-                if ($car->$field) {
-                    $this->fileUploadService->deleteFile($car->$field, 'public');
+                if ($vehicle->$field) {
+                    $this->fileUploadService->deleteFile($vehicle->$field, 'public');
                 }
                 
                 $result = $this->fileUploadService->uploadFile(
@@ -172,19 +173,19 @@ class VehicleController extends Controller
             }
         }
 
-        $car->update($validated);
+        $vehicle->update($validated);
 
-        return redirect()->route('admin.vehicles.show', $car)
+        return redirect()->route('admin.vehicles.show', $vehicle)
             ->with('success', 'Vehicle updated successfully.');
     }
 
     /**
      * Remove the specified vehicle from storage.
      */
-    public function destroy(Car $car): RedirectResponse
+    public function destroy(Car $vehicle): RedirectResponse
     {
         // Check if car has active bookings
-        if ($car->bookings()->whereIn('booking_status', ['confirmed', 'active'])->exists()) {
+        if ($vehicle->bookings()->whereIn('booking_status', ['confirmed', 'active'])->exists()) {
             return redirect()->route('admin.vehicles.index')
                 ->with('error', 'Cannot delete vehicle with active bookings.');
         }
@@ -192,12 +193,12 @@ class VehicleController extends Controller
         // Delete photos
         $photoFields = ['photo_front', 'photo_side', 'photo_back'];
         foreach ($photoFields as $field) {
-            if ($car->$field) {
-                $this->fileUploadService->deleteFile($car->$field, 'public');
+            if ($vehicle->$field) {
+                $this->fileUploadService->deleteFile($vehicle->$field, 'public');
             }
         }
 
-        $car->delete();
+        $vehicle->delete();
 
         return redirect()->route('admin.vehicles.index')
             ->with('success', 'Vehicle deleted successfully.');

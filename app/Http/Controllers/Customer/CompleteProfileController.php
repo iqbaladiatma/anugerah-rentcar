@@ -38,6 +38,7 @@ class CompleteProfileController extends Controller
             'address' => ['required', 'string', 'max:500'],
             'ktp_photo' => ['required', File::image()->max(2048)],
             'sim_photo' => ['required', File::image()->max(2048)],
+            'kk_photo' => ['required', File::image()->max(2048)],
         ], [
             'phone.required' => 'Nomor telepon wajib diisi',
             'nik.required' => 'NIK wajib diisi',
@@ -50,6 +51,9 @@ class CompleteProfileController extends Controller
             'sim_photo.required' => 'Foto SIM wajib diunggah',
             'sim_photo.image' => 'Foto SIM harus berupa gambar',
             'sim_photo.max' => 'Foto SIM tidak boleh melebihi 2MB',
+            'kk_photo.required' => 'Foto Kartu Keluarga wajib diunggah',
+            'kk_photo.image' => 'Foto Kartu Keluarga harus berupa gambar',
+            'kk_photo.max' => 'Foto Kartu Keluarga tidak boleh melebihi 2MB',
         ]);
         
         // Handle KTP photo upload
@@ -74,12 +78,24 @@ class CompleteProfileController extends Controller
             $validated['sim_photo'] = $simPath;
         }
         
+        // Handle KK photo upload
+        if ($request->hasFile('kk_photo')) {
+            // Delete old photo if exists
+            if ($customer->kk_photo) {
+                Storage::disk('public')->delete($customer->kk_photo);
+            }
+            
+            $kkPath = $request->file('kk_photo')->store('customers/kk', 'public');
+            $validated['kk_photo'] = $kkPath;
+        }
+        
         // Update customer with specific fields only
         $customer->phone = $validated['phone'];
         $customer->nik = $validated['nik'];
         $customer->address = $validated['address'];
         $customer->ktp_photo = $validated['ktp_photo'];
         $customer->sim_photo = $validated['sim_photo'];
+        $customer->kk_photo = $validated['kk_photo'];
         $customer->profile_completed = true;
         $customer->save();
         

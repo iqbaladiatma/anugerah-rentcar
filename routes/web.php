@@ -12,6 +12,9 @@ Route::get('/kendaraan/{car}', [PublicVehicleController::class, 'show'])->name('
 Route::post('/kendaraan/cari', [PublicVehicleController::class, 'search'])->name('vehicles.search');
 Route::post('/kendaraan/cek-ketersediaan', [PublicVehicleController::class, 'checkAvailability'])->name('vehicles.check-availability');
 
+// Static pages
+Route::view('/syarat-ketentuan', 'pages.terms')->name('terms');
+
 // Unified Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/masuk', [UnifiedLoginController::class, 'showLoginForm'])->name('login');
@@ -71,15 +74,20 @@ Route::view('dashboard', 'admin.dashboard')
 // Admin routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     // Vehicle Management Routes
-    Route::resource('kendaraan', \App\Http\Controllers\VehicleController::class, ['names' => [
-        'index' => 'vehicles.index',
-        'create' => 'vehicles.create',
-        'store' => 'vehicles.store',
-        'show' => 'vehicles.show',
-        'edit' => 'vehicles.edit',
-        'update' => 'vehicles.update',
-        'destroy' => 'vehicles.destroy',
-    ]]);
+    Route::resource('kendaraan', \App\Http\Controllers\VehicleController::class, [
+        'names' => [
+            'index' => 'vehicles.index',
+            'create' => 'vehicles.create',
+            'store' => 'vehicles.store',
+            'show' => 'vehicles.show',
+            'edit' => 'vehicles.edit',
+            'update' => 'vehicles.update',
+            'destroy' => 'vehicles.destroy',
+        ],
+        'parameters' => [
+            'kendaraan' => 'vehicle'
+        ]
+    ]);
     Route::patch('/kendaraan/{car}/status', [\App\Http\Controllers\VehicleController::class, 'updateStatus'])->name('vehicles.update-status');
     Route::get('/kendaraan/perawatan/jatuh-tempo', [\App\Http\Controllers\VehicleController::class, 'maintenanceDue'])->name('vehicles.maintenance-due');
     

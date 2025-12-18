@@ -24,6 +24,7 @@ class Customer extends Authenticatable
         'nik',
         'ktp_photo',
         'sim_photo',
+        'kk_photo',
         'address',
         'is_member',
         'member_discount',
@@ -165,6 +166,14 @@ class Customer extends Authenticatable
     public function getSimPhotoUrlAttribute(): ?string
     {
         return $this->sim_photo ? asset('storage/' . $this->sim_photo) : null;
+    }
+
+    /**
+     * Get KK photo URL.
+     */
+    public function getKkPhotoUrlAttribute(): ?string
+    {
+        return $this->kk_photo ? asset('storage/' . $this->kk_photo) : null;
     }
 
     /**

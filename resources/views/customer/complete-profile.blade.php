@@ -93,6 +93,7 @@
                     <!-- File Upload Section -->
                     <div class="border-t border-gray-200 pt-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4">Upload Dokumen Identitas</h3>
+                        <p class="text-sm text-gray-600 mb-4">Unggah foto KTP, SIM, dan Kartu Keluarga (KK) untuk verifikasi identitas.</p>
                         
                         <!-- KTP Photo -->
                         <div class="mb-6">
@@ -117,7 +118,7 @@
                         </div>
 
                         <!-- SIM Photo -->
-                        <div>
+                        <div class="mb-6">
                             <label for="sim_photo" class="block text-sm font-medium text-gray-700 mb-2">
                                 Foto SIM <span class="text-red-500">*</span>
                             </label>
@@ -135,7 +136,29 @@
                             </div>
                             @error('sim_photo')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror>
+                            @enderror
+                        </div>
+
+                        <!-- KK Photo (Kartu Keluarga) -->
+                        <div>
+                            <label for="kk_photo" class="block text-sm font-medium text-gray-700 mb-2">
+                                Foto Kartu Keluarga (KK) <span class="text-red-500">*</span>
+                            </label>
+                            <div class="flex items-center justify-center w-full">
+                                <label for="kk_photo" class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                        </svg>
+                                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau drag and drop</p>
+                                        <p class="text-xs text-gray-500">PNG, JPG (MAX. 2MB)</p>
+                                    </div>
+                                    <input id="kk_photo" name="kk_photo" type="file" class="hidden" accept="image/*" required />
+                                </label>
+                            </div>
+                            @error('kk_photo')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -240,6 +263,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             setupPreview('ktp_photo');
             setupPreview('sim_photo');
+            setupPreview('kk_photo');
         });
     </script>
     @endpush

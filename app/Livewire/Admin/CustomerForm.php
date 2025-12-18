@@ -30,14 +30,17 @@ class CustomerForm extends Component
     // Document uploads
     public $ktp_photo;
     public $sim_photo;
+    public $kk_photo;
 
     // Existing documents (for editing)
     public ?string $existing_ktp_photo = null;
     public ?string $existing_sim_photo = null;
+    public ?string $existing_kk_photo = null;
 
     // Document removal flags
     public bool $remove_ktp_photo = false;
     public bool $remove_sim_photo = false;
+    public bool $remove_kk_photo = false;
 
     protected function rules()
     {
@@ -87,6 +90,12 @@ class CustomerForm extends Component
                 : 'required|image|mimes:jpeg,png,jpg|max:2048';
         }
 
+        if (!$this->isEditing || $this->kk_photo) {
+            $rules['kk_photo'] = $this->isEditing && $this->existing_kk_photo && !$this->remove_kk_photo
+                ? 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+                : 'required|image|mimes:jpeg,png,jpg|max:2048';
+        }
+
         return $rules;
     }
 
@@ -97,8 +106,10 @@ class CustomerForm extends Component
         'nik.size' => 'NIK must be exactly 16 digits.',
         'ktp_photo.required' => 'KTP photo is required.',
         'sim_photo.required' => 'SIM photo is required.',
+        'kk_photo.required' => 'Foto Kartu Keluarga wajib diunggah.',
         'ktp_photo.image' => 'KTP photo must be an image file.',
         'sim_photo.image' => 'SIM photo must be an image file.',
+        'kk_photo.image' => 'Foto Kartu Keluarga must be an image file.',
         'blacklist_reason.required_if' => 'Blacklist reason is required when blacklisting a customer.',
         '*.max' => 'The file size must not exceed 2MB.',
     ];
@@ -132,6 +143,7 @@ class CustomerForm extends Component
         // Store existing documents
         $this->existing_ktp_photo = $this->customer->ktp_photo;
         $this->existing_sim_photo = $this->customer->sim_photo;
+        $this->existing_kk_photo = $this->customer->kk_photo;
     }
 
     public function updatedIsMember()
@@ -183,7 +195,7 @@ class CustomerForm extends Component
         ];
 
         // Handle document uploads and removals
-        $documentFields = ['ktp_photo', 'sim_photo'];
+        $documentFields = ['ktp_photo', 'sim_photo', 'kk_photo'];
         foreach ($documentFields as $field) {
             $removeProperty = "remove_{$field}";
             $existingProperty = "existing_{$field}";

@@ -180,6 +180,7 @@
                     <ul class="space-y-2">
                         <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-white">Home</a></li>
                         <li><a href="{{ route('vehicles.catalog') }}" class="text-gray-300 hover:text-white">Vehicles</a></li>
+                        <li><a href="{{ route('terms') }}" class="text-gray-300 hover:text-white">Syarat & Ketentuan</a></li>
                         <li><a href="#about" class="text-gray-300 hover:text-white">About Us</a></li>
                         <li><a href="#contact" class="text-gray-300 hover:text-white">Contact</a></li>
                     </ul>

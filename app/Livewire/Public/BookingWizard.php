@@ -50,8 +50,10 @@ class BookingWizard extends Component
     // Step 4: Document Upload
     public $ktpPhoto;
     public $simPhoto;
+    public $kkPhoto;
     public $ktpPhotoPreview;
     public $simPhotoPreview;
+    public $kkPhotoPreview;
 
     // Step 5: Payment Method
     public $paymentMethod = 'bank_transfer';
@@ -372,6 +374,10 @@ class BookingWizard extends Component
             $this->errors['simPhoto'] = 'SIM photo is required';
         }
 
+        if (!$this->customer->kk_photo && !$this->kkPhoto) {
+            $this->errors['kkPhoto'] = 'Kartu Keluarga photo is required';
+        }
+
         // Enhanced security validation for document uploads
         if ($this->ktpPhoto) {
             $validator = validator(['ktpPhoto' => $this->ktpPhoto], [
@@ -393,6 +399,18 @@ class BookingWizard extends Component
             if ($validator->fails()) {
                 foreach ($validator->errors()->get('simPhoto') as $error) {
                     $this->addError('simPhoto', $error);
+                }
+            }
+        }
+
+        if ($this->kkPhoto) {
+            $validator = validator(['kkPhoto' => $this->kkPhoto], [
+                'kkPhoto' => EnhancedFileUpload::customerDocument()
+            ]);
+            
+            if ($validator->fails()) {
+                foreach ($validator->errors()->get('kkPhoto') as $error) {
+                    $this->addError('kkPhoto', $error);
                 }
             }
         }
@@ -498,6 +516,19 @@ class BookingWizard extends Component
             }
         }
 
+        // Upload KK photo if provided
+        if ($this->kkPhoto) {
+            $result = $this->uploadCustomerDocument($this->kkPhoto, $this->customer->nik, 'kk');
+            if ($result['success']) {
+                $updates['kk_photo'] = $result['path'];
+            } else {
+                foreach ($result['errors'] as $error) {
+                    $this->addError('kkPhoto', $error);
+                }
+                return;
+            }
+        }
+
         if (!empty($updates)) {
             $this->customer->update($updates);
         }
@@ -579,6 +610,19 @@ class BookingWizard extends Component
     {
         $this->simPhoto = null;
         $this->simPhotoPreview = null;
+    }
+
+    public function updatedKkPhoto()
+    {
+        if ($this->kkPhoto) {
+            $this->kkPhotoPreview = $this->kkPhoto->temporaryUrl();
+        }
+    }
+
+    public function removeKkPhoto()
+    {
+        $this->kkPhoto = null;
+        $this->kkPhotoPreview = null;
     }
 
     public function render()

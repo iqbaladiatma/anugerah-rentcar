@@ -424,7 +424,7 @@
                 <div class="p-6">
                     <h2 class="text-2xl font-bold text-gray-900 mb-6">Upload Required Documents</h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <!-- KTP Upload -->
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">KTP (Identity Card)</h3>
@@ -500,6 +500,46 @@
                                             <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG up to 10MB</p>
                                         </div>
                                         <input id="simPhoto" type="file" wire:model="simPhoto" accept="image/*" class="hidden">
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- KK Upload (Kartu Keluarga) -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Kartu Keluarga (KK)</h3>
+                            
+                            @if ($customer && $customer->kk_photo && !$kkPhoto)
+                                <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <span class="text-sm text-green-800 font-medium">KK already uploaded</span>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                                    @if ($kkPhotoPreview)
+                                        <div class="mb-4">
+                                            <img src="{{ $kkPhotoPreview }}" alt="KK Preview" class="max-w-full h-48 mx-auto rounded">
+                                            <button type="button" wire:click="removeKkPhoto" 
+                                                    class="mt-2 text-sm text-red-600 hover:text-red-800">
+                                                Remove Photo
+                                            </button>
+                                        </div>
+                                    @else
+                                        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <div class="text-sm text-gray-600 mb-4">
+                                            <label for="kkPhoto" class="cursor-pointer">
+                                                <span class="text-blue-600 hover:text-blue-500 font-medium">Click to upload</span>
+                                                <span> or drag and drop</span>
+                                            </label>
+                                            <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG up to 10MB</p>
+                                        </div>
+                                        <input id="kkPhoto" type="file" wire:model="kkPhoto" accept="image/*" class="hidden">
                                     @endif
                                 </div>
                             @endif

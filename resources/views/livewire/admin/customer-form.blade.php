@@ -89,11 +89,11 @@
                     <div class="md:col-span-1">
                         <h3 class="text-lg font-medium leading-6 text-gray-900">Dokumen Identitas</h3>
                         <p class="mt-1 text-sm text-gray-500">
-                            Unggah foto dokumen KTP dan SIM yang jelas.
+                            Unggah foto dokumen KTP, SIM, dan Kartu Keluarga (KK) yang jelas.
                         </p>
                     </div>
                     <div class="mt-5 md:mt-0 md:col-span-2">
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
                             <!-- KTP Photo -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">
@@ -150,7 +150,6 @@
                                                            accept="image/*"
                                                            class="sr-only">
                                                 </label>
-                                                <p class="pl-1">atau seret dan lepas</p>
                                             </div>
                                             <p class="text-xs text-gray-500">PNG, JPG hingga 2MB</p>
                                         </div>
@@ -218,7 +217,6 @@
                                                            accept="image/*"
                                                            class="sr-only">
                                                 </label>
-                                                <p class="pl-1">atau seret dan lepas</p>
                                             </div>
                                             <p class="text-xs text-gray-500">PNG, JPG hingga 2MB</p>
                                         </div>
@@ -226,6 +224,73 @@
                                 @endif
                                 
                                 @error('sim_photo')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- KK Photo (Kartu Keluarga) -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">
+                                    Foto Kartu Keluarga *
+                                </label>
+                                
+                                @if($existing_kk_photo && !$remove_kk_photo && !$kk_photo)
+                                    <div class="mt-1">
+                                        <img src="{{ asset('storage/' . $existing_kk_photo) }}" 
+                                             alt="KK Saat Ini" 
+                                             class="h-32 w-full object-cover rounded-md border">
+                                        <div class="mt-2 flex space-x-2">
+                                            <button type="button" 
+                                                    wire:click="removeDocument('kk')"
+                                                    class="text-sm text-red-600 hover:text-red-800">
+                                                Hapus
+                                            </button>
+                                        </div>
+                                    </div>
+                                @elseif($kk_photo)
+                                    <div class="mt-1">
+                                        <img src="{{ $kk_photo->temporaryUrl() }}" 
+                                             alt="KK Baru" 
+                                             class="h-32 w-full object-cover rounded-md border">
+                                        <div class="mt-2">
+                                            <button type="button" 
+                                                    wire:click="$set('kk_photo', null)"
+                                                    class="text-sm text-red-600 hover:text-red-800">
+                                                Hapus
+                                            </button>
+                                        </div>
+                                    </div>
+                                @elseif($remove_kk_photo)
+                                    <div class="mt-1 p-4 border-2 border-dashed border-red-300 rounded-md">
+                                        <p class="text-sm text-red-600">Foto KK akan dihapus</p>
+                                        <button type="button" 
+                                                wire:click="restoreDocument('kk')"
+                                                class="mt-1 text-sm text-blue-600 hover:text-blue-800">
+                                            Pulihkan
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                        <div class="space-y-1 text-center">
+                                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            <div class="flex text-sm text-gray-600">
+                                                <label for="kk_photo" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                                    <span>Unggah foto KK</span>
+                                                    <input id="kk_photo" 
+                                                           wire:model="kk_photo" 
+                                                           type="file" 
+                                                           accept="image/*"
+                                                           class="sr-only">
+                                                </label>
+                                            </div>
+                                            <p class="text-xs text-gray-500">PNG, JPG hingga 2MB</p>
+                                        </div>
+                                    </div>
+                                @endif
+                                
+                                @error('kk_photo')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
