@@ -49,7 +49,7 @@
         <div class="lg:col-span-2 space-y-6">
             <!-- Vehicle Information -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+                <div class="bg-gradient-to-r from-accent-600 to-accent-700 px-6 py-4">
                     <h2 class="text-lg font-semibold text-white">Informasi Kendaraan</h2>
                 </div>
                 <div class="p-6">
@@ -81,7 +81,7 @@
 
             <!-- Rental Details -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+                <div class="bg-gradient-to-r from-accent-600 to-accent-700 px-6 py-4">
                     <h2 class="text-lg font-semibold text-white">Detail Sewa</h2>
                 </div>
                 <div class="p-6">
@@ -119,13 +119,16 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Key Handover Tracking --}}
+            @include('customer.partials.kunci-status', ['booking' => $booking])
         </div>
 
         <!-- Right Column - Payment & Actions -->
         <div class="space-y-6">
             <!-- Payment Summary -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+                <div class="bg-gradient-to-r from-accent-600 to-accent-700 px-6 py-4">
                     <h2 class="text-lg font-semibold text-white">Ringkasan Pembayaran</h2>
                 </div>
                 <div class="p-6 space-y-3">

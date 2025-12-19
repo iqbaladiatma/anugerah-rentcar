@@ -140,98 +140,90 @@
                     </div>
                 </div>
             </div>
-
-        @elseif ($currentStep === 2)
-            <!-- Step 2: Customer Information -->
             <div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Informasi Pelanggan</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Verifikasi Identitas</h2>
+                <p class="text-gray-600 mb-8">Silahkan unggah foto dokumen identitas Anda untuk verifikasi.</p>
                 
-                <div class="mb-6">
-                    <div class="flex space-x-4">
-                        <label class="flex items-center cursor-pointer">
-                            <input type="radio" wire:model="customerType" value="existing" 
-                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <span class="ml-2 text-sm font-medium text-gray-700">Pelanggan Lama</span>
-                        </label>
-                        <label class="flex items-center cursor-pointer">
-                            <input type="radio" wire:model="customerType" value="new" 
-                                   class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <span class="ml-2 text-sm font-medium text-gray-700">Pelanggan Baru</span>
-                        </label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- KTP Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-4">KTP (Kartu Tanda Penduduk) *</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                            @if ($ktpPhoto)
+                                <div class="space-y-4">
+                                    <img src="{{ $ktpPhoto->temporaryUrl() }}" class="mx-auto max-h-40 rounded-lg shadow-md">
+                                    <button type="button" wire:click="$set('ktpPhoto', null)" 
+                                            class="text-sm text-red-600 hover:text-red-800">
+                                        Hapus Foto
+                                    </button>
+                                </div>
+                            @else
+                                <div class="space-y-4">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <div>
+                                        <label for="ktpPhoto" class="cursor-pointer">
+                                            <span class="text-blue-600 hover:text-blue-800 font-medium">Unggah Foto KTP</span>
+                                            <input id="ktpPhoto" type="file" wire:model="ktpPhoto" accept="image/*" class="hidden">
+                                        </label>
+                                        <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 2MB</p>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        @error('ktpPhoto') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
+                    <!-- SIM Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-4">SIM (Driving License) *</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                            @if ($simPhoto)
+                                <div class="space-y-4">
+                                    <img src="{{ $simPhoto->temporaryUrl() }}" class="mx-auto max-h-40 rounded-lg shadow-md">
+                                    <button type="button" wire:click="$set('simPhoto', null)" 
+                                            class="text-sm text-red-600 hover:text-red-800">
+                                        Hapus Foto
+                                    </button>
+                                </div>
+                            @else
+                                <div class="space-y-4">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <div>
+                                        <label for="simPhoto" class="cursor-pointer">
+                                            <span class="text-blue-600 hover:text-blue-800 font-medium">Unggah Foto SIM</span>
+                                            <input id="simPhoto" type="file" wire:model="simPhoto" accept="image/*" class="hidden">
+                                        </label>
+                                        <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 2MB</p>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        @error('simPhoto') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
-                @if ($customerType === 'existing')
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Cari Pelanggan *</label>
-                        <input type="text" wire:model.debounce.300ms="customerSearch" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                               placeholder="Cari nama, no hp, atau NIK...">
-                        
-                        @if(count($existingCustomers) > 0)
-                            <div class="mt-2 border border-gray-200 rounded-lg max-h-60 overflow-y-auto">
-                                @foreach($existingCustomers as $customer)
-                                    <label class="flex items-center p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0">
-                                        <input type="radio" wire:model="existingCustomerId" value="{{ $customer->id }}"
-                                               class="w-4 h-4 text-accent-600 border-gray-300 focus:ring-accent-500">
-                                        <div class="ml-3">
-                                            <div class="font-medium text-gray-900">{{ $customer->name }}</div>
-                                            <div class="text-sm text-gray-600">{{ $customer->phone }} • {{ $customer->nik }}</div>
-                                            @if($customer->is_member)
-                                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                    Member
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </label>
-                                @endforeach
+                <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex">
+                        <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-blue-800">Persyaratan Dokumen</h3>
+                            <div class="mt-2 text-sm text-blue-700">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Foto harus jelas dan mudah dibaca</li>
+                                    <li>Dokumen harus valid dan tidak habis masa berlaku</li>
+                                    <li>File harus berformat JPG atau PNG, maksimum 2MB</li>
+                                    <li>Your information will be kept secure and confidential</li>
+                                </ul>
                             </div>
-                        @endif
-                        @error('existingCustomerId') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                    </div>
-                @else
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
-                            <input type="text" wire:model="customerName" 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                                   placeholder="Masukkan nama lengkap">
-                            @error('customerName') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon *</label>
-                            <input type="tel" wire:model="customerPhone" 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                                   placeholder="Masukkan nomor telepon">
-                            @error('customerPhone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email (Opsional)</label>
-                            <input type="email" wire:model="customerEmail" 
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                                   placeholder="Masukkan email">
-                            @error('customerEmail') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">NIK (Nomor Induk Kependudukan) *</label>
-                            <input type="text" wire:model="customerNik" maxlength="16"
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                                   placeholder="16-digit NIK">
-                            @error('customerNik') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Alamat *</label>
-                            <textarea wire:model="customerAddress" rows="3"
-                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent"
-                                      placeholder="Masukkan alamat"></textarea>
-                            @error('customerAddress') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
                     </div>
-                @endif
+                </div>
             </div>
 
         @elseif ($currentStep === 3)

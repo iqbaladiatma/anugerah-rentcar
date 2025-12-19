@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use App\Events\BookingCreated;
 
 class BookingController extends Controller
 {
@@ -190,6 +191,9 @@ class BookingController extends Controller
         $validated['is_out_of_town'] = $validated['is_out_of_town'] ?? false;
 
         $booking = Booking::create($validated);
+
+        // Dispatch event for new booking notification
+        BookingCreated::dispatch($booking);
 
         return redirect()->route('admin.bookings.show', $booking)
             ->with('success', 'Booking created successfully.');
@@ -701,5 +705,86 @@ class BookingController extends Controller
 
         return redirect()->back()
             ->with('success', 'Payment rejected.');
+    }
+
+    /**
+     * Show key handover form.
+     */
+    public function serahKunci(Booking $booking): View
+    {
+        // Check if can handover keys
+        if (!$booking->bisaSerahKunci()) {
+            return redirect()->back()
+                ->with('error', 'Booking belum bisa diserahkan kuncinya. Pastikan pembayaran sudah lunas.');
+        }
+
+        $booking->load(['customer', 'car', 'driver']);
+        
+        return view('admin.bookings.serah-kunci', compact('booking'));
+    }
+
+    /**
+     * Store key handover.
+     */
+    public function storeSerahKunci(Request $request, Booking $booking): RedirectResponse
+    {
+        $validated = $request->validate([
+            'foto_kondisi.*' => 'required|image|max:5120',
+            'catatan' => 'nullable|string|max:1000',
+            'tanda_tangan' => 'required|string',
+        ]);
+
+        $keyHandoverService = app(\App\Services\KeyHandoverService::class);
+        $success = $keyHandoverService->serahKunci($booking, $validated);
+
+        if ($success) {
+            return redirect()->route('admin.bookings.show', $booking)
+                ->with('success', 'Kunci berhasil diserahkan kepada customer.');
+        }
+
+        return redirect()->back()
+            ->with('error', 'Gagal menyerahkan kunci. Silakan coba lagi.');
+    }
+
+    /**
+     * Show key return form.
+     */
+    public function terimaKunci(Booking $booking): View
+    {
+        // Check if can receive keys
+        if (!$booking->bisaTerimaKunci()) {
+            return redirect()->back()
+                ->with('error', 'Kunci belum bisa diterima. Pastikan kunci sudah diserahkan terlebih dahulu.');
+        }
+
+        $booking->load(['customer', 'car', 'driver']);
+        
+        return view('admin.bookings.terima-kunci', compact('booking'));
+    }
+
+    /**
+     * Store key return.
+     */
+    public function storeTerimaKunci(Request $request, Booking $booking): RedirectResponse
+    {
+        $validated = $request->validate([
+            'foto_kondisi.*' => 'required|image|max:5120',
+            'kilometer_akhir' => 'nullable|numeric',
+            'bahan_bakar_akhir' => 'nullable|string',
+            'kerusakan' => 'nullable|string|max:1000',
+            'biaya_kerusakan' => 'nullable|numeric|min:0',
+            'catatan' => 'nullable|string|max:1000',
+        ]);
+
+        $keyHandoverService = app(\App\Services\KeyHandoverService::class);
+        $success = $keyHandoverService->terimaKunci($booking, $validated);
+
+        if ($success) {
+            return redirect()->route('admin.bookings.show', $booking)
+                ->with('success', 'Kunci berhasil diterima dan booking diselesaikan.');
+        }
+
+        return redirect()->back()
+            ->with('error', 'Gagal menerima kunci. Silakan coba lagi.');
     }
 }

@@ -135,6 +135,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/pemesanan/statistik/api', [\App\Http\Controllers\BookingController::class, 'statistics'])->name('bookings.statistics');
     Route::get('/pemesanan/sopir/tersedia', [\App\Http\Controllers\BookingController::class, 'getAvailableDrivers'])->name('bookings.available-drivers');
     
+    // Key Handover Routes
+    Route::get('/pemesanan/{booking}/serah-kunci', [\App\Http\Controllers\BookingController::class, 'serahKunci'])->name('bookings.serah-kunci');
+    Route::post('/pemesanan/{booking}/serah-kunci', [\App\Http\Controllers\BookingController::class, 'storeSerahKunci'])->name('bookings.serah-kunci.store');
+    Route::get('/pemesanan/{booking}/terima-kunci', [\App\Http\Controllers\BookingController::class, 'terimaKunci'])->name('bookings.terima-kunci');
+    Route::post('/pemesanan/{booking}/terima-kunci', [\App\Http\Controllers\BookingController::class, 'storeTerimaKunci'])->name('bookings.terima-kunci.store');
+    
     // Maintenance Management Routes
     Route::resource('perawatan', \App\Http\Controllers\MaintenanceController::class, ['names' => [
         'index' => 'maintenance.index',

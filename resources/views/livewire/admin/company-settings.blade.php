@@ -104,7 +104,7 @@
         <div class="flex justify-end">
             <button type="submit" 
                     wire:loading.attr="disabled"
-                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
+                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent-600 hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 disabled:opacity-50">
                 <span wire:loading.remove wire:target="save">Save Changes</span>
                 <span wire:loading wire:target="save">Saving...</span>
             </button>

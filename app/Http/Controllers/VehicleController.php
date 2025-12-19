@@ -91,7 +91,7 @@ class VehicleController extends Controller
         $car = Car::create($validated);
 
         return redirect()->route('admin.vehicles.show', $car)
-            ->with('success', 'Vehicle created successfully.');
+            ->with('success', 'Kendaraan berhasil ditambahkan.');
     }
 
     /**
@@ -175,8 +175,8 @@ class VehicleController extends Controller
 
         $vehicle->update($validated);
 
-        return redirect()->route('admin.vehicles.show', $vehicle)
-            ->with('success', 'Vehicle updated successfully.');
+        return redirect()->route('admin.vehicles.index')
+            ->with('success', 'Data kendaraan berhasil diperbarui.');
     }
 
     /**
@@ -187,7 +187,7 @@ class VehicleController extends Controller
         // Check if car has active bookings
         if ($vehicle->bookings()->whereIn('booking_status', ['confirmed', 'active'])->exists()) {
             return redirect()->route('admin.vehicles.index')
-                ->with('error', 'Cannot delete vehicle with active bookings.');
+                ->with('error', 'Tidak dapat menghapus kendaraan yang sedang disewa atau dibooking.');
         }
 
         // Delete photos
@@ -201,7 +201,7 @@ class VehicleController extends Controller
         $vehicle->delete();
 
         return redirect()->route('admin.vehicles.index')
-            ->with('success', 'Vehicle deleted successfully.');
+            ->with('success', 'Kendaraan berhasil dihapus.');
     }
 
     /**
@@ -216,7 +216,7 @@ class VehicleController extends Controller
 
         $car->updateStatus($validated['status']);
 
-        $message = "Vehicle status updated to " . ucfirst($validated['status']);
+        $message = "Status kendaraan diperbarui menjadi " . ucfirst($validated['status']);
         if (!empty($validated['reason'])) {
             $message .= " - " . $validated['reason'];
         }

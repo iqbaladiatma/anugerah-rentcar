@@ -1,11 +1,12 @@
 <div x-data="{ 
-        sidebarOpen: @entangle('sidebarOpen'),
+        sidebarOpen: false,
         isDesktop: window.innerWidth >= 1024
     }" 
     x-init="
         // Watch for window resize
         window.addEventListener('resize', () => {
             isDesktop = window.innerWidth >= 1024;
+            if (isDesktop) sidebarOpen = false;
         });
     "
     @toggle-sidebar.window="sidebarOpen = !sidebarOpen">
@@ -23,7 +24,8 @@
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          class="fixed inset-0 z-50 bg-gray-900/80 lg:hidden"
-         @click="sidebarOpen = false">
+         @click="sidebarOpen = false"
+         style="display: none;">
     </div>
 
     <!-- Sidebar -->
@@ -35,7 +37,8 @@
          x-transition:leave-start="translate-x-0 lg:translate-x-0"
          x-transition:leave-end="-translate-x-full lg:translate-x-0"
          class="fixed inset-y-0 left-0 z-50 flex w-64 flex-col lg:z-auto"
-         :class="{ 'lg:translate-x-0': true }">
+         :class="{ 'lg:translate-x-0': true }"
+         style="display: none;">
         
         <!-- Sidebar content -->
         <div class="flex flex-col bg-white px-6 shadow-xl lg:shadow-none border-r border-gray-200 overflow-hidden h-full">
@@ -87,7 +90,8 @@
                                     x-transition:leave="transition ease-in duration-75"
                                     x-transition:leave-start="transform opacity-100 scale-100"
                                     x-transition:leave-end="transform opacity-0 scale-95"
-                                    class="mt-1 px-2">
+                                    class="mt-1 px-2"
+                                    style="display: none;">
                                     @foreach($item['children'] as $child)
                                         <li>
                                             <a href="{{ route($child['route']) }}" 

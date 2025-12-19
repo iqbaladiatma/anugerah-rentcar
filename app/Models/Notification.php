@@ -63,6 +63,8 @@ class Notification extends Model
     const TYPE_BOOKING_REMINDER = 'booking_reminder';
     const TYPE_VEHICLE_RETURN = 'vehicle_return';
     const TYPE_SYSTEM_ALERT = 'system_alert';
+    const TYPE_NEW_CUSTOMER = 'new_customer';
+    const TYPE_NEW_BOOKING = 'new_booking';
 
     /**
      * Priority constants.
@@ -203,6 +205,8 @@ class Notification extends Model
             self::TYPE_BOOKING_REMINDER => 'clock',
             self::TYPE_VEHICLE_RETURN => 'truck',
             self::TYPE_SYSTEM_ALERT => 'exclamation-triangle',
+            self::TYPE_NEW_CUSTOMER => 'user-plus',
+            self::TYPE_NEW_BOOKING => 'shopping-cart',
             default => 'bell',
         };
     }
@@ -328,6 +332,47 @@ class Notification extends Model
             'details' => "Booking #{$booking->booking_number} from {$booking->customer->name}",
             'priority' => self::PRIORITY_MEDIUM,
             'icon' => 'clipboard-list',
+            'notifiable_type' => Booking::class,
+            'notifiable_id' => $booking->id,
+            'recipient_type' => self::RECIPIENT_ALL_STAFF,
+            'action_url' => route('admin.bookings.show', $booking->id),
+        ]);
+    }
+
+    /**
+     * Create a new customer notification.
+     */
+    public static function createNewCustomerNotification(Customer $customer): self
+    {
+        return static::create([
+            'type' => self::TYPE_NEW_CUSTOMER,
+            'title' => 'Pelanggan Baru',
+            'message' => "Pelanggan baru telah terdaftar: {$customer->name}",
+            'details' => "Telepon: {$customer->phone}" . ($customer->email ? " | Email: {$customer->email}" : ""),
+            'priority' => self::PRIORITY_LOW,
+            'icon' => 'user-plus',
+            'notifiable_type' => Customer::class,
+            'notifiable_id' => $customer->id,
+            'recipient_type' => self::RECIPIENT_ALL_STAFF,
+            'action_url' => route('admin.customers.show', $customer->id),
+        ]);
+    }
+
+    /**
+     * Create a new booking notification.
+     */
+    public static function createNewBookingNotification(Booking $booking): self
+    {
+        $carInfo = $booking->car ? "{$booking->car->brand} {$booking->car->model} ({$booking->car->license_plate})" : 'N/A';
+        $customerName = $booking->customer ? $booking->customer->name : 'N/A';
+        
+        return static::create([
+            'type' => self::TYPE_NEW_BOOKING,
+            'title' => 'Orderan Baru',
+            'message' => "Orderan baru dari {$customerName}",
+            'details' => "Booking #{$booking->booking_number} | Kendaraan: {$carInfo} | Total: Rp " . number_format($booking->total_amount, 0, ',', '.'),
+            'priority' => self::PRIORITY_HIGH,
+            'icon' => 'shopping-cart',
             'notifiable_type' => Booking::class,
             'notifiable_id' => $booking->id,
             'recipient_type' => self::RECIPIENT_ALL_STAFF,

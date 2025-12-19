@@ -81,26 +81,45 @@
                         @endif
 
                         @if($booking->booking_status === 'confirmed')
-                            <form action="{{ route('admin.bookings.activate', $booking) }}" method="POST" class="inline">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" 
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    Keluar Kendaraan
+                            @if($booking->bisaSerahKunci())
+                                <a href="{{ route('admin.bookings.serah-kunci', $booking) }}" 
+                                   class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                    </svg>
+                                    Serah Kunci
+                                </a>
+                            @else
+                                <button disabled class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-400 cursor-not-allowed" title="Pembayaran harus lunas untuk serah kunci">
+                                    <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    </svg>
+                                    Serah Kunci (Terkunci)
                                 </button>
-                            </form>
+                            @endif
                         @endif
 
                         @if($booking->booking_status === 'active')
-                            <form action="{{ route('admin.bookings.complete', $booking) }}" method="POST" class="inline">
-                                @csrf
-                                @method('PATCH')
-                                <input type="hidden" name="actual_return_date" value="{{ now() }}">
-                                <button type="submit" 
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                                    Masuk Kendaraan
-                                </button>
-                            </form>
+                            @if($booking->bisaTerimaKunci())
+                                <a href="{{ route('admin.bookings.terima-kunci', $booking) }}" 
+                                   class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                                    <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Terima Kunci
+                                </a>
+                            @else
+                                <form action="{{ route('admin.bookings.complete', $booking) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="actual_return_date" value="{{ now() }}">
+                                    <button type="submit" 
+                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                            onclick="return confirm('Booking ini tidak memiliki data serah kunci. Selesaikan secara manual?')">
+                                        Selesaikan (Manual)
+                                    </button>
+                                </form>
+                            @endif
                         @endif
 
                         @if($booking->canBeCancelled())
@@ -119,18 +138,35 @@
             </div>
 
             <!-- Payment Verification -->
-            @if($booking->payment_status === 'verifying' || $booking->payment_proof)
+            @if($booking->payment_status === 'verifying' || $booking->payment_proof || $booking->deposit_proof)
                 <div class="bg-white shadow rounded-lg p-6 mb-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Verifikasi Pembayaran</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="text-sm font-medium text-gray-500 mb-2">Bukti Pembayaran</h4>
-                            <div class="border rounded-lg p-2">
-                                <a href="{{ asset('storage/' . $booking->payment_proof) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $booking->payment_proof) }}" alt="Bukti Pembayaran" class="max-h-64 object-contain mx-auto">
-                                </a>
+                        <div class="space-y-6">
+                            @if($booking->payment_proof)
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500 mb-2">
+                                    Bukti Pembayaran {{ $booking->payment_type === 'full' && $booking->deposit_proof ? '(Pelunasan)' : '' }}
+                                </h4>
+                                <div class="border rounded-lg p-2">
+                                    <a href="{{ asset('storage/' . $booking->payment_proof) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $booking->payment_proof) }}" alt="Bukti Pembayaran" class="max-h-64 object-contain mx-auto">
+                                    </a>
+                                </div>
                             </div>
+                            @endif
+
+                            @if($booking->deposit_proof)
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500 mb-2">Bukti Deposit (Riwayat)</h4>
+                                <div class="border rounded-lg p-2 bg-gray-50">
+                                    <a href="{{ asset('storage/' . $booking->deposit_proof) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $booking->deposit_proof) }}" alt="Bukti Deposit" class="max-h-64 object-contain mx-auto opacity-75 hover:opacity-100 transition-opacity">
+                                    </a>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                         
                         <div class="space-y-4">

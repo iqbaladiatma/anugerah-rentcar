@@ -41,9 +41,23 @@ class Booking extends Model
         'payment_type',
         'paid_amount',
         'payment_proof',
+        'deposit_proof',
         'payment_notes',
         'booking_status',
         'notes',
+        // Penyerahan Kunci
+        'kunci_diserahkan',
+        'tanggal_serah_kunci',
+        'petugas_serah_kunci_id',
+        'foto_serah_kunci',
+        'catatan_serah_kunci',
+        'tanda_tangan_customer',
+        // Pengembalian Kunci
+        'kunci_dikembalikan',
+        'tanggal_terima_kunci',
+        'petugas_terima_kunci_id',
+        'foto_terima_kunci',
+        'catatan_terima_kunci',
     ];
 
     /**
@@ -106,6 +120,22 @@ class Booking extends Model
     public function driver(): BelongsTo
     {
         return $this->belongsTo(User::class, 'driver_id');
+    }
+
+    /**
+     * Get the staff who handed over the keys.
+     */
+    public function petugasSerahKunci(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'petugas_serah_kunci_id');
+    }
+
+    /**
+     * Get the staff who received the keys back.
+     */
+    public function petugasTerimaKunci(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'petugas_terima_kunci_id');
     }
 
     /**
@@ -369,5 +399,41 @@ class Booking extends Model
                 $booking->booking_number = static::generateBookingNumber();
             }
         });
+    }
+
+    /**
+     * Check if keys can be handed over.
+     */
+    public function bisaSerahKunci(): bool
+    {
+        return $this->booking_status === self::STATUS_CONFIRMED
+            && $this->payment_status === self::PAYMENT_PAID
+            && !$this->kunci_diserahkan;
+    }
+
+    /**
+     * Check if keys can be received back.
+     */
+    public function bisaTerimaKunci(): bool
+    {
+        return $this->booking_status === self::STATUS_ACTIVE
+            && $this->kunci_diserahkan
+            && !$this->kunci_dikembalikan;
+    }
+
+    /**
+     * Check if keys have been handed over.
+     */
+    public function sudahSerahKunci(): bool
+    {
+        return (bool) $this->kunci_diserahkan;
+    }
+
+    /**
+     * Check if keys have been returned.
+     */
+    public function sudahTerimaKunci(): bool
+    {
+        return (bool) $this->kunci_dikembalikan;
     }
 }

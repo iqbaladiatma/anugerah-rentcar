@@ -12,6 +12,8 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Events\CustomerCreated;
+use App\Events\BookingCreated;
 
 class BookingWizard extends Component
 {
@@ -36,7 +38,7 @@ class BookingWizard extends Component
     public $notes = '';
 
     // Step 2: Customer information
-    public $customerType = 'existing'; // 'existing' or 'new'
+    public $customerType = 'existing'; // 'existing', 'new', or 'authenticated'
     public $existingCustomerId = null;
     public $existingCustomers = [];
     public $customerSearch = '';
@@ -85,7 +87,21 @@ class BookingWizard extends Component
         $this->duration = $this->startDate->diffInDays($this->endDate) + 1;
         
         $this->calculatePricing();
-        $this->loadExistingCustomers();
+        
+        if (auth('customer')->check()) {
+            $customer = auth('customer')->user();
+            $this->customerType = 'authenticated';
+            $this->existingCustomerId = $customer->id;
+            
+            // Pre-fill data for display
+            $this->customerName = $customer->name;
+            $this->customerPhone = $customer->phone;
+            $this->customerEmail = $customer->email;
+            $this->customerNik = $customer->nik;
+            $this->customerAddress = $customer->address;
+        } else {
+            $this->loadExistingCustomers();
+        }
     }
 
     public function calculatePricing()
@@ -102,6 +118,10 @@ class BookingWizard extends Component
 
     public function loadExistingCustomers()
     {
+        if (auth('customer')->check()) {
+            return;
+        }
+
         $this->existingCustomers = Customer::where('is_blacklisted', false)
             ->when($this->customerSearch, function ($query) {
                 $query->where(function ($q) {
@@ -171,6 +191,8 @@ class BookingWizard extends Component
                         'customerNik' => 'required|string|size:16|unique:customers,nik',
                         'customerAddress' => 'required|string|max:500',
                     ]);
+                } elseif ($this->customerType === 'authenticated') {
+                    // No validation needed for authenticated user data display
                 } else {
                     $this->validate([
                         'existingCustomerId' => 'required|exists:customers,id',
@@ -216,7 +238,11 @@ class BookingWizard extends Component
                 'ktp_photo' => $this->ktpPhotoPath,
                 'sim_photo' => $this->simPhotoPath,
             ]);
+            
+            // Dispatch event for new customer notification
+            CustomerCreated::dispatch($customer);
         } else {
+            // For both 'existing' and 'authenticated'
             $customer = Customer::findOrFail($this->existingCustomerId);
             // Update documents for existing customer
             $customer->update([
@@ -266,6 +292,9 @@ class BookingWizard extends Component
             'booking_status' => Booking::BOOKING_STATUS_PENDING,
             'notes' => $this->notes,
         ]);
+
+        // Dispatch event for new booking notification
+        BookingCreated::dispatch($booking);
 
         return redirect()->route('booking.confirmation', $booking)
             ->with('success', 'Booking created successfully! Please complete payment to confirm your reservation.');

@@ -31,7 +31,14 @@
     <!-- Payment Type Selection -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h3 class="font-semibold text-gray-900 mb-4">Pilih Jenis Pembayaran</h3>
-        <div class="space-y-3" x-data="{ paymentType: 'deposit' }">
+        
+        @php
+            $isPartial = $booking->payment_status === 'partial';
+            $remainingAmount = $booking->total_amount - $booking->deposit_amount;
+        @endphp
+
+        <div class="space-y-3" x-data="{ paymentType: '{{ $isPartial ? 'full' : 'deposit' }}' }">
+            @if(!$isPartial)
             <label class="flex items-start p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                    :class="paymentType === 'deposit' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'"
                    @click="paymentType = 'deposit'">
@@ -46,6 +53,7 @@
                     </div>
                 </div>
             </label>
+            @endif
             
             <label class="flex items-start p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                    :class="paymentType === 'full' ? 'border-green-500 bg-green-50' : 'border-gray-300'"
@@ -54,10 +62,21 @@
                 <div class="ml-3 flex-1">
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-semibold text-gray-900">Bayar Lunas</p>
-                            <p class="text-sm text-gray-600 mt-1">Bayar langsung lunas, tidak perlu bayar lagi</p>
+                            @if($isPartial)
+                                <p class="font-semibold text-gray-900">Pelunasan Sisa Pembayaran</p>
+                                <p class="text-sm text-gray-600 mt-1">Lunasi sisa pembayaran untuk menyelesaikan transaksi</p>
+                            @else
+                                <p class="font-semibold text-gray-900">Bayar Lunas</p>
+                                <p class="text-sm text-gray-600 mt-1">Bayar langsung lunas, tidak perlu bayar lagi</p>
+                            @endif
                         </div>
-                        <p class="text-xl font-bold text-green-600">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</p>
+                        <p class="text-xl font-bold text-green-600">
+                            @if($isPartial)
+                                Rp {{ number_format($remainingAmount, 0, ',', '.') }}
+                            @else
+                                Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
+                            @endif
+                        </p>
                     </div>
                 </div>
             </label>

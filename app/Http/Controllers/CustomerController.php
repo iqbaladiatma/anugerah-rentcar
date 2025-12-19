@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Events\CustomerCreated;
 
 class CustomerController extends Controller
 {
@@ -66,6 +67,9 @@ class CustomerController extends Controller
         $validated['is_blacklisted'] = false;
 
         $customer = Customer::create($validated);
+
+        // Dispatch event for new customer notification
+        CustomerCreated::dispatch($customer);
 
         return redirect()->route('admin.customers.show', $customer)
             ->with('success', 'Customer created successfully.');

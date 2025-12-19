@@ -99,7 +99,7 @@ class VehicleList extends Component
         if ($this->showMaintenanceDue) {
             $query->where(function ($q) {
                 $q->where('last_oil_change', '<=', now()->subDays(90))
-                  ->orWhere('stnk_expiry', '<=', now()->addDays(30));
+                  ->orWhere('stnk_expiry', '<=', now()->addDays(7));
             });
         }
 

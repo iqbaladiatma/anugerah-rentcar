@@ -159,7 +159,7 @@ class Car extends Model
             return false;
         }
 
-        return Carbon::parse($this->stnk_expiry)->diffInDays(Carbon::now()) <= 30;
+        return Carbon::parse($this->stnk_expiry)->diffInDays(Carbon::now()) <= 7;
     }
 
     /**
@@ -249,7 +249,7 @@ class Car extends Model
     {
         return $query->where(function ($q) {
             $q->where('last_oil_change', '<=', Carbon::now()->subDays(90))
-              ->orWhere('stnk_expiry', '<=', Carbon::now()->addDays(30));
+              ->orWhere('stnk_expiry', '<=', Carbon::now()->addDays(7));
         });
     }
 

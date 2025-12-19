@@ -1,4 +1,4 @@
-<div class="relative" x-data="{ open: @entangle('showDropdown') }">
+<div class="relative" x-data="{ open: false }">
     <!-- Notification Bell -->
     <button @click="open = !open" 
             class="relative p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-full">
@@ -6,9 +6,9 @@
         <x-icons.bell class="h-6 w-6" />
         
         <!-- Notification Badge -->
-        @if($unreadCount > 0)
+        @if($this->unreadCount > 0)
             <span class="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-xs text-white flex items-center justify-center font-medium">
-                {{ $unreadCount > 9 ? '9+' : $unreadCount }}
+                {{ $this->unreadCount > 9 ? '9+' : $this->unreadCount }}
             </span>
         @endif
     </button>
@@ -22,13 +22,14 @@
          x-transition:leave-start="transform opacity-100 scale-100"
          x-transition:leave-end="transform opacity-0 scale-95"
          @click.away="open = false"
+         style="display: none;"
          class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
         
         <!-- Header -->
         <div class="px-4 py-3 border-b border-gray-200">
             <div class="flex items-center justify-between">
                 <h3 class="text-sm font-medium text-gray-900">Notifikasi</h3>
-                @if($unreadCount > 0)
+                @if($this->unreadCount > 0)
                     <button wire:click="markAllAsRead" 
                             class="text-xs text-blue-600 hover:text-blue-800">
                         Tandai Semua Sudah Dibaca
@@ -39,8 +40,8 @@
 
         <!-- Notifications List -->
         <div class="max-h-96 overflow-y-auto">
-            @if($recentNotifications->count() > 0)
-                @foreach($recentNotifications as $notification)
+            @if($this->recentNotifications->count() > 0)
+                @foreach($this->recentNotifications as $notification)
                     <div class="px-4 py-3 hover:bg-gray-50 {{ $notification->isUnread() ? 'bg-blue-50' : '' }}">
                         <div class="flex items-start space-x-3">
                             <!-- Icon -->
@@ -91,7 +92,7 @@
         </div>
 
         <!-- Footer -->
-        @if($recentNotifications->count() > 0)
+        @if($this->recentNotifications->count() > 0)
             <div class="px-4 py-3 border-t border-gray-200">
                 <a href="{{ route('admin.notifications.index') }}" 
                    class="block text-center text-sm text-blue-600 hover:text-blue-800">

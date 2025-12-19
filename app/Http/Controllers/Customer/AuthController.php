@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Events\CustomerCreated;
 
 class AuthController extends Controller
 {
@@ -72,6 +73,9 @@ class AuthController extends Controller
         ]);
 
         event(new Registered($customer));
+
+        // Dispatch event for new customer notification
+        CustomerCreated::dispatch($customer);
 
         Auth::guard('customer')->login($customer);
 

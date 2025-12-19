@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Events\CustomerCreated;
+use App\Events\BookingCreated;
 
 class BookingWizard extends Component
 {
@@ -474,6 +476,9 @@ class BookingWizard extends Component
             'password' => Hash::make($this->customerPassword),
         ]);
 
+        // Dispatch event for new customer notification
+        CustomerCreated::dispatch($customer);
+
         $this->customer = $customer;
         Auth::guard('customer')->login($customer);
 
@@ -568,6 +573,9 @@ class BookingWizard extends Component
             'booking_status' => Booking::STATUS_PENDING,
             'notes' => $this->notes,
         ]);
+
+        // Dispatch event for new booking notification
+        BookingCreated::dispatch($this->booking);
 
         // Clear session data
         session()->forget(['booking.car_id', 'booking.start_date', 'booking.end_date']);

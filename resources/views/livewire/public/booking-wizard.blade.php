@@ -22,11 +22,11 @@
                 @endfor
             </div>
             <div class="flex justify-between mt-2 text-sm">
-                <span class="{{ $currentStep >= 1 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Vehicle Selection</span>
-                <span class="{{ $currentStep >= 2 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Pricing Details</span>
-                <span class="{{ $currentStep >= 3 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Customer Info</span>
-                <span class="{{ $currentStep >= 4 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Documents</span>
-                <span class="{{ $currentStep >= 5 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Confirmation</span>
+                <span class="{{ $currentStep >= 1 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Pilih Kendaraan</span>
+                <span class="{{ $currentStep >= 2 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Detail Harga</span>
+                <span class="{{ $currentStep >= 3 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Info Pelanggan</span>
+                <span class="{{ $currentStep >= 4 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Dokumen</span>
+                <span class="{{ $currentStep >= 5 ? 'text-accent-600 font-medium' : 'text-gray-500' }}">Konfirmasi</span>
             </div>
         </div>
 
@@ -54,22 +54,22 @@
             @if ($currentStep === 1)
                 <!-- Step 1: Vehicle Selection -->
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Select Your Vehicle & Dates</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Pilih Kendaraan & Tanggal</h2>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <!-- Date Selection -->
                         <div class="space-y-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Rental Period</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Periode Sewa</label>
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label class="block text-xs text-gray-500 mb-1">Pickup Date</label>
+                                        <label class="block text-xs text-gray-500 mb-1">Tanggal Ambil</label>
                                         <input type="date" wire:model.live="startDate" 
                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                                min="{{ date('Y-m-d') }}">
                                     </div>
                                     <div>
-                                        <label class="block text-xs text-gray-500 mb-1">Return Date</label>
+                                        <label class="block text-xs text-gray-500 mb-1">Tanggal Kembali</label>
                                         <input type="date" wire:model.live="endDate" 
                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
                                                min="{{ $startDate }}">
@@ -78,38 +78,38 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Pickup Location</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengambilan</label>
                                 <input type="text" wire:model="pickupLocation" 
                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
-                                       placeholder="Enter pickup location">
+                                       placeholder="Masukkan lokasi pengambilan">
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Return Location</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Pengembalian</label>
                                 <input type="text" wire:model="returnLocation" 
                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
-                                       placeholder="Enter return location">
+                                       placeholder="Masukkan lokasi pengembalian">
                             </div>
 
                             <div class="space-y-3">
                                 <label class="flex items-center">
                                     <input type="checkbox" wire:model.live="withDriver" 
                                            class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
-                                    <span class="ml-2 text-sm text-gray-700">With Driver</span>
+                                    <span class="ml-2 text-sm text-gray-700">Dengan Sopir</span>
                                 </label>
 
                                 <label class="flex items-center">
                                     <input type="checkbox" wire:model.live="isOutOfTown" 
                                            class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
-                                    <span class="ml-2 text-sm text-gray-700">Out of Town Trip</span>
+                                    <span class="ml-2 text-sm text-gray-700">Perjalanan Luar Kota</span>
                                 </label>
 
                                 @if ($isOutOfTown)
                                     <div class="ml-6">
-                                        <label class="block text-xs text-gray-500 mb-1">Additional Fee</label>
+                                        <label class="block text-xs text-gray-500 mb-1">Biaya Tambahan</label>
                                         <input type="number" wire:model.live="outOfTownFee" 
                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-500"
-                                               placeholder="Enter additional fee" min="0">
+                                               placeholder="Masukkan biaya tambahan" min="0">
                                     </div>
                                 @endif
                             </div>
@@ -117,7 +117,7 @@
 
                         <!-- Vehicle Selection -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-4">Available Vehicles</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-4">Kendaraan Tersedia</label>
                             <div class="space-y-4 max-h-96 overflow-y-auto">
                                 @forelse ($availableCars as $availableCar)
                                     <div class="border rounded-lg p-4 cursor-pointer transition-all
@@ -161,38 +161,11 @@
                         </div>
                     </div>
                 </div>
-            @endif
 
-            <!-- Navigation Buttons -->
-            <div class="px-6 py-4 bg-gray-50 border-t flex justify-between">
-                @if ($currentStep > 1)
-                    <button type="button" wire:click="previousStep" 
-                            class="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium">
-                        ← Previous
-                    </button>
-                @else
-                    <div></div>
-                @endif
-
-                @if ($currentStep < $totalSteps)
-                    <button type="button" wire:click="nextStep" 
-                            class="px-6 py-2 bg-accent-500 text-white rounded-lg hover:bg-accent-600 transition-colors font-medium">
-                        Next →
-                    </button>
-                @else
-                    <button type="button" wire:click="createBooking" 
-                            class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-                        Complete Booking
-                    </button>
-                @endif
-            </div>
-        </div>
-    </div>
-</div>       
-     @elseif ($currentStep === 2)
+            @elseif ($currentStep === 2)
                 <!-- Step 2: Pricing Details -->
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Pricing Details</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Detail Harga</h2>
                     
                     @if ($car && !empty($pricingData))
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -303,7 +276,7 @@
             @elseif ($currentStep === 3)
                 <!-- Step 3: Customer Information -->
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Information</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Informasi Pelanggan</h2>
                     
                     @if (!$customer)
                         <!-- Login/Register Toggle -->
@@ -313,13 +286,13 @@
                                         wire:click="$set('isExistingCustomer', false)"
                                         class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors
                                             {{ !$isExistingCustomer ? 'bg-white text-accent-600 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
-                                    New Customer
+                                    Pelanggan Baru
                                 </button>
                                 <button type="button" 
                                         wire:click="$set('isExistingCustomer', true)"
                                         class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors
                                             {{ $isExistingCustomer ? 'bg-white text-accent-600 shadow-sm' : 'text-gray-500 hover:text-gray-700' }}">
-                                    Existing Customer
+                                    Sudah Punya Akun
                                 </button>
                             </div>
                         </div>
@@ -402,19 +375,55 @@
                         @endif
                     @else
                         <!-- Customer Info Display -->
-                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                </svg>
+                        <!-- Customer Info Display -->
+                        <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                            <div class="flex justify-between items-start mb-6">
                                 <div>
-                                    <h4 class="font-medium text-green-800">Customer Information Verified</h4>
-                                    <p class="text-sm text-green-700">{{ $customer->name }} ({{ $customer->email }})</p>
-                                    @if ($customer->is_member)
-                                        <p class="text-sm text-green-700 font-medium">✓ Member - Discount Applied</p>
-                                    @endif
+                                    <h3 class="text-lg font-semibold text-gray-900">Data Diri Pemesan</h3>
+                                    <p class="text-sm text-gray-500">Informasi ini akan digunakan untuk pemesanan Anda.</p>
+                                </div>
+                                <a href="{{ route('customer.profile') }}" target="_blank" class="text-sm text-accent-600 hover:text-accent-700 font-medium flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                    Ubah Data
+                                </a>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Nama Lengkap</label>
+                                    <p class="text-gray-900 font-medium">{{ $customer->name }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Email</label>
+                                    <p class="text-gray-900 font-medium">{{ $customer->email }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Nomor Telepon</label>
+                                    <p class="text-gray-900 font-medium">{{ $customer->phone }}</p>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">NIK</label>
+                                    <p class="text-gray-900 font-medium">{{ $customer->nik }}</p>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Alamat Lengkap</label>
+                                    <p class="text-gray-900 font-medium">{{ $customer->address }}</p>
                                 </div>
                             </div>
+
+                            @if ($customer->is_member)
+                                <div class="mt-6 bg-green-50 border border-green-200 rounded-lg p-4 flex items-center">
+                                    <svg class="w-5 h-5 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <div>
+                                        <p class="text-sm font-medium text-green-800">Status Member Aktif</p>
+                                        <p class="text-xs text-green-600">Anda berhak mendapatkan diskon khusus member.</p>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -422,7 +431,7 @@
             @elseif ($currentStep === 4)
                 <!-- Step 4: Document Upload -->
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Upload Required Documents</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Upload Dokumen yang Diperlukan</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <!-- KTP Upload -->
@@ -567,7 +576,7 @@
             @elseif ($currentStep === 5)
                 <!-- Step 5: Confirmation & Payment -->
                 <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Booking Confirmation</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Konfirmasi Pemesanan</h2>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <!-- Booking Summary -->
@@ -727,3 +736,31 @@
                         </div>
                     </div>
                 </div>
+            @endif
+
+            <!-- Navigation Buttons -->
+            <div class="px-6 py-4 bg-gray-50 border-t flex justify-between">
+                @if ($currentStep > 1)
+                    <button type="button" wire:click="previousStep" 
+                            class="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium">
+                        ← Previous
+                    </button>
+                @else
+                    <div></div>
+                @endif
+
+                @if ($currentStep < $totalSteps)
+                    <button type="button" wire:click="nextStep" 
+                            class="px-6 py-2 bg-accent-500 text-white rounded-lg hover:bg-accent-600 transition-colors font-medium">
+                        Next →
+                    </button>
+                @else
+                    <button type="button" wire:click="createBooking" 
+                            class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+                        Complete Booking
+                    </button>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>

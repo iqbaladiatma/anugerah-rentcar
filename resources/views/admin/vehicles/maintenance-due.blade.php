@@ -54,7 +54,7 @@
                             @php
                                 $maintenanceVehicles = \App\Models\Car::where(function ($query) {
                                     $query->where('last_oil_change', '<=', now()->subDays(90))
-                                          ->orWhere('stnk_expiry', '<=', now()->addDays(30));
+                                          ->orWhere('stnk_expiry', '<=', now()->addDays(7));
                                 })->get();
                             @endphp
                             

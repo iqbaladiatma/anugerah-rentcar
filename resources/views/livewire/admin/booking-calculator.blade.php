@@ -1,20 +1,54 @@
 <div class="space-y-6">
+    <!-- Hidden Input Fields for Form Submission -->
+    <input type="hidden" name="customer_id" value="{{ $customer_id }}">
+    <input type="hidden" name="car_id" value="{{ $car_id }}">
+    <input type="hidden" name="driver_id" value="{{ $driver_id }}">
+    <input type="hidden" name="start_date" value="{{ $start_date }}">
+    <input type="hidden" name="end_date" value="{{ $end_date }}">
+    <input type="hidden" name="pickup_location" value="{{ $pickup_location }}">
+    <input type="hidden" name="return_location" value="{{ $return_location }}">
+    <input type="hidden" name="with_driver" value="{{ $with_driver ? '1' : '0' }}">
+    <input type="hidden" name="is_out_of_town" value="{{ $is_out_of_town ? '1' : '0' }}">
+    <input type="hidden" name="out_of_town_fee" value="{{ $out_of_town_fee }}">
+    <input type="hidden" name="notes" value="{{ $notes }}">
+    
     <!-- Form Section -->
     <div class="bg-white shadow rounded-lg p-6">
         <h3 class="text-lg font-medium text-gray-900 mb-4">Detail Pemesanan</h3>
         
+        @if(count($customers) === 0 || count($cars) === 0)
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-yellow-800">Data Tidak Tersedia</h3>
+                        <div class="mt-2 text-sm text-yellow-700">
+                            @if(count($customers) === 0)
+                                <p>Tidak ada pelanggan aktif yang tersedia. <a href="{{ route('admin.customers.create') }}" class="font-medium underline">Tambah pelanggan baru</a></p>
+                            @endif
+                            @if(count($cars) === 0)
+                                <p>Tidak ada kendaraan tersedia. <a href="{{ route('admin.vehicles.create') }}" class="font-medium underline">Tambah kendaraan baru</a></p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Customer Selection -->
             <div>
-                <label for="customer_id" class="block text-sm font-medium text-gray-700">Pelanggan</label>
-                <select wire:model="customer_id" id="customer_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <label for="customer_id" class="block text-sm font-medium text-gray-700">Pelanggan <span class="text-red-500">*</span></label>
+                <select wire:model.live="customer_id" id="customer_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
                     <option value="">Pilih Pelanggan</option>
                     @foreach($customers as $customer)
                         <option value="{{ $customer['id'] }}">
                             {{ $customer['name'] }} - {{ $customer['phone'] }}
-                            @if($customer['is_member'])
-                                <span class="text-green-600">(Anggota)</span>
-                            @endif
+                            @if($customer['is_member']) (Anggota) @endif
                         </option>
                     @endforeach
                 </select>
@@ -30,8 +64,8 @@
 
             <!-- Vehicle Selection -->
             <div>
-                <label for="car_id" class="block text-sm font-medium text-gray-700">Kendaraan</label>
-                <select wire:model="car_id" id="car_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <label for="car_id" class="block text-sm font-medium text-gray-700">Kendaraan <span class="text-red-500">*</span></label>
+                <select wire:model.live="car_id" id="car_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
                     <option value="">Pilih Kendaraan</option>
                     @foreach($cars as $car)
                         <option value="{{ $car['id'] }}">
@@ -53,31 +87,31 @@
 
             <!-- Start Date -->
             <div>
-                <label for="start_date" class="block text-sm font-medium text-gray-700">Tanggal Mulai</label>
-                <input wire:model="start_date" type="datetime-local" id="start_date" 
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <label for="start_date" class="block text-sm font-medium text-gray-700">Tanggal Mulai <span class="text-red-500">*</span></label>
+                <input wire:model.live="start_date" type="datetime-local" id="start_date" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
             </div>
 
             <!-- End Date -->
             <div>
-                <label for="end_date" class="block text-sm font-medium text-gray-700">Tanggal Selesai</label>
-                <input wire:model="end_date" type="datetime-local" id="end_date" 
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <label for="end_date" class="block text-sm font-medium text-gray-700">Tanggal Selesai <span class="text-red-500">*</span></label>
+                <input wire:model.live="end_date" type="datetime-local" id="end_date" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
             </div>
 
             <!-- Pickup Location -->
             <div>
-                <label for="pickup_location" class="block text-sm font-medium text-gray-700">Lokasi Penjemputan</label>
-                <input wire:model="pickup_location" type="text" id="pickup_location" 
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                <label for="pickup_location" class="block text-sm font-medium text-gray-700">Lokasi Penjemputan <span class="text-red-500">*</span></label>
+                <input wire:model.live="pickup_location" type="text" id="pickup_location" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
                        placeholder="Masukkan lokasi penjemputan">
             </div>
 
             <!-- Return Location -->
             <div>
-                <label for="return_location" class="block text-sm font-medium text-gray-700">Lokasi Pengembalian</label>
-                <input wire:model="return_location" type="text" id="return_location" 
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                <label for="return_location" class="block text-sm font-medium text-gray-700">Lokasi Pengembalian <span class="text-red-500">*</span></label>
+                <input wire:model.live="return_location" type="text" id="return_location" 
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
                        placeholder="Masukkan lokasi pengembalian">
             </div>
         </div>
@@ -86,8 +120,8 @@
         <div class="mt-6 space-y-4">
             <!-- Driver Option -->
             <div class="flex items-center">
-                <input wire:model="with_driver" type="checkbox" id="with_driver" 
-                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                <input wire:model.live="with_driver" type="checkbox" id="with_driver" 
+                       class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded">
                 <label for="with_driver" class="ml-2 block text-sm text-gray-900">
                     Termasuk Sopir
                 </label>
@@ -97,7 +131,7 @@
             @if($with_driver)
                 <div>
                     <label for="driver_id" class="block text-sm font-medium text-gray-700">Pilih Sopir</label>
-                    <select wire:model="driver_id" id="driver_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <select wire:model.live="driver_id" id="driver_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
                         <option value="">Pilih Sopir</option>
                         @foreach($available_drivers as $driver)
                             <option value="{{ $driver['id'] }}">
@@ -110,8 +144,8 @@
 
             <!-- Out of Town Option -->
             <div class="flex items-center">
-                <input wire:model="is_out_of_town" type="checkbox" id="is_out_of_town" 
-                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                <input wire:model.live="is_out_of_town" type="checkbox" id="is_out_of_town" 
+                       class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded">
                 <label for="is_out_of_town" class="ml-2 block text-sm text-gray-900">
                     Perjalanan Luar Kota
                 </label>
@@ -134,7 +168,7 @@
                             <span class="text-gray-500 sm:text-sm">Rp</span>
                         </div>
                         <input x-model="formatted" type="text" id="out_of_town_fee" 
-                               class="pl-12 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                               class="pl-12 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
                                placeholder="0">
                     </div>
                 </div>
@@ -143,8 +177,8 @@
             <!-- Notes -->
             <div>
                 <label for="notes" class="block text-sm font-medium text-gray-700">Catatan</label>
-                <textarea wire:model="notes" id="notes" rows="3" 
-                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                <textarea wire:model.live="notes" id="notes" rows="3" 
+                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
                           placeholder="Catatan tambahan atau persyaratan khusus"></textarea>
             </div>
         </div>
@@ -252,12 +286,12 @@
                 <div class="flex justify-between items-center py-2 border-b border-gray-200">
                     <div class="text-sm font-medium text-gray-900">Subtotal</div>
                     <div class="text-sm font-medium text-gray-900">
-                        Rp {{ number_format($pricing['subtotal'], 0, ',', '.') }}
+                        Rp {{ number_format($pricing['subtotal'] ?? 0, 0, ',', '.') }}
                     </div>
                 </div>
 
                 <!-- Member Discount -->
-                @if($pricing['member_discount'] > 0)
+                @if(($pricing['member_discount'] ?? 0) > 0)
                     <div class="flex justify-between items-center py-2 border-b border-gray-200">
                         <div class="text-sm font-medium text-green-600">Diskon Anggota</div>
                         <div class="text-sm font-medium text-green-600">
@@ -269,23 +303,23 @@
                 <!-- Total Amount -->
                 <div class="flex justify-between items-center py-3 border-t-2 border-gray-300">
                     <div class="text-lg font-bold text-gray-900">Total Biaya</div>
-                    <div class="text-lg font-bold text-gray-900">
-                        Rp {{ number_format($pricing['total_amount'], 0, ',', '.') }}
+                    <div class="text-lg font-bold text-orange-600">
+                        Rp {{ number_format($pricing['total_amount'] ?? 0, 0, ',', '.') }}
                     </div>
                 </div>
 
                 <!-- Deposit and Remaining -->
-                <div class="bg-blue-50 p-4 rounded-lg space-y-2">
+                <div class="bg-orange-50 p-4 rounded-lg space-y-2">
                     <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-blue-900">Deposit Diperlukan (30%)</div>
-                        <div class="text-sm font-bold text-blue-900">
-                            Rp {{ number_format($pricing['deposit_amount'], 0, ',', '.') }}
+                        <div class="text-sm font-medium text-orange-900">Deposit Diperlukan (30%)</div>
+                        <div class="text-sm font-bold text-orange-900">
+                            Rp {{ number_format($pricing['deposit_amount'] ?? 0, 0, ',', '.') }}
                         </div>
                     </div>
                     <div class="flex justify-between items-center">
-                        <div class="text-sm font-medium text-blue-900">Sisa Pembayaran</div>
-                        <div class="text-sm font-bold text-blue-900">
-                            Rp {{ number_format($pricing['remaining_amount'], 0, ',', '.') }}
+                        <div class="text-sm font-medium text-orange-900">Sisa Pembayaran</div>
+                        <div class="text-sm font-bold text-orange-900">
+                            Rp {{ number_format($pricing['remaining_amount'] ?? 0, 0, ',', '.') }}
                         </div>
                     </div>
                 </div>
@@ -297,7 +331,7 @@
     @if($is_calculating)
         <div class="bg-white shadow rounded-lg p-6">
             <div class="flex items-center justify-center">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
                 <span class="ml-2 text-gray-600">Menghitung harga...</span>
             </div>
         </div>
@@ -306,7 +340,7 @@
     <!-- Action Buttons -->
     <div class="flex justify-end space-x-3">
         <button type="button" wire:click="resetForm" 
-                class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
             Reset Formulir
         </button>
     </div>

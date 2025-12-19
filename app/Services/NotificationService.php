@@ -87,7 +87,11 @@ class NotificationService
     protected function sendEmailNotification(Notification $notification, User $user): void
     {
         try {
-            Mail::to($user->email)->send(new SystemNotification($notification));
+            // Mail::to($user->email)->send(new SystemNotification($notification));
+            Log::info('Email notification disabled per user request', [
+                'notification_id' => $notification->id,
+                'user_id' => $user->id
+            ]);
             $notification->markEmailSent();
             $notification->updateDeliveryStatus('email', 'sent');
         } catch (\Exception $e) {
@@ -134,7 +138,7 @@ class NotificationService
     {
         try {
             if ($customer->email) {
-                Mail::to($customer->email)->send(new CustomerNotification($data));
+                // Mail::to($customer->email)->send(new CustomerNotification($data));
                 Log::info('Customer notification sent', [
                     'customer_id' => $customer->id,
                     'type' => $data['type'] ?? 'general',
@@ -207,7 +211,7 @@ class NotificationService
     {
         $notifications = collect();
         
-        $carsWithExpiringStnk = Car::where('stnk_expiry', '<=', Carbon::now()->addDays(30))
+        $carsWithExpiringStnk = Car::where('stnk_expiry', '<=', Carbon::now()->addDays(7))
             ->where('stnk_expiry', '>=', Carbon::now())
             ->get();
 

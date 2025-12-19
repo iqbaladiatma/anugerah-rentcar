@@ -44,7 +44,7 @@ class MaintenanceNotifications extends Component
         }
 
         // Get cars with expiring STNK
-        $carsWithExpiringStnk = Car::where('stnk_expiry', '<=', Carbon::now()->addDays(30))
+        $carsWithExpiringStnk = Car::where('stnk_expiry', '<=', Carbon::now()->addDays(7))
             ->where('stnk_expiry', '>=', Carbon::now())
             ->get();
 

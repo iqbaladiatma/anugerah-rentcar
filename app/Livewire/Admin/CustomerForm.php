@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\Customer;
 use App\Models\Setting;
+use App\Events\CustomerCreated;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -222,6 +223,10 @@ class CustomerForm extends Component
             session()->flash('success', 'Customer updated successfully.');
         } else {
             $customer = Customer::create($data);
+            
+            // Dispatch event for new customer notification
+            CustomerCreated::dispatch($customer);
+            
             session()->flash('success', 'Customer created successfully.');
             return redirect()->route('admin.customers.show', $customer->id);
         }

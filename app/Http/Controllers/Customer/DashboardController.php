@@ -21,8 +21,8 @@ class DashboardController extends Controller
             'active_bookings' => $customer->activeBookings()->count(),
             'completed_bookings' => $customer->completedBookings()->count(),
             'total_spent' => $customer->bookings()
-                ->where('payment_status', 'paid')
-                ->sum('total_amount'),
+                ->whereIn('payment_status', ['paid', 'partial', 'verifying'])
+                ->sum('paid_amount'),
         ];
 
         $recentBookings = $customer->bookings()
@@ -31,7 +31,23 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        return view('customer.dashboard', compact('stats', 'recentBookings'));
+        // Get pending payments for alert (belum bayar sama sekali)
+        $pendingPayments = $customer->bookings()
+            ->with(['car'])
+            ->where('payment_status', 'pending')
+            ->whereIn('booking_status', ['pending', 'confirmed'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Get partial payments for alert (sudah bayar deposit, belum lunas)
+        $partialPayments = $customer->bookings()
+            ->with(['car'])
+            ->where('payment_status', 'partial')
+            ->whereIn('booking_status', ['confirmed', 'active'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('customer.dashboard', compact('stats', 'recentBookings', 'pendingPayments', 'partialPayments'));
     }
 
     /**
@@ -160,9 +176,9 @@ class DashboardController extends Controller
             abort(403, 'Unauthorized access to booking.');
         }
 
-        // Only allow payment upload for pending payments
-        if ($booking->payment_status !== 'pending') {
-            return back()->with('error', 'Payment confirmation is only available for pending payments.');
+        // Only allow payment upload for pending or partial payments
+        if (!in_array($booking->payment_status, ['pending', 'partial'])) {
+            return back()->with('error', 'Payment confirmation is only available for pending or partial payments.');
         }
 
         return view('customer.payment-confirmation', compact('booking'));
@@ -194,10 +210,18 @@ class DashboardController extends Controller
             ? $booking->total_amount 
             : $booking->deposit_amount;
 
-        // Update booking with payment proof
+        // If this is a full payment (pelunasan) and previous status was partial,
+        // save the existing payment proof (deposit) to deposit_proof column
+        // so we don't lose the history
+        $depositProof = $booking->deposit_proof;
+        if ($request->payment_type === 'full' && $booking->payment_status === 'partial') {
+            $depositProof = $booking->payment_proof;
+        }
 
+        // Update booking with payment proof
         $booking->update([
             'payment_proof' => $path,
+            'deposit_proof' => $depositProof,
             'payment_notes' => $request->notes,
             'payment_type' => $request->payment_type,
             'paid_amount' => $paidAmount,

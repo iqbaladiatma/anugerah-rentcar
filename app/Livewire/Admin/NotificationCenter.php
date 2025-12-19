@@ -60,6 +60,8 @@ class NotificationCenter extends Component
     {
         return [
             '' => 'All Types',
+            Notification::TYPE_NEW_CUSTOMER => 'Pelanggan Baru',
+            Notification::TYPE_NEW_BOOKING => 'Orderan Baru',
             Notification::TYPE_MAINTENANCE => 'Maintenance',
             Notification::TYPE_STNK_EXPIRY => 'STNK Expiry',
             Notification::TYPE_PAYMENT_OVERDUE => 'Payment Overdue',
