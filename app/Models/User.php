@@ -17,6 +17,7 @@ class User extends Authenticatable
     /**
      * Role constants.
      */
+    const ROLE_SUPER_ADMIN = 'super_admin';
     const ROLE_ADMIN = 'admin';
     const ROLE_STAFF = 'staff';
     const ROLE_DRIVER = 'driver';
@@ -97,6 +98,7 @@ class User extends Authenticatable
     public static function getRoles(): array
     {
         return [
+            self::ROLE_SUPER_ADMIN => 'Super Administrator',
             self::ROLE_ADMIN => 'Administrator',
             self::ROLE_STAFF => 'Staff',
             self::ROLE_DRIVER => 'Driver',
@@ -104,11 +106,19 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user is super admin.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === self::ROLE_SUPER_ADMIN;
+    }
+
+    /**
      * Check if user is admin.
      */
     public function isAdmin(): bool
     {
-        return $this->role === self::ROLE_ADMIN;
+        return $this->role === self::ROLE_ADMIN || $this->role === self::ROLE_SUPER_ADMIN;
     }
 
     /**
@@ -132,7 +142,7 @@ class User extends Authenticatable
      */
     public function canManageVehicles(): bool
     {
-        return in_array($this->role, [self::ROLE_ADMIN, self::ROLE_STAFF]);
+        return in_array($this->role, [self::ROLE_SUPER_ADMIN, self::ROLE_ADMIN, self::ROLE_STAFF]);
     }
 
     /**
@@ -140,7 +150,7 @@ class User extends Authenticatable
      */
     public function canManageCustomers(): bool
     {
-        return in_array($this->role, [self::ROLE_ADMIN, self::ROLE_STAFF]);
+        return in_array($this->role, [self::ROLE_SUPER_ADMIN, self::ROLE_ADMIN, self::ROLE_STAFF]);
     }
 
     /**
@@ -148,7 +158,7 @@ class User extends Authenticatable
      */
     public function canManageBookings(): bool
     {
-        return in_array($this->role, [self::ROLE_ADMIN, self::ROLE_STAFF]);
+        return in_array($this->role, [self::ROLE_SUPER_ADMIN, self::ROLE_ADMIN, self::ROLE_STAFF]);
     }
 
     /**
@@ -156,7 +166,7 @@ class User extends Authenticatable
      */
     public function canViewReports(): bool
     {
-        return in_array($this->role, [self::ROLE_ADMIN, self::ROLE_STAFF]);
+        return in_array($this->role, [self::ROLE_SUPER_ADMIN, self::ROLE_ADMIN, self::ROLE_STAFF]);
     }
 
     /**
@@ -164,7 +174,7 @@ class User extends Authenticatable
      */
     public function canManageSettings(): bool
     {
-        return $this->role === self::ROLE_ADMIN;
+        return in_array($this->role, [self::ROLE_SUPER_ADMIN, self::ROLE_ADMIN]);
     }
 
     /**

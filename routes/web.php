@@ -217,6 +217,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('/notifikasi/tandai-semua-dibaca', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::get('/notifikasi/jumlah-belum-dibaca', [\App\Http\Controllers\NotificationController::class, 'getUnreadCount'])->name('notifications.unread-count');
     Route::post('/notifikasi/buat', [\App\Http\Controllers\NotificationController::class, 'generate'])->name('notifications.generate');
+    
+    // Super Admin Routes
+    Route::middleware('super.admin')->group(function () {
+        Route::get('/super-admin', \App\Livewire\Admin\SuperAdminDashboard::class)->name('super-admin.dashboard');
+    });
 });
 
 Route::view('profile', 'profile')

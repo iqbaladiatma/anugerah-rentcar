@@ -133,6 +133,16 @@ class AdminSidebar extends Component
             ];
         }
 
+        // Super Admin Dashboard - Super Admin only
+        if ($user->isSuperAdmin()) {
+            $menuItems[] = [
+                'name' => 'Super Admin',
+                'route' => 'admin.super-admin.dashboard',
+                'icon' => 'shield-check',
+                'permission' => true
+            ];
+        }
+
         // System Settings - Admin only
         if ($user->canManageSettings()) {
             $menuItems[] = [

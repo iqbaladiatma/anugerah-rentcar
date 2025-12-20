@@ -17,11 +17,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'error.handling' => \App\Http\Middleware\ErrorHandlingMiddleware::class,
             'performance' => \App\Http\Middleware\PerformanceMonitoringMiddleware::class,
             'profile.complete' => \App\Http\Middleware\EnsureProfileCompleted::class,
+            'track.session' => \App\Http\Middleware\TrackActiveSession::class,
+            'super.admin' => \App\Http\Middleware\SuperAdminMiddleware::class,
         ]);
         
         // Add error handling middleware to web group
         $middleware->web(append: [
             \App\Http\Middleware\ErrorHandlingMiddleware::class,
+            \App\Http\Middleware\TrackActiveSession::class,
         ]);
         
         // Add performance monitoring middleware (only in non-production or when explicitly enabled)
