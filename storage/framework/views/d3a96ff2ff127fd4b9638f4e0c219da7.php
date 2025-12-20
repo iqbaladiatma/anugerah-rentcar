@@ -12,7 +12,7 @@
                     </label>
                     <input type="text" 
                            id="license_plate"
-                           wire:model="license_plate"
+                           wire:model.blur="license_plate"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 <?php $__errorArgs = ['license_plate'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -41,7 +41,7 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
                     </label>
                     <input type="text" 
                            id="stnk_number"
-                           wire:model="stnk_number"
+                           wire:model.blur="stnk_number"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 <?php $__errorArgs = ['stnk_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -310,6 +310,37 @@ unset($__errorArgs, $__bag); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendB
         <!-- Pricing Information -->
         <div class="bg-white rounded-lg shadow-sm border p-6">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Harga</h3>
+            
+            <!-- Pricing Reference & Packages -->
+            <div class="mb-6 bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <h4 class="text-sm font-medium text-gray-900 mb-3">Referensi & Paket Harga</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Global Settings Info -->
+                    <div class="text-sm text-gray-600 space-y-1">
+                        <p><span class="font-medium">Denda Keterlambatan:</span> Rp <?php echo e(number_format($settings->late_penalty_per_hour ?? 0, 0, ',', '.')); ?>/jam</p>
+                        <p><span class="font-medium">Waktu Jeda:</span> <?php echo e($settings->buffer_time_hours ?? 0); ?> jam</p>
+                        <p><span class="font-medium">Diskon Member:</span> <?php echo e($settings->member_discount_percentage ?? 0); ?>%</p>
+                    </div>
+
+                    <!-- Apply Package -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Terapkan Paket Harga</label>
+                        <select wire:change="applyPackage($event.target.value)" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            <option value="">-- Pilih Paket --</option>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($rentalPackages): ?>
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $rentalPackages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $package): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($package->id); ?>">
+                                        <?php echo e($package->name); ?> (<?php echo e($package->duration_hours); ?> Jam) - Rp <?php echo e(number_format($package->price, 0, ',', '.')); ?>
+
+                                    </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        </select>
+                        <p class="mt-1 text-xs text-gray-500">Memilih paket akan otomatis mengisi harga harian/mingguan.</p>
+                    </div>
+                </div>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Daily Rate -->

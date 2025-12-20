@@ -54,53 +54,6 @@
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>
-
-        <!-- Company Logo -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Logo Perusahaan</label>
-            <div class="mt-1 flex items-center space-x-4">
-                <!-- Current Logo Display -->
-                @if($current_logo || $logo_preview)
-                    <div class="flex-shrink-0">
-                        <img class="h-20 w-20 object-contain border border-gray-300 rounded-lg" 
-                             src="{{ $logo_preview ?: asset('storage/' . $current_logo) }}" 
-                             alt="Logo Perusahaan">
-                    </div>
-                @else
-                    <div class="flex-shrink-0">
-                        <div class="h-20 w-20 bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center">
-                            <x-icons.office-building class="h-8 w-8 text-gray-400" />
-                        </div>
-                    </div>
-                @endif
-
-                <div class="flex-1">
-                    <input type="file" 
-                           wire:model="company_logo"
-                           accept="image/*"
-                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
-                    
-                    @if($current_logo)
-                        <button type="button" 
-                                wire:click="removeLogo"
-                                class="mt-2 text-sm text-red-600 hover:text-red-800">
-                            Remove current logo
-                        </button>
-                    @endif
-                </div>
-            </div>
-            @error('company_logo')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-            <p class="mt-1 text-sm text-gray-500">Upload a logo image (JPEG, PNG, JPG). Maximum file size: 2MB.</p>
-        </div>
-
-        <!-- Loading indicator -->
-        <div wire:loading wire:target="company_logo" class="text-sm text-gray-500">
-            Mengunggah logo...
-        </div>
-
-        <!-- Submit Button -->
         <div class="flex justify-end">
             <button type="submit" 
                     wire:loading.attr="disabled"

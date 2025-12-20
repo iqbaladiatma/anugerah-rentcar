@@ -113,23 +113,6 @@
                 <input wire:model.live="return_location" type="text" id="return_location" 
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
                        placeholder="Masukkan lokasi pengembalian">
-            </div>
-        </div>
-
-        <!-- Additional Options -->
-        <div class="mt-6 space-y-4">
-            <!-- Driver Option -->
-            <div class="flex items-center">
-                <input wire:model.live="with_driver" type="checkbox" id="with_driver" 
-                       class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded">
-                <label for="with_driver" class="ml-2 block text-sm text-gray-900">
-                    Termasuk Sopir
-                </label>
-            </div>
-
-            <!-- Driver Selection -->
-            @if($with_driver)
-                <div>
                     <label for="driver_id" class="block text-sm font-medium text-gray-700">Pilih Sopir</label>
                     <select wire:model.live="driver_id" id="driver_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500">
                         <option value="">Pilih Sopir</option>

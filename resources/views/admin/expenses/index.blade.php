@@ -23,7 +23,9 @@
                             </div>
                             <div class="ml-4">
                                 <p class="text-sm font-medium text-gray-500">Bulan Ini</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="monthly-total">Loading...</p>
+                                <p class="text-2xl font-semibold text-gray-900">
+                                    Rp {{ number_format($monthlySummary['total_amount'], 0, ',', '.') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -37,7 +39,9 @@
                             </div>
                             <div class="ml-4">
                                 <p class="text-sm font-medium text-gray-500">Tahun Ini</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="yearly-total">Loading...</p>
+                                <p class="text-2xl font-semibold text-gray-900">
+                                    Rp {{ number_format($yearlySummary['total_amount'], 0, ',', '.') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -51,7 +55,9 @@
                             </div>
                             <div class="ml-4">
                                 <p class="text-sm font-medium text-gray-500">Rata-Rata Bulanan</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="average-monthly">Loading...</p>
+                                <p class="text-2xl font-semibold text-gray-900">
+                                    Rp {{ number_format($yearlySummary['average_monthly'], 0, ',', '.') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -64,8 +70,10 @@
                                 <x-icons.receipt-tax class="h-8 w-8 text-red-500" />
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Total Pengeluaran</p>
-                                <p class="text-2xl font-semibold text-gray-900" id="total-count">Loading...</p>
+                                <p class="text-sm font-medium text-gray-500">Total Transaksi</p>
+                                <p class="text-2xl font-semibold text-gray-900">
+                                    {{ number_format($yearlySummary['total_count']) }} items
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -80,62 +88,4 @@
             </div>
         </div>
     </div>
-
-    @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadSummaryData();
-        });
-
-        function loadSummaryData() {
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth() + 1;
-
-            console.log('Loading summary data...', { year: currentYear, month: currentMonth });
-
-            // Load monthly summary
-            fetch(`{{ route('admin.expenses.monthly-summary') }}?year=${currentYear}&month=${currentMonth}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok: ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Monthly summary data:', data);
-                    document.getElementById('monthly-total').textContent = 
-                        new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.total_amount);
-                })
-                .catch(error => {
-                    console.error('Error loading monthly summary:', error);
-                    document.getElementById('monthly-total').textContent = 'Error';
-                    document.getElementById('monthly-total').title = error.message;
-                });
-
-            // Load yearly summary
-            fetch(`{{ route('admin.expenses.yearly-summary') }}?year=${currentYear}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok: ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Yearly summary data:', data);
-                    document.getElementById('yearly-total').textContent = 
-                        new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.total_amount);
-                    document.getElementById('average-monthly').textContent = 
-                        new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.average_monthly);
-                    document.getElementById('total-count').textContent = data.total_count + ' items';
-                })
-                .catch(error => {
-                    console.error('Error loading yearly summary:', error);
-                    document.getElementById('yearly-total').textContent = 'Error';
-                    document.getElementById('average-monthly').textContent = 'Error';
-                    document.getElementById('total-count').textContent = 'Error';
-                });
-        }
-    </script>
-    @endpush
 </x-admin-layout>

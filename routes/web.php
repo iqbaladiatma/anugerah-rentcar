@@ -14,6 +14,7 @@ Route::post('/kendaraan/cek-ketersediaan', [PublicVehicleController::class, 'che
 
 // Static pages
 Route::view('/syarat-ketentuan', 'pages.terms')->name('terms');
+Route::view('/dukungan', 'pages.support')->name('public.support');
 
 // Unified Authentication Routes
 Route::middleware('guest')->group(function () {

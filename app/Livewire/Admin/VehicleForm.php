@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Car;
+use App\Models\Setting;
+use App\Models\RentalPackage;
 use App\Rules\SecureFileUpload;
 use App\Rules\EnhancedFileUpload;
 use App\Traits\HandlesSecureFileUploads;
@@ -17,6 +19,10 @@ class VehicleForm extends Component
 
     public ?Car $vehicle = null;
     public bool $isEditing = false;
+
+    // Global Settings & Packages
+    public $settings;
+    public $rentalPackages;
 
     // Vehicle properties
     public string $license_plate = '';
@@ -64,7 +70,7 @@ class VehicleForm extends Component
             'model' => 'required|string|max:50',
             'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
             'color' => 'required|string|max:30',
-            'stnk_number' => 'required|string|max:50',
+            'stnk_number' => 'required|string|max:17',
             'stnk_expiry' => 'required|date|after:today',
             'last_oil_change' => 'nullable|date|before_or_equal:today',
             'oil_change_interval_km' => 'nullable|integer|min:1000|max:50000',
@@ -114,12 +120,47 @@ class VehicleForm extends Component
         $this->daily_rate = 0;
         $this->weekly_rate = 0;
         $this->driver_fee_per_day = 0;
+
+        // Load settings and packages
+        $this->settings = Setting::current();
+        $this->rentalPackages = RentalPackage::where('is_active', true)->get();
         
         if ($vehicle && $vehicle->exists) {
             $this->vehicle = $vehicle;
             $this->isEditing = true;
             $this->fillFromVehicle();
         }
+    }
+
+    public function applyPackage($packageId)
+    {
+        $package = $this->rentalPackages->find($packageId);
+        if ($package) {
+            if ($package->duration_hours == 24) {
+                $this->daily_rate = $package->price;
+            } elseif ($package->duration_hours == 168) { // 7 days * 24 hours
+                $this->weekly_rate = $package->price;
+            }
+        }
+    }
+
+    public function updatedLicensePlate($value)
+    {
+        // Format: Uppercase and add space after first letters and before last letters
+        // Example: B1234ABC -> B 1234 ABC
+        $value = strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $value));
+        
+        if (preg_match('/^([A-Z]{1,2})(\d{1,4})([A-Z]{0,3})$/', $value, $matches)) {
+            $this->license_plate = trim($matches[1] . ' ' . $matches[2] . ' ' . $matches[3]);
+        } else {
+            $this->license_plate = $value;
+        }
+    }
+
+    public function updatedStnkNumber($value)
+    {
+        // Max 17 digits, numbers only
+        $this->stnk_number = substr(preg_replace('/[^0-9]/', '', $value), 0, 17);
     }
 
     private function fillFromVehicle()
@@ -217,10 +258,11 @@ class VehicleForm extends Component
             $this->vehicle->update($data);
             session()->flash('success', 'Kendaraan berhasil diperbarui.');
         } else {
-            $vehicle = Car::create($data);
+            Car::create($data);
             session()->flash('success', 'Kendaraan berhasil dibuat.');
-            return redirect()->route('admin.vehicles.show', $vehicle);
         }
+
+        return redirect()->route('admin.vehicles.index');
     }
 
     public function render()

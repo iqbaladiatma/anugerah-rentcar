@@ -45,17 +45,18 @@ class ExpenseController extends Controller
         $currentMonth = Carbon::now();
         $monthlySummary = Expense::getMonthlySummary($currentMonth->year, $currentMonth->month);
 
+        // Get yearly summary for current year
+        $yearlySummary = Expense::getYearlySummary($currentMonth->year);
+
         return view('admin.expenses.index', compact(
             'expenses',
             'totalExpenses',
             'expenseCount',
-            'monthlySummary'
+            'monthlySummary',
+            'yearlySummary'
         ));
     }
 
-    /**
-     * Show the form for creating a new expense.
-     */
     public function create(): View
     {
         return view('admin.expenses.create', [

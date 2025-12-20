@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('current_odometer');
             $table->decimal('daily_rate', 10, 2);
             $table->decimal('weekly_rate', 10, 2);
-            $table->decimal('driver_fee_per_day', 8, 2);
+            $table->decimal('driver_fee_per_day', 15, 2);
             $table->string('photo_front')->nullable();
             $table->string('photo_side')->nullable();
             $table->string('photo_back')->nullable();

@@ -19,7 +19,7 @@ class AdminUserSeeder extends Seeder
             'phone' => '+62812345678',
             'role' => 'admin',
             'is_active' => true,
-            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+            'password' => \Illuminate\Support\Facades\Hash::make('adminkita'),
             'email_verified_at' => now(),
         ]);
 

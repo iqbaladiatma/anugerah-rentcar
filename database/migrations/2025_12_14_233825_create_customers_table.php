@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone');
             $table->string('email')->nullable();
-            $table->string('nik')->unique();
-            $table->string('ktp_photo');
-            $table->string('sim_photo');
-            $table->text('address');
+            $table->string('password')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->string('phone', 20)->nullable();
+            $table->string('nik', 16)->unique()->nullable();
+            $table->string('ktp_photo')->nullable();
+            $table->string('sim_photo')->nullable();
+            $table->string('kk_photo')->nullable();
+            $table->text('address')->nullable();
+            $table->boolean('profile_completed')->default(false);
             $table->boolean('is_member')->default(false);
             $table->decimal('member_discount', 5, 2)->nullable();
             $table->boolean('is_blacklisted')->default(false);

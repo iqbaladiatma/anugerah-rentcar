@@ -20,17 +20,17 @@
     <div class="border-b border-gray-200 mb-6">
         <nav class="-mb-px flex space-x-8" aria-label="Tabs">
             <button @click="activeTab = 'general'"
-                :class="activeTab === 'general' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                :class="activeTab === 'general' ? 'border-accent-500 text-accent-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
                 class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-150">
                 Pengaturan Umum
             </button>
             <button @click="activeTab = 'penalties'"
-                :class="activeTab === 'penalties' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                :class="activeTab === 'penalties' ? 'border-accent-500 text-accent-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
                 class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-150">
                 Denda
             </button>
             <button @click="activeTab = 'packages'"
-                :class="activeTab === 'packages' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                :class="activeTab === 'packages' ? 'border-accent-500 text-accent-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
                 class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-150">
                 Paket Sewa
             </button>
@@ -39,105 +39,107 @@
 
     <!-- General Settings Tab -->
     <div x-show="activeTab === 'general'" x-cloak>
-        <form wire:submit.prevent="saveSettings" class="space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Late Penalty Rate -->
-                <div x-data="{
-                    raw: @entangle('late_penalty_per_hour'),
-                    get formatted() {
-                        return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
-                    },
-                    set formatted(value) {
-                        this.raw = value.replace(/\D/g, '');
-                    }
-                }">
-                    <label for="late_penalty_per_hour" class="block text-sm font-medium text-gray-700">
-                        Tarif Denda Keterlambatan (per jam)
-                    </label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm">Rp</span>
+        <div class="bg-white shadow sm:rounded-lg p-6">
+            <form wire:submit.prevent="saveSettings" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Late Penalty Rate -->
+                    <div x-data="{
+                        raw: @entangle('late_penalty_per_hour'),
+                        get formatted() {
+                            return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                        },
+                        set formatted(value) {
+                            this.raw = value.replace(/\D/g, '');
+                        }
+                    }">
+                        <label for="late_penalty_per_hour" class="block text-sm font-medium text-gray-700">
+                            Tarif Denda Keterlambatan (per jam)
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">Rp</span>
+                            </div>
+                            <input type="text" 
+                                   id="late_penalty_per_hour" 
+                                   x-model="formatted"
+                                   class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent-500 focus:ring-accent-500 sm:text-sm @error('late_penalty_per_hour') border-red-300 @enderror">
                         </div>
-                        <input type="text" 
-                               id="late_penalty_per_hour" 
-                               x-model="formatted"
-                               class="pl-12 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('late_penalty_per_hour') border-red-300 @enderror">
+                        @error('late_penalty_per_hour')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        <p class="mt-1 text-sm text-gray-500">Denda yang dikenakan per jam untuk pengembalian yang terlambat.</p>
                     </div>
-                    @error('late_penalty_per_hour')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <p class="mt-1 text-sm text-gray-500">Denda yang dikenakan per jam untuk pengembalian yang terlambat.</p>
+
+                    <!-- Buffer Time -->
+                    <div>
+                        <label for="buffer_time_hours" class="block text-sm font-medium text-gray-700">
+                            Waktu Jeda (jam)
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="number" 
+                                   id="buffer_time_hours" 
+                                   wire:model="buffer_time_hours"
+                                   min="0"
+                                   max="24"
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-accent-500 focus:ring-accent-500 sm:text-sm @error('buffer_time_hours') border-red-300 @enderror">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">jam</span>
+                            </div>
+                        </div>
+                        @error('buffer_time_hours')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        <p class="mt-1 text-sm text-gray-500">Waktu yang dicadangkan setelah pengembalian untuk pembersihan/pemeliharaan.</p>
+                    </div>
+
+                    <!-- Member Discount -->
+                    <div>
+                        <label for="member_discount_percentage" class="block text-sm font-medium text-gray-700">
+                            Diskon Member
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="number" 
+                                   id="member_discount_percentage" 
+                                   wire:model="member_discount_percentage"
+                                   step="0.01"
+                                   min="0"
+                                   max="100"
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-accent-500 focus:ring-accent-500 sm:text-sm @error('member_discount_percentage') border-red-300 @enderror">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">%</span>
+                            </div>
+                        </div>
+                        @error('member_discount_percentage')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        <p class="mt-1 text-sm text-gray-500">Persentase diskon default untuk member.</p>
+                    </div>
                 </div>
 
-                <!-- Buffer Time -->
-                <div>
-                    <label for="buffer_time_hours" class="block text-sm font-medium text-gray-700">
-                        Waktu Jeda (jam)
-                    </label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <input type="number" 
-                               id="buffer_time_hours" 
-                               wire:model="buffer_time_hours"
-                               min="0"
-                               max="24"
-                               class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('buffer_time_hours') border-red-300 @enderror">
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm">jam</span>
-                        </div>
-                    </div>
-                    @error('buffer_time_hours')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <p class="mt-1 text-sm text-gray-500">Waktu yang dicadangkan setelah pengembalian untuk pembersihan/pemeliharaan.</p>
+                <div class="flex justify-end pt-4 border-t border-gray-200">
+                    <button type="button" 
+                            wire:click="resetToDefaults"
+                            wire:confirm="Apakah Anda yakin ingin mereset ke nilai default?"
+                            class="mr-3 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500">
+                        Reset ke Default
+                    </button>
+
+                    <button type="submit" 
+                            wire:loading.attr="disabled"
+                            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-accent-600 hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 disabled:opacity-50">
+                        <span wire:loading.remove wire:target="saveSettings">Simpan Pengaturan</span>
+                        <span wire:loading wire:target="saveSettings">Menyimpan...</span>
+                    </button>
                 </div>
-
-                <!-- Member Discount -->
-                <div>
-                    <label for="member_discount_percentage" class="block text-sm font-medium text-gray-700">
-                        Diskon Member
-                    </label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <input type="number" 
-                               id="member_discount_percentage" 
-                               wire:model="member_discount_percentage"
-                               step="0.01"
-                               min="0"
-                               max="100"
-                               class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm @error('member_discount_percentage') border-red-300 @enderror">
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm">%</span>
-                        </div>
-                    </div>
-                    @error('member_discount_percentage')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <p class="mt-1 text-sm text-gray-500">Persentase diskon default untuk member.</p>
-                </div>
-            </div>
-
-            <div class="flex justify-between pt-4">
-                <button type="button" 
-                        wire:click="resetToDefaults"
-                        wire:confirm="Apakah Anda yakin ingin mereset ke nilai default?"
-                        class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Reset ke Default
-                </button>
-
-                <button type="submit" 
-                        wire:loading.attr="disabled"
-                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
-                    <span wire:loading.remove wire:target="saveSettings">Simpan Pengaturan</span>
-                    <span wire:loading wire:target="saveSettings">Menyimpan...</span>
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Penalties Tab -->
     <div x-show="activeTab === 'penalties'" x-cloak>
         <div>
             <div class="flex justify-end mb-4">
-                <button wire:click="createPenalty" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button wire:click="createPenalty" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-accent-600 hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500">
                     Tambah Denda
                 </button>
             </div>
@@ -178,7 +180,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button wire:click="editPenalty({{ $penalty->id }})" class="text-indigo-600 hover:text-indigo-900 mr-3">Ubah</button>
+                                    <button wire:click="editPenalty({{ $penalty->id }})" class="text-accent-600 hover:text-accent-900 mr-3">Ubah</button>
                                     <button wire:click="deletePenalty({{ $penalty->id }})" wire:confirm="Apakah Anda yakin ingin menghapus denda ini?" class="text-red-600 hover:text-red-900">Hapus</button>
                                 </td>
                             </tr>
@@ -197,7 +199,7 @@
     <div x-show="activeTab === 'packages'" x-cloak>
         <div>
             <div class="flex justify-end mb-4">
-                <button wire:click="createPackage" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button wire:click="createPackage" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-accent-600 hover:bg-accent-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500">
                     Tambah Paket
                 </button>
             </div>
@@ -258,7 +260,6 @@
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" wire:click="$set('showPenaltyModal', false)"></div>
                 
-                <!-- This element is to trick the browser into centering the modal contents. -->
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                 
                 <div class="inline-block align-middle bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
@@ -273,9 +274,22 @@
                                     <input type="text" wire:model="penaltyForm.name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     @error('penaltyForm.name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                                 </div>
-                                <div>
+                                <div x-data="{
+                                    raw: @entangle('penaltyForm.amount'),
+                                    get formatted() {
+                                        return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                                    },
+                                    set formatted(value) {
+                                        this.raw = value.replace(/\D/g, '');
+                                    }
+                                }">
                                     <label class="block text-sm font-medium text-gray-700">Jumlah</label>
-                                    <input type="number" wire:model="penaltyForm.amount" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    <div class="mt-1 relative rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <span class="text-gray-500 sm:text-sm">Rp</span>
+                                        </div>
+                                        <input type="text" x-model="formatted" class="pl-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    </div>
                                     @error('penaltyForm.amount') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                                 </div>
                                 <div>
@@ -339,9 +353,22 @@
                                     <input type="number" wire:model="packageForm.duration_hours" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     @error('packageForm.duration_hours') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                                 </div>
-                                <div>
+                                <div x-data="{
+                                    raw: @entangle('packageForm.price'),
+                                    get formatted() {
+                                        return this.raw ? new Intl.NumberFormat('id-ID').format(this.raw) : '';
+                                    },
+                                    set formatted(value) {
+                                        this.raw = value.replace(/\D/g, '');
+                                    }
+                                }">
                                     <label class="block text-sm font-medium text-gray-700">Harga</label>
-                                    <input type="number" wire:model="packageForm.price" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    <div class="mt-1 relative rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <span class="text-gray-500 sm:text-sm">Rp</span>
+                                        </div>
+                                        <input type="text" x-model="formatted" class="pl-10 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    </div>
                                     @error('packageForm.price') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                                 </div>
                                 <div>

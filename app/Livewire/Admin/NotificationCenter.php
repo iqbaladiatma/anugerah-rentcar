@@ -92,7 +92,7 @@ class NotificationCenter extends Component
     {
         $count = $this->notificationService->markAllAsRead(auth()->id());
         $this->dispatch('notifications-marked-read', count: $count);
-        session()->flash('message', "Marked {$count} notifications as read.");
+        session()->flash('message', "Berhasil menandai {$count} notifikasi sebagai sudah dibaca.");
     }
 
     public function toggleUnreadFilter()
@@ -131,6 +131,11 @@ class NotificationCenter extends Component
 
     public function render()
     {
-        return view('livewire.admin.notification-center');
+        return view('livewire.admin.notification-center', [
+            'notifications' => $this->notifications,
+            'unreadCount' => $this->unreadCount,
+            'notificationTypes' => $this->notificationTypes,
+            'priorityOptions' => $this->priorityOptions,
+        ]);
     }
 }

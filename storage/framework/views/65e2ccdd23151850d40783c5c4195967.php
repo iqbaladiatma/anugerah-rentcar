@@ -9,10 +9,22 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header', null, []); ?> 
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <?php echo e(__('Notifications')); ?>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <?php echo e(__('Analisis Pengeluaran')); ?>
 
-        </h2>
+            </h2>
+            <div class="flex space-x-2">
+                <a href="<?php echo e(route('admin.expenses.create')); ?>" 
+                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Tambah Pengeluaran
+                </a>
+                <a href="<?php echo e(route('admin.expenses.index')); ?>" 
+                   class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Kembali ke Pengeluaran
+                </a>
+            </div>
+        </div>
      <?php $__env->endSlot(); ?>
 
     <div class="py-12">
@@ -21,11 +33,11 @@
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
-[$__name, $__params] = $__split('admin.notification-center', []);
+[$__name, $__params] = $__split('admin.expense-analytics');
 
 $key = null;
 
-$key ??= \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::generateKey('lw-632047342-0', null);
+$key ??= \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::generateKey('lw-3806514644-0', null);
 
 $__html = app('livewire')->mount($__name, $__params, $key);
 
@@ -48,4 +60,4 @@ if (isset($__slots)) unset($__slots);
 <?php if (isset($__componentOriginal91fdd17964e43374ae18c674f95cdaa3)): ?>
 <?php $component = $__componentOriginal91fdd17964e43374ae18c674f95cdaa3; ?>
 <?php unset($__componentOriginal91fdd17964e43374ae18c674f95cdaa3); ?>
-<?php endif; ?><?php /**PATH C:\laragon\www\anugerah-rentcar\resources\views/admin/notifications/index.blade.php ENDPATH**/ ?>
+<?php endif; ?><?php /**PATH C:\laragon\www\anugerah-rentcar\resources\views/admin/expenses/analytics.blade.php ENDPATH**/ ?>

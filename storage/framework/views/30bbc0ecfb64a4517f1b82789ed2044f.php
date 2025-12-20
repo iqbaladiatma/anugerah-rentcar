@@ -56,10 +56,7 @@
                             <a href="<?php echo e(route('vehicles.catalog')); ?>" class="<?php echo e(request()->routeIs('vehicles.*') ? 'nav-link-active' : 'nav-link'); ?>">
                                 Kendaraan
                             </a>
-                            <a href="<?php echo e(route('home')); ?>#about" class="nav-link">
-                                Tentang Kami
-                            </a>
-                            <a href="<?php echo e(route('home')); ?>#contact" class="nav-link">
+                            <a href="<?php echo e(route('public.support')); ?>" class="nav-link">
                                 Kontak
                             </a>
                         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -139,17 +136,22 @@
                             Kami menyediakan kendaraan berkualitas untuk semua kebutuhan transportasi Anda.
                         </p>
                         <div class="flex space-x-4">
-                            <a href="#" class="w-10 h-10 bg-secondary-800 hover:bg-accent-500 rounded-lg flex items-center justify-center text-secondary-400 hover:text-white transition-all duration-200">
+                            <!-- 1. INSTAGRAM -->
+                            <a href="https://www.instagram.com/anugerah.rentcar/" class="w-10 h-10 bg-secondary-800 hover:bg-pink-600 rounded-lg flex items-center justify-center text-secondary-400 hover:text-white transition-all duration-200 group">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="w-10 h-10 bg-secondary-800 hover:bg-accent-500 rounded-lg flex items-center justify-center text-secondary-400 hover:text-white transition-all duration-200">
+
+                            <!-- 2. TIKTOK -->
+                                <a href="https://www.tiktok.com/@anugerah.rentcar" class="w-10 h-10 bg-secondary-800 hover:bg-black hover:border hover:border-gray-700 rounded-lg flex items-center justify-center text-secondary-400 hover:text-white transition-all duration-200">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+                                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="w-10 h-10 bg-secondary-800 hover:bg-accent-500 rounded-lg flex items-center justify-center text-secondary-400 hover:text-white transition-all duration-200">
+
+                                <!-- 3. WHATSAPP -->
+                            <a href="https://wa.me/628977777451" class="w-10 h-10 bg-secondary-800 hover:bg-green-600 rounded-lg flex items-center justify-center text-secondary-400 hover:text-white transition-all duration-200">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
                                 </svg>
@@ -164,7 +166,7 @@
                             <li><a href="<?php echo e(route('vehicles.catalog')); ?>" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Jelajahi Kendaraan</a></li>
                             <li><a href="<?php echo e(route('terms')); ?>" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Syarat & Ketentuan</a></li>
                             <li><a href="<?php echo e(route('terms')); ?>#faq" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">FAQ</a></li>
-                            <li><a href="<?php echo e(route('home')); ?>#contact" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Hubungi Kami</a></li>
+                            <li><a href="<?php echo e(route('public.support')); ?>" class="text-secondary-300 hover:text-accent-500 transition-colors text-base">Hubungi Kami</a></li>
                         </ul>
                     </div>
 
@@ -253,7 +255,6 @@
 
         <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
 
-        <script src="//unpkg.com/alpinejs" defer></script>
         <?php echo $__env->yieldPushContent('scripts'); ?>
     </body>
 </html><?php /**PATH C:\laragon\www\anugerah-rentcar\resources\views/layouts/public.blade.php ENDPATH**/ ?>

@@ -92,11 +92,19 @@
                             </div>
 
                             <div class="space-y-3">
-                                <label class="flex items-center">
-                                    <input type="checkbox" wire:model.live="withDriver" 
-                                           class="w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-500">
-                                    <span class="ml-2 text-sm text-gray-700">Dengan Sopir</span>
-                                </label>
+                                <div class="mt-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Layanan</label>
+                                    <div class="flex space-x-4">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="radio" wire:model.live="withDriver" value="0" class="w-4 h-4 text-accent-600 border-gray-300 focus:ring-accent-500">
+                                            <span class="ml-2 text-sm text-gray-700">Lepas Kunci</span>
+                                        </label>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="radio" wire:model.live="withDriver" value="1" class="w-4 h-4 text-accent-600 border-gray-300 focus:ring-accent-500">
+                                            <span class="ml-2 text-sm text-gray-700">Dengan Sopir</span>
+                                        </label>
+                                    </div>
+                                </div>
 
                                 <label class="flex items-center">
                                     <input type="checkbox" wire:model.live="isOutOfTown" 
@@ -255,12 +263,14 @@
                                     </div>
                                 </div>
 
-                                    <svg class="w-5 h-5 text-accent-600 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <div class="mt-4 flex items-start bg-accent-50 p-4 rounded-lg">
+                                        <svg class="w-5 h-5 text-accent-600 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                                    <div class="text-sm text-accent-800">
+                                        </svg>
+                                        <div class="text-sm text-accent-800">
                                             <p class="font-medium">Payment Information</p>
                                             <p class="mt-1">A deposit is required to secure your booking. The remaining balance can be paid upon vehicle pickup.</p>
-                                        </div>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
