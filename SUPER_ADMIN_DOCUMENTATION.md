@@ -13,6 +13,11 @@ Fitur Super Admin telah berhasil ditambahkan ke sistem Anugerah Rentcar. Super A
 Email: superadmin@anugerah-rentcar.com
 Password: SuperAdmin123!
 ```
+di website gitu
+```
+Email: superadmin@anugerah-rentcar.com
+Password: superadminkita
+```
 
 **⚠️ PENTING: Segera ubah password setelah login pertama kali!**
 
