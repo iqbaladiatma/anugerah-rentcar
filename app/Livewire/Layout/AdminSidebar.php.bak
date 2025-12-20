@@ -145,37 +145,31 @@ class AdminSidebar extends Component
 
         // System Settings - Admin only
         if ($user->canManageSettings()) {
-            $settingsChildren = [
-                [
-                    'name' => 'Pengaturan Perusahaan',
-                    'route' => 'admin.settings.company',
-                    'icon' => 'office-building'
-                ],
-                [
-                    'name' => 'Manajemen Pengguna',
-                    'route' => 'admin.settings.users',
-                    'icon' => 'user-group'
-                ],
-                [
-                    'name' => 'Konfigurasi Harga',
-                    'route' => 'admin.settings.pricing',
-                    'icon' => 'calculator'
-                ]
-            ];
-
-            // Add System Configuration only for Super Admin
-            if ($user->isSuperAdmin()) {
-                $settingsChildren[] = [
-                    'name' => 'Konfigurasi Sistem',
-                    'route' => 'admin.settings.system',
-                    'icon' => 'adjustments'
-                ];
-            }
-
             $menuItems[] = [
                 'name' => 'Pengaturan Sistem',
                 'icon' => 'cog',
-                'children' => $settingsChildren
+                'children' => [
+                    [
+                        'name' => 'Pengaturan Perusahaan',
+                        'route' => 'admin.settings.company',
+                        'icon' => 'office-building'
+                    ],
+                    [
+                        'name' => 'Manajemen Pengguna',
+                        'route' => 'admin.settings.users',
+                        'icon' => 'user-group'
+                    ],
+                    [
+                        'name' => 'Konfigurasi Harga',
+                        'route' => 'admin.settings.pricing',
+                        'icon' => 'calculator'
+                    ],
+                    [
+                        'name' => 'Konfigurasi Sistem',
+                        'route' => 'admin.settings.system',
+                        'icon' => 'adjustments'
+                    ]
+                ]
             ];
         }
 

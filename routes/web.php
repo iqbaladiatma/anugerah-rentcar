@@ -199,7 +199,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/pengaturan/perusahaan', [\App\Http\Controllers\SettingsController::class, 'company'])->name('settings.company');
     Route::get('/pengaturan/pengguna', [\App\Http\Controllers\SettingsController::class, 'users'])->name('settings.users');
     Route::get('/pengaturan/harga', [\App\Http\Controllers\SettingsController::class, 'pricing'])->name('settings.pricing');
-    Route::get('/pengaturan/sistem', [\App\Http\Controllers\SettingsController::class, 'system'])->name('settings.system');
+    
+    // Super Admin Only Routes
+    Route::middleware('super.admin')->group(function () {
+        Route::get('/pengaturan/sistem', [\App\Http\Controllers\SettingsController::class, 'system'])->name('settings.system');
+    });
     
     // Settings API Routes
     Route::post('/pengaturan/perusahaan', [\App\Http\Controllers\SettingsController::class, 'updateCompany'])->name('settings.update-company');
