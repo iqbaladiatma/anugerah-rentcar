@@ -74,7 +74,7 @@
                             <li x-data="{ open: {{ $isActive ? 'true' : 'false' }} }">
                                 <button @click="open = !open" 
                                         class="group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm font-medium leading-6 text-gray-700 hover:bg-gray-50 hover:text-accent-500"
-                                        :class="{ 'bg-gray-50 text-accent-500': open }">
+                                        :class="{ 'bg-accent-50 text-accent-500': open }">
                                     @include('components.icons.' . $item['icon'], ['class' => 'h-5 w-5 shrink-0'])
                                     <span class="truncate flex-1">{{ $item['name'] }}</span>
                                     <svg class="h-4 w-4 shrink-0 transition-transform duration-200"
@@ -96,7 +96,7 @@
                                         <li>
                                             <a href="{{ route($child['route']) }}" 
                                                wire:navigate
-                                               class="group flex gap-x-3 rounded-md py-2 pl-8 pr-2 text-sm leading-6 text-gray-600 hover:bg-gray-50 hover:text-accent-500 {{ request()->routeIs($child['route'] . '*') ? 'bg-gray-50 text-accent-500 font-medium' : '' }}">
+                                               class="group flex gap-x-3 rounded-md py-2 pl-8 pr-2 text-sm leading-6 text-gray-600 hover:bg-gray-50 hover:text-accent-500 {{ request()->routeIs($child['route'] . '*') ? 'bg-accent-50 text-accent-500 font-medium' : '' }}">
                                                 @include('components.icons.' . $child['icon'], ['class' => 'h-4 w-4 shrink-0'])
                                                 <span class="truncate">{{ $child['name'] }}</span>
                                             </a>
@@ -109,7 +109,7 @@
                             <li>
                                 <a href="{{ route($item['route']) }}" 
                                    wire:navigate
-                                   class="group flex gap-x-3 rounded-md p-2 text-sm font-medium leading-6 text-gray-700 hover:bg-gray-50 hover:text-accent-500 {{ request()->routeIs($item['route'] . '*') ? 'bg-gray-50 text-accent-500' : '' }}">
+                                   class="group flex gap-x-3 rounded-md p-2 text-sm font-medium leading-6 text-gray-700 hover:bg-gray-50 hover:text-accent-500 {{ request()->routeIs($item['route'] . '*') ? 'bg-accent-50 text-accent-500' : '' }}">
                                     @include('components.icons.' . $item['icon'], ['class' => 'h-5 w-5 shrink-0'])
                                     <span class="truncate">{{ $item['name'] }}</span>
                                 </a>
