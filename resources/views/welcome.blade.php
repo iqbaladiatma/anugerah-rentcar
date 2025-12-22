@@ -72,8 +72,10 @@
         </nav>
 
         <!-- Hero Section -->
-        <section id="home" class="relative bg-white pt-16 lg:pt-20">
-            <div class="container-custom section-padding">
+        <section id="home" class="relative pt-16 lg:pt-20 bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('sewa.png') }}');">
+            <!-- Overlay for better text readability -->
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="container-custom section-padding relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                     <!-- Hero Content -->
                     <div class="text-center lg:text-left animate-fade-in">
@@ -81,7 +83,7 @@
                             <span class="text-white">Temukan Mobil Rental</span>
                             <span class="text-gradient">Terbaik Anda</span>
                         </h1>
-                        <p class="text-body mb-8 max-w-lg mx-auto lg:mx-0">
+                        <p class="text-lg text-white/90 mb-8 max-w-lg mx-auto lg:mx-0">
                             Layanan rental mobil terpercaya, terjangkau, dan nyaman untuk semua kebutuhan transportasi Anda
                         </p>
                         
@@ -90,7 +92,7 @@
                             <a href="{{ route('vehicles.catalog') }}" class="btn-primary">
                                 Jelajahi Kendaraan
                             </a>
-                            <a href="#about" class="btn-outline">
+                            <a href="#about" class="border-2 border-white text-white hover:bg-white hover:text-secondary-900 px-6 py-3 rounded-xl font-semibold transition-all duration-200">
                                 Pelajari Lebih Lanjut
                             </a>
                         </div>
@@ -98,16 +100,16 @@
                         <!-- Stats -->
                         <div class="grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
                             <div class="text-center lg:text-left">
-                                <div class="text-2xl lg:text-3xl font-bold text-accent-500 mb-1">500+</div>
-                                <div class="text-sm text-secondary-600">Pelanggan Puas</div>
+                                <div class="text-2xl lg:text-3xl font-bold text-accent-400 mb-1">500+</div>
+                                <div class="text-sm text-white/80">Pelanggan Puas</div>
                             </div>
                             <div class="text-center lg:text-left">
-                                <div class="text-2xl lg:text-3xl font-bold text-accent-500 mb-1">50+</div>
-                                <div class="text-sm text-secondary-600">Armada Kendaraan</div>
+                                <div class="text-2xl lg:text-3xl font-bold text-accent-400 mb-1">50+</div>
+                                <div class="text-sm text-white/80">Armada Kendaraan</div>
                             </div>
                             <div class="text-center lg:text-left">
-                                <div class="text-2xl lg:text-3xl font-bold text-accent-500 mb-1">24/7</div>
-                                <div class="text-sm text-secondary-600">Layanan Support</div>
+                                <div class="text-2xl lg:text-3xl font-bold text-accent-400 mb-1">24/7</div>
+                                <div class="text-sm text-white/80">Layanan Support</div>
                             </div>
                         </div>
                     </div>

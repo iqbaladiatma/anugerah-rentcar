@@ -38,11 +38,11 @@
                 <livewire:layout.admin-header />
                 
                 <!-- Konten Halaman -->
-                <main class="py-6 pb-20 lg:pb-6">
-                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <main class="py-4 sm:py-6 pb-20 lg:pb-6">
+                    <div class="mx-auto max-w-7xl px-3 sm:px-4 lg:px-8">
                         <!-- Judul Halaman -->
                         @if (isset($header))
-                            <div class="mb-6">
+                            <div class="mb-4 sm:mb-6">
                                 {{ $header }}
                             </div>
                         @endif

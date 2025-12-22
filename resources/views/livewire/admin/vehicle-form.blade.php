@@ -5,20 +5,56 @@
             <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Dasar</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- License Plate -->
-                <div>
-                    <label for="license_plate" class="block text-sm font-medium text-gray-700 mb-1">
+                <!-- License Plate (3 Parts - Indonesian Format) -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
                         Nomor Plat <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" 
-                           id="license_plate"
-                           wire:model.blur="license_plate"
-                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('license_plate') border-red-500 @enderror"
-                           placeholder="B 1234 ABC">
+                    <div class="flex items-center gap-2">
+                        <!-- Part 1: Area Code (1 letter) -->
+                        <div class="w-16">
+                            <input type="text" 
+                                   wire:model.blur="plate_area"
+                                   maxlength="1"
+                                   class="w-full text-center uppercase border border-gray-300 rounded-lg px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('license_plate') border-red-500 @enderror"
+                                   placeholder="B"
+                                   style="text-transform: uppercase;"
+                                   oninput="this.value = this.value.toUpperCase().replace(/[^A-Z]/g, '')">
+                        </div>
+                        
+                        <!-- Part 2: Number (1-4 digits) -->
+                        <div class="w-24">
+                            <input type="text" 
+                                   wire:model.blur="plate_number"
+                                   maxlength="4"
+                                   class="w-full text-center border border-gray-300 rounded-lg px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('license_plate') border-red-500 @enderror"
+                                   placeholder="1234"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        </div>
+                        
+                        <!-- Part 3: Series (1-3 letters) -->
+                        <div class="w-20">
+                            <input type="text" 
+                                   wire:model.blur="plate_series"
+                                   maxlength="3"
+                                   class="w-full text-center uppercase border border-gray-300 rounded-lg px-2 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('license_plate') border-red-500 @enderror"
+                                   placeholder="ABC"
+                                   style="text-transform: uppercase;"
+                                   oninput="this.value = this.value.toUpperCase().replace(/[^A-Z]/g, '')">
+                        </div>
+                        
+                        <!-- Preview -->
+                        <div class="flex-1 ml-2">
+                            <span class="text-sm text-gray-500">Preview:</span>
+                            <span class="font-mono font-bold text-gray-800 ml-1">{{ $plate_area }} {{ $plate_number }} {{ $plate_series }}</span>
+                        </div>
+                    </div>
                     @error('license_plate')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
+                    <p class="mt-1 text-xs text-gray-500">Format: 1 huruf (kode wilayah) + 1-4 angka + 1-3 huruf</p>
                 </div>
+
 
                 <!-- STNK Number -->
                 <div>

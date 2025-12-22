@@ -1,21 +1,21 @@
-<div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+<div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-2 sm:gap-x-4 border-b border-gray-200 bg-white px-3 sm:px-4 lg:px-8 shadow-sm">
 
-    <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+    <div class="flex flex-1 gap-x-2 sm:gap-x-4 self-stretch lg:gap-x-6">
         <!-- Search -->
         <div class="relative flex flex-1 items-center">
-            <div class="relative w-full max-w-md">
+            <div class="relative w-full lg:max-w-md">
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                    <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
                     </svg>
                 </div>
                 <input type="text" 
-                       placeholder="Cari pelanggan, kendaraan, pemesanan..." 
-                       class="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent-500 sm:text-sm sm:leading-6">
+                       placeholder="Cari..." 
+                       class="block w-full rounded-md border-0 py-1.5 pl-9 sm:pl-10 pr-3 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent-500 sm:text-sm sm:leading-6">
             </div>
         </div>
 
-        <div class="flex items-center gap-x-4 lg:gap-x-6">
+        <div class="flex items-center gap-x-2 sm:gap-x-4 lg:gap-x-6">
             <!-- Notifications Widget -->
             <?php
 $__split = function ($name, $params = []) {
@@ -47,8 +47,8 @@ if (isset($__slots)) unset($__slots);
                         class="-m-1.5 flex items-center p-1.5 hover:bg-gray-50 rounded-md"
                         @click="open = !open">
                     <span class="sr-only">Buka menu pengguna</span>
-                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-accent-500 to-accent-600">
-                        <span class="text-sm font-medium text-white">
+                    <div class="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-gradient-to-r from-accent-500 to-accent-600">
+                        <span class="text-xs sm:text-sm font-medium text-white">
                             <?php echo e(substr(auth()->user()->name, 0, 1)); ?>
 
                         </span>
@@ -73,7 +73,8 @@ if (isset($__slots)) unset($__slots);
                      x-transition:leave="transition ease-in duration-75"
                      x-transition:leave-start="transform opacity-100 scale-100"
                      x-transition:leave-end="transform opacity-0 scale-95"
-                     class="absolute right-0 z-10 mt-2.5 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5">
+                     class="absolute right-0 z-10 mt-2.5 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5"
+                     style="display: none;">
                     
                     <a href="<?php echo e(route('profile')); ?>" 
                        wire:navigate

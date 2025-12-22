@@ -1,21 +1,21 @@
 <div>
     <!-- Search and Filters -->
-    <div class="mb-6 bg-gray-50 p-4 rounded-lg">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-            <div>
+    <div class="mb-4 sm:mb-6 bg-gray-50 p-3 sm:p-4 rounded-lg">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <div class="sm:col-span-2 lg:col-span-1">
                 <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="search" 
                        id="search"
                        placeholder="Nama, telepon, email, atau NIK..."
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
+                       class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
             </div>
             
             <div>
                 <label for="memberStatus" class="block text-sm font-medium text-gray-700 mb-1">Status Anggota</label>
                 <select wire:model.live="memberStatus" 
                         id="memberStatus"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
                     @foreach($memberStatusOptions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                     @endforeach
@@ -26,7 +26,7 @@
                 <label for="blacklistStatus" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select wire:model.live="blacklistStatus" 
                         id="blacklistStatus"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500">
                     @foreach($blacklistStatusOptions as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
                     @endforeach
@@ -35,7 +35,7 @@
             
             <div class="flex items-end">
                 <button wire:click="clearFilters" 
-                        class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        class="w-full px-4 py-2 text-sm bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
                     Hapus Filter
                 </button>
             </div>
@@ -44,13 +44,13 @@
         <!-- Quick Filter Buttons -->
         <div class="flex flex-wrap gap-2">
             <button wire:click="toggleMembersOnly" 
-                    class="px-3 py-1 text-sm rounded-full {{ $showMembersOnly ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700' }} hover:bg-green-600 hover:text-white">
+                    class="px-3 py-1 text-xs sm:text-sm rounded-full {{ $showMembersOnly ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700' }} hover:bg-green-600 hover:text-white">
                 <x-icons.star class="w-3 h-3 inline mr-1" />
                 Hanya Anggota
             </button>
             
             <button wire:click="toggleBlacklistedOnly" 
-                    class="px-3 py-1 text-sm rounded-full {{ $showBlacklistedOnly ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700' }} hover:bg-red-600 hover:text-white">
+                    class="px-3 py-1 text-xs sm:text-sm rounded-full {{ $showBlacklistedOnly ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700' }} hover:bg-red-600 hover:text-white">
                 <x-icons.ban class="w-3 h-3 inline mr-1" />
                 Hanya Daftar Hitam
             </button>
@@ -59,15 +59,144 @@
 
     <!-- Loading Indicator -->
     <div wire:loading class="mb-4">
-        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
+        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded text-sm">
             Memuat pelanggan...
         </div>
     </div>
 
-    <!-- Customer Table -->
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <!-- Mobile Card View -->
+    <div class="lg:hidden space-y-3">
+        @forelse($customers as $customer)
+            <div class="bg-white shadow rounded-lg p-4">
+                <!-- Header -->
+                <div class="flex items-start gap-3 mb-3">
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                        <x-icons.user class="h-6 w-6 text-gray-600" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-semibold text-gray-900 truncate">{{ $customer->name }}</div>
+                        <div class="text-xs text-gray-500">NIK: {{ $customer->nik }}</div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-1 mb-3 text-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="text-gray-500 text-xs">Telepon:</span>
+                        <span class="text-gray-900">{{ $customer->phone }}</span>
+                    </div>
+                    @if($customer->email)
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-500 text-xs">Email:</span>
+                            <span class="text-gray-900 truncate">{{ $customer->email }}</span>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Status Badges -->
+                <div class="flex flex-wrap gap-2 mb-3">
+                    @if($customer->is_member)
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            <x-icons.star class="w-3 h-3 mr-1" />
+                            Anggota ({{ $customer->getMemberDiscountPercentage() }}%)
+                        </span>
+                    @endif
+                    
+                    @if($customer->is_blacklisted)
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            <x-icons.ban class="w-3 h-3 mr-1" />
+                            Daftar Hitam
+                        </span>
+                    @else
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-accent-100 text-accent-800">
+                            Aktif
+                        </span>
+                    @endif
+                </div>
+
+                <!-- Booking Stats -->
+                @if(isset($customerStats[$customer->id]))
+                    @php $stats = $customerStats[$customer->id] @endphp
+                    <div class="bg-gray-50 rounded p-2 mb-3 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Total Pemesanan:</span>
+                            <span class="font-medium">{{ $stats['total_bookings'] }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Aktif:</span>
+                            <span class="font-medium">{{ $stats['active_bookings'] }}</span>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="text-xs text-gray-500 mb-3">
+                    Terdaftar: {{ $customer->created_at->format('d M Y') }}
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-wrap gap-2">
+                    <a href="{{ route('admin.customers.show', $customer) }}" 
+                       class="flex-1 text-center px-3 py-1.5 bg-gray-100 text-gray-700 rounded text-xs font-medium hover:bg-gray-200">
+                        Lihat
+                    </a>
+                    <a href="{{ route('admin.customers.edit', $customer) }}" 
+                       class="flex-1 text-center px-3 py-1.5 bg-accent-500 text-white rounded text-xs font-medium hover:bg-accent-600">
+                        Edit
+                    </a>
+                    
+                    @if(!$customer->is_blacklisted)
+                        @if($customer->is_member)
+                            <button wire:click="updateMemberStatus({{ $customer->id }}, false)"
+                                    class="flex-1 px-3 py-1.5 bg-yellow-500 text-white rounded text-xs font-medium hover:bg-yellow-600"
+                                    wire:confirm="Hapus status anggota dari {{ $customer->name }}?">
+                                Hapus Anggota
+                            </button>
+                        @else
+                            <button wire:click="updateMemberStatus({{ $customer->id }}, true, 10)"
+                                    class="flex-1 px-3 py-1.5 bg-green-500 text-white rounded text-xs font-medium hover:bg-green-600">
+                                Jadikan Anggota
+                            </button>
+                        @endif
+                    @endif
+                    
+                    @if($customer->is_blacklisted)
+                        <button wire:click="updateBlacklistStatus({{ $customer->id }}, false)"
+                                class="flex-1 px-3 py-1.5 bg-green-500 text-white rounded text-xs font-medium hover:bg-green-600"
+                                wire:confirm="Hapus {{ $customer->name }} dari daftar hitam?">
+                            Buka Blokir
+                        </button>
+                    @else
+                        <button onclick="blacklistCustomer({{ $customer->id }}, '{{ $customer->name }}')"
+                                class="flex-1 px-3 py-1.5 bg-red-500 text-white rounded text-xs font-medium hover:bg-red-600">
+                            Daftar Hitam
+                        </button>
+                    @endif
+                </div>
+            </div>
+        @empty
+            <div class="bg-white shadow rounded-lg p-8 text-center">
+                <div class="text-gray-500">
+                    @if($search || $memberStatus !== '' || $blacklistStatus !== '')
+                        Tidak ada pelanggan yang ditemukan sesuai kriteria Anda.
+                    @else
+                        Belum ada pelanggan yang terdaftar.
+                    @endif
+                </div>
+            </div>
+        @endforelse
+
+        <!-- Mobile Pagination -->
+        @if($customers->hasPages())
+            <div class="mt-4">
+                {{ $customers->links() }}
+            </div>
+        @endif
+    </div>
+
+    <!-- Desktop Table View -->
+    <div class="hidden lg:block bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
@@ -233,7 +362,7 @@
             </table>
         </div>
         
-        <!-- Pagination -->
+        <!-- Desktop Pagination -->
         @if($customers->hasPages())
             <div class="px-6 py-3 border-t border-gray-200">
                 {{ $customers->links() }}

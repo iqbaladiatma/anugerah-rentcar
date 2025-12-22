@@ -1,13 +1,13 @@
 <div>
     <!-- Header -->
-    <div class="mb-6">
-        <div class="flex justify-between items-center">
+    <div class="mb-4 sm:mb-6">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900">Manajemen Kendaraan</h2>
-                <p class="text-gray-600">Kelola armada kendaraan sewaan Anda</p>
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Manajemen Kendaraan</h2>
+                <p class="text-sm sm:text-base text-gray-600">Kelola armada kendaraan sewaan Anda</p>
             </div>
             <a href="<?php echo e(route('admin.vehicles.create')); ?>" 
-               class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+               class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 text-sm sm:text-base whitespace-nowrap shrink-0">
                 <?php if (isset($component)) { $__componentOriginal52632fe7b137108a4c1d9fb6383ade19 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal52632fe7b137108a4c1d9fb6383ade19 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.icons.plus','data' => ['class' => 'w-5 h-5']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -28,28 +28,29 @@
 <?php $component = $__componentOriginal52632fe7b137108a4c1d9fb6383ade19; ?>
 <?php unset($__componentOriginal52632fe7b137108a4c1d9fb6383ade19); ?>
 <?php endif; ?>
-                Tambah Kendaraan
+                <span class="hidden sm:inline">Tambah Kendaraan</span>
+                <span class="sm:hidden">Tambah</span>
             </a>
         </div>
     </div>
 
     <!-- Filters -->
-    <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="bg-white rounded-lg shadow-sm border p-3 sm:p-4 mb-4 sm:mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <!-- Search -->
-            <div>
+            <div class="sm:col-span-2 lg:col-span-1">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Cari</label>
                 <input type="text" 
                        wire:model.live.debounce.300ms="search"
-                       placeholder="Plat nomor, merek, model..."
-                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent-500 focus:border-accent-500">
+                       placeholder="Plat nomor, merek..."
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-accent-500">
             </div>
 
             <!-- Status Filter -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <select wire:model.live="status" 
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent-500 focus:border-accent-500">
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-accent-500">
                     <option value="">Semua Status</option>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $statusOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($value); ?>"><?php echo e($label); ?></option>
@@ -63,23 +64,145 @@
                     <input type="checkbox" 
                            wire:model.live="showMaintenanceDue"
                            class="rounded border-gray-300 text-accent-600 focus:ring-accent-500">
-                    <span class="ml-2 text-sm text-gray-700">Hanya Perlu Perawatan</span>
+                    <span class="ml-2 text-sm text-gray-700">Perlu Perawatan</span>
                 </label>
             </div>
 
             <!-- Results Count -->
-            <div class="flex items-end justify-end">
+            <div class="flex items-end sm:justify-end">
                 <span class="text-sm text-gray-600">
-                    <?php echo e($vehicles->total()); ?> kendaraan ditemukan
+                    <?php echo e($vehicles->total()); ?> kendaraan
                 </span>
             </div>
         </div>
     </div>
 
-    <!-- Vehicle Table -->
-    <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+    <!-- Mobile Card View -->
+    <div class="lg:hidden space-y-3 sm:space-y-4">
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $vehicles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vehicle): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <div class="bg-white rounded-lg shadow-sm border p-4">
+                <!-- Header -->
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-gray-900 text-base truncate"><?php echo e($vehicle->license_plate); ?></div>
+                        <div class="text-sm text-gray-600 truncate"><?php echo e($vehicle->brand); ?> <?php echo e($vehicle->model); ?></div>
+                        <div class="text-xs text-gray-500"><?php echo e($vehicle->year); ?> • <?php echo e($vehicle->color); ?></div>
+                    </div>
+                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full shrink-0 ml-2
+                        <?php if($vehicle->status === 'available'): ?> bg-green-100 text-green-800
+                        <?php elseif($vehicle->status === 'rented'): ?> bg-accent-100 text-accent-800
+                        <?php elseif($vehicle->status === 'maintenance'): ?> bg-yellow-100 text-yellow-800
+                        <?php else: ?> bg-gray-100 text-gray-800
+                        <?php endif; ?>">
+                        <?php echo e(ucfirst($vehicle->status)); ?>
+
+                    </span>
+                </div>
+
+                <!-- Details -->
+                <div class="space-y-2 mb-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">STNK:</span>
+                        <span class="text-gray-900 truncate ml-2"><?php echo e($vehicle->stnk_number); ?></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Odometer:</span>
+                        <span class="text-gray-900"><?php echo e(number_format($vehicle->current_odometer)); ?> km</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Tarif Harian:</span>
+                        <span class="text-gray-900 font-semibold">Rp <?php echo e(number_format($vehicle->daily_rate, 0, ',', '.')); ?></span>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($maintenanceNotifications[$vehicle->id])): ?>
+                    <div class="mb-3 space-y-1">
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $maintenanceNotifications[$vehicle->id]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full
+                                <?php if($notification['priority'] === 'high'): ?> bg-red-100 text-red-800
+                                <?php else: ?> bg-yellow-100 text-yellow-800
+                                <?php endif; ?>">
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($notification['type'] === 'oil_change'): ?>
+                                    Ganti Oli Diperlukan
+                                <?php elseif($notification['type'] === 'stnk_expiry'): ?>
+                                    STNK Kadaluarsa
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                            </span>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                <!-- Status Update -->
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($vehicle->status !== 'rented'): ?>
+                    <div class="mb-3">
+                        <select wire:change="updateVehicleStatus(<?php echo e($vehicle->id); ?>, $event.target.value)"
+                                class="w-full text-sm border border-gray-300 rounded-lg px-3 py-2">
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $statusOptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($value !== 'rented' || $vehicle->status === 'rented'): ?>
+                                    <option value="<?php echo e($value); ?>" 
+                                            <?php if($vehicle->status === $value): ?> selected <?php endif; ?>>
+                                        <?php echo e($label); ?>
+
+                                    </option>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        </select>
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                <!-- Actions -->
+                <div class="flex gap-2">
+                    <a href="<?php echo e(route('admin.vehicles.show', $vehicle)); ?>" 
+                       class="flex-1 text-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200">
+                        Lihat
+                    </a>
+                    <a href="<?php echo e(route('admin.vehicles.edit', $vehicle)); ?>" 
+                       class="flex-1 text-center px-3 py-2 bg-accent-500 text-white rounded-lg text-sm font-medium hover:bg-accent-600">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+            <div class="bg-white rounded-lg shadow-sm border p-8 text-center">
+                <?php if (isset($component)) { $__componentOriginal76aa02719abeb9a1a42530834e80b874 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal76aa02719abeb9a1a42530834e80b874 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.icons.car','data' => ['class' => 'w-12 h-12 mx-auto mb-4 text-gray-300']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('icons.car'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'w-12 h-12 mx-auto mb-4 text-gray-300']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal76aa02719abeb9a1a42530834e80b874)): ?>
+<?php $attributes = $__attributesOriginal76aa02719abeb9a1a42530834e80b874; ?>
+<?php unset($__attributesOriginal76aa02719abeb9a1a42530834e80b874); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal76aa02719abeb9a1a42530834e80b874)): ?>
+<?php $component = $__componentOriginal76aa02719abeb9a1a42530834e80b874; ?>
+<?php unset($__componentOriginal76aa02719abeb9a1a42530834e80b874); ?>
+<?php endif; ?>
+                <p class="text-base font-medium text-gray-900">Tidak ada kendaraan ditemukan</p>
+                <p class="text-sm text-gray-500 mt-1">Mulai dengan menambahkan kendaraan pertama Anda ke armada.</p>
+            </div>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+        <!-- Mobile Pagination -->
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($vehicles->hasPages()): ?>
+            <div class="mt-4">
+                <?php echo e($vehicles->links()); ?>
+
+            </div>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+    </div>
+
+    <!-- Desktop Table View -->
+    <div class="hidden lg:block bg-white rounded-lg shadow-sm border overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th wire:click="sortBy('license_plate')" 
@@ -261,7 +384,7 @@
             </table>
         </div>
 
-        <!-- Pagination -->
+        <!-- Desktop Pagination -->
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($vehicles->hasPages()): ?>
             <div class="px-6 py-3 border-t border-gray-200">
                 <?php echo e($vehicles->links()); ?>

@@ -20,6 +20,8 @@ class Booking extends Model
      */
     protected $fillable = [
         'booking_number',
+        'booking_type',
+        'admin_id',
         'customer_id',
         'car_id',
         'driver_id',
@@ -45,6 +47,11 @@ class Booking extends Model
         'payment_notes',
         'booking_status',
         'notes',
+        // Walk-in Customer Data
+        'walkin_customer_name',
+        'walkin_customer_phone',
+        'walkin_customer_id_number',
+        'walkin_customer_address',
         // Penyerahan Kunci
         'kunci_diserahkan',
         'tanggal_serah_kunci',
@@ -97,6 +104,58 @@ class Booking extends Model
     const STATUS_ACTIVE = 'active';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CANCELLED = 'cancelled';
+
+    /**
+     * Booking type constants.
+     */
+    const TYPE_ONLINE = 'online';
+    const TYPE_WALKIN = 'walkin';
+
+    /**
+     * Get the admin who created walk-in booking.
+     */
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'admin_id');
+    }
+
+    /**
+     * Check if this is a walk-in booking.
+     */
+    public function isWalkin(): bool
+    {
+        return $this->booking_type === self::TYPE_WALKIN;
+    }
+
+    /**
+     * Check if this is an online booking.
+     */
+    public function isOnline(): bool
+    {
+        return $this->booking_type === self::TYPE_ONLINE;
+    }
+
+    /**
+     * Get customer name (works for both online and walk-in).
+     */
+    public function getCustomerNameAttribute(): string
+    {
+        if ($this->isWalkin() && $this->walkin_customer_name) {
+            return $this->walkin_customer_name;
+        }
+        return $this->customer?->name ?? 'Unknown';
+    }
+
+    /**
+     * Get customer phone (works for both online and walk-in).
+     */
+    public function getCustomerPhoneAttribute(): string
+    {
+        if ($this->isWalkin() && $this->walkin_customer_phone) {
+            return $this->walkin_customer_phone;
+        }
+        return $this->customer?->phone ?? '-';
+    }
 
     /**
      * Get the customer that owns the booking.

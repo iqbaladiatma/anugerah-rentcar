@@ -20,9 +20,12 @@ class BookingList extends Component
     // Modal state
     public $show_confirm_modal = false;
     public $show_cancel_modal = false;
+    public $show_delete_modal = false;
     public $confirm_booking_id = null;
     public $cancel_booking_id = null;
+    public $delete_booking_id = null;
     public $cancellation_reason = '';
+    public $delete_reason = '';
 
     // Quick filters
     public $quick_filter = '';
@@ -95,6 +98,12 @@ class BookingList extends Component
                     $query->whereDate('end_date', Carbon::today())
                           ->where('booking_status', Booking::STATUS_ACTIVE);
                     break;
+                case 'walkin':
+                    $query->where('booking_type', Booking::TYPE_WALKIN);
+                    break;
+                case 'online':
+                    $query->where('booking_type', Booking::TYPE_ONLINE);
+                    break;
             }
         }
 
@@ -120,7 +129,7 @@ class BookingList extends Component
         try {
             $booking->confirm();
             session()->flash('success', 'Booking confirmed successfully.');
-            $this->emit('bookingUpdated');
+            $this->dispatch('bookingUpdated');
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to confirm booking: ' . $e->getMessage());
         }
@@ -162,7 +171,7 @@ class BookingList extends Component
             
             $booking->cancel();
             session()->flash('success', 'Booking cancelled successfully.');
-            $this->emit('bookingUpdated');
+            $this->dispatch('bookingUpdated');
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to cancel booking: ' . $e->getMessage());
         }
@@ -177,6 +186,48 @@ class BookingList extends Component
         $this->cancellation_reason = '';
     }
 
+    // Delete Booking Methods
+    public function deleteBooking($bookingId)
+    {
+        $this->delete_booking_id = $bookingId;
+        $this->delete_reason = '';
+        $this->show_delete_modal = true;
+    }
+
+    public function processDelete()
+    {
+        $this->validate([
+            'delete_reason' => 'required|string|min:10|max:500',
+        ], [
+            'delete_reason.required' => 'Alasan penghapusan wajib diisi.',
+            'delete_reason.min' => 'Alasan minimal 10 karakter.',
+        ]);
+
+        $booking = Booking::findOrFail($this->delete_booking_id);
+
+        try {
+            // Log the deletion reason before deleting
+            \Log::info("Booking {$booking->booking_number} deleted by admin. Reason: {$this->delete_reason}");
+            
+            $bookingNumber = $booking->booking_number;
+            $booking->delete();
+            
+            session()->flash('success', "Pemesanan {$bookingNumber} berhasil dihapus.");
+            $this->dispatch('bookingUpdated');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Gagal menghapus pemesanan: ' . $e->getMessage());
+        }
+
+        $this->closeDeleteModal();
+    }
+
+    public function closeDeleteModal()
+    {
+        $this->show_delete_modal = false;
+        $this->delete_booking_id = null;
+        $this->delete_reason = '';
+    }
+
     public function activateBooking($bookingId)
     {
         $booking = Booking::findOrFail($bookingId);
@@ -189,7 +240,7 @@ class BookingList extends Component
         try {
             $booking->activate();
             session()->flash('success', 'Booking activated successfully. Vehicle is now checked out.');
-            $this->emit('bookingUpdated');
+            $this->dispatch('bookingUpdated');
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to activate booking: ' . $e->getMessage());
         }
@@ -209,7 +260,7 @@ class BookingList extends Component
             $booking->updateLatePenalty();
             $booking->complete();
             session()->flash('success', 'Booking completed successfully.');
-            $this->emit('bookingUpdated');
+            $this->dispatch('bookingUpdated');
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to complete booking: ' . $e->getMessage());
         }
@@ -259,7 +310,7 @@ class BookingList extends Component
         $this->select_all = false;
         $this->bulk_action = '';
         $this->show_actions = false;
-        $this->emit('bookingUpdated');
+        $this->dispatch('bookingUpdated');
     }
 
     public function refreshBookings()
@@ -307,22 +358,24 @@ class BookingList extends Component
     public function getQuickFilterOptions()
     {
         return [
-            '' => 'All Bookings',
-            'pending' => 'Pending Confirmation',
-            'confirmed' => 'Confirmed',
-            'active' => 'Active Rentals',
-            'overdue' => 'Overdue Returns',
-            'today_checkout' => 'Today\'s Checkouts',
-            'today_checkin' => 'Today\'s Check-ins',
+            '' => 'Semua Pemesanan',
+            'pending' => 'Menunggu Konfirmasi',
+            'confirmed' => 'Terkonfirmasi',
+            'active' => 'Sedang Aktif',
+            'overdue' => 'Terlambat Kembali',
+            'today_checkout' => 'Checkout Hari Ini',
+            'today_checkin' => 'Check-in Hari Ini',
+            'walkin' => 'Walk-in',
+            'online' => 'Online',
         ];
     }
 
     public function getBulkActionOptions()
     {
         return [
-            '' => 'Select Action',
-            'confirm' => 'Confirm Bookings',
-            'cancel' => 'Cancel Bookings',
+            '' => 'Pilih Aksi',
+            'confirm' => 'Konfirmasi Pemesanan',
+            'cancel' => 'Batalkan Pemesanan',
         ];
     }
 

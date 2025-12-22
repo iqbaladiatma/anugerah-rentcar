@@ -26,6 +26,12 @@ class VehicleForm extends Component
 
     // Vehicle properties
     public string $license_plate = '';
+    
+    // License plate parts (Indonesian format: B 1234 ABC)
+    public string $plate_area = '';      // 1 letter (area code)
+    public string $plate_number = '';    // 1-4 digits
+    public string $plate_series = '';    // 1-3 letters
+    
     public string $brand = '';
     public string $model = '';
     public ?int $year = null;
@@ -39,6 +45,7 @@ class VehicleForm extends Component
     public ?float $weekly_rate = 0;
     public ?float $driver_fee_per_day = 0;
     public string $status = Car::STATUS_AVAILABLE;
+
 
     // Photo uploads
     public $photo_front;
@@ -144,18 +151,30 @@ class VehicleForm extends Component
         }
     }
 
-    public function updatedLicensePlate($value)
+    // Auto-update license_plate when any part changes
+    public function updatedPlateArea($value)
     {
-        // Format: Uppercase and add space after first letters and before last letters
-        // Example: B1234ABC -> B 1234 ABC
-        $value = strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $value));
-        
-        if (preg_match('/^([A-Z]{1,2})(\d{1,4})([A-Z]{0,3})$/', $value, $matches)) {
-            $this->license_plate = trim($matches[1] . ' ' . $matches[2] . ' ' . $matches[3]);
-        } else {
-            $this->license_plate = $value;
-        }
+        $this->plate_area = strtoupper(substr(preg_replace('/[^A-Z]/i', '', $value), 0, 1));
+        $this->updateLicensePlate();
     }
+
+    public function updatedPlateNumber($value)
+    {
+        $this->plate_number = substr(preg_replace('/[^0-9]/', '', $value), 0, 4);
+        $this->updateLicensePlate();
+    }
+
+    public function updatedPlateSeries($value)
+    {
+        $this->plate_series = strtoupper(substr(preg_replace('/[^A-Z]/i', '', $value), 0, 3));
+        $this->updateLicensePlate();
+    }
+
+    private function updateLicensePlate()
+    {
+        $this->license_plate = trim("{$this->plate_area} {$this->plate_number} {$this->plate_series}");
+    }
+
 
     public function updatedStnkNumber($value)
     {
@@ -166,7 +185,19 @@ class VehicleForm extends Component
     private function fillFromVehicle()
     {
         $this->license_plate = $this->vehicle->license_plate ?? '';
+        
+        // Split license plate into parts for editing
+        if ($this->license_plate) {
+            $cleaned = preg_replace('/\s+/', ' ', trim($this->license_plate));
+            if (preg_match('/^([A-Z])\s*(\d{1,4})\s*([A-Z]{1,3})$/i', $cleaned, $matches)) {
+                $this->plate_area = strtoupper($matches[1]);
+                $this->plate_number = $matches[2];
+                $this->plate_series = strtoupper($matches[3]);
+            }
+        }
+        
         $this->brand = $this->vehicle->brand ?? '';
+
         $this->model = $this->vehicle->model ?? '';
         $this->year = (int) ($this->vehicle->year ?? date('Y'));
         $this->color = $this->vehicle->color ?? '';
