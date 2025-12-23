@@ -286,7 +286,7 @@
 
             <?php elseif($currentStep === 3): ?>
                 <!-- Step 3: Customer Information -->
-                <div class="p-6">
+                <div class="p-6" wire:key="step-3-content">
                     <h2 class="text-2xl font-bold text-gray-900 mb-6">Informasi Pelanggan</h2>
                     
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(!$customer): ?>
@@ -385,7 +385,6 @@
                             </div>
                         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     <?php else: ?>
-                        <!-- Customer Info Display -->
                         <!-- Customer Info Display -->
                         <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
                             <div class="flex justify-between items-start mb-6">
