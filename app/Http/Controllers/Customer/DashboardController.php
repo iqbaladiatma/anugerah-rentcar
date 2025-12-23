@@ -103,7 +103,7 @@ class DashboardController extends Controller
         
         // Ensure the booking belongs to the authenticated customer
         if ($booking->customer_id !== $customer->id) {
-            abort(403, 'Unauthorized access to booking.');
+            abort(403, 'Unauthorized access to booking. Booking Customer: ' . $booking->customer_id . ', Auth User: ' . $customer->id);
         }
 
         return view('customer.booking-details', compact('booking'));
@@ -118,7 +118,7 @@ class DashboardController extends Controller
         
         // Ensure the booking belongs to the authenticated customer
         if ($booking->customer_id !== $customer->id) {
-            abort(403, 'Unauthorized access to booking.');
+            abort(403, 'Unauthorized access to booking. Booking Customer: ' . $booking->customer_id . ', Auth User: ' . $customer->id);
         }
 
         // Check if booking can be cancelled
@@ -150,7 +150,7 @@ class DashboardController extends Controller
         
         // Ensure the booking belongs to the authenticated customer
         if ($booking->customer_id !== $customer->id) {
-            abort(403, 'Unauthorized access to booking.');
+            abort(403, 'Unauthorized access to booking. Booking Customer: ' . $booking->customer_id . ', Auth User: ' . $customer->id);
         }
 
         // Only allow ticket download for confirmed or active bookings
@@ -172,8 +172,8 @@ class DashboardController extends Controller
         $customer = auth('customer')->user();
         
         // Ensure the booking belongs to the authenticated customer
-        if ($booking->customer_id !== $customer->id) {
-            abort(403, 'Unauthorized access to booking.');
+        if ($booking->customer_id != $customer->id) {
+             abort(403, "Unauthorized access. Booking Owner ID: {$booking->customer_id}, Your ID: {$customer->id}");
         }
 
         // Only allow payment upload for pending or partial payments
@@ -193,7 +193,7 @@ class DashboardController extends Controller
         
         // Ensure the booking belongs to the authenticated customer
         if ($booking->customer_id !== $customer->id) {
-            abort(403, 'Unauthorized access to booking.');
+            abort(403, 'Unauthorized access to booking. Booking Customer: ' . $booking->customer_id . ', Auth User: ' . $customer->id);
         }
 
         $request->validate([
@@ -245,7 +245,7 @@ class DashboardController extends Controller
         
         // Ensure the booking belongs to the authenticated customer
         if ($booking->customer_id !== $customer->id) {
-            abort(403, 'Unauthorized access to booking.');
+            abort(403, 'Unauthorized access to booking. Booking Customer: ' . $booking->customer_id . ', Auth User: ' . $customer->id);
         }
 
         // Check if booking can be modified
@@ -265,7 +265,7 @@ class DashboardController extends Controller
         
         // Ensure the booking belongs to the authenticated customer
         if ($booking->customer_id !== $customer->id) {
-            abort(403, 'Unauthorized access to booking.');
+            abort(403, 'Unauthorized access to booking. Booking Customer: ' . $booking->customer_id . ', Auth User: ' . $customer->id);
         }
 
         // Check if booking can be modified

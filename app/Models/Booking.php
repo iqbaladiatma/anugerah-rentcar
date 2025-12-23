@@ -346,9 +346,22 @@ class Booking extends Model
     {
         $prefix = 'BK';
         $date = Carbon::now()->format('Ymd');
-        $sequence = static::whereDate('created_at', Carbon::today())->count() + 1;
+        $prefixWithDate = $prefix . $date;
         
-        return $prefix . $date . str_pad($sequence, 3, '0', STR_PAD_LEFT);
+        // Find the last booking number for this date
+        $latestBooking = static::where('booking_number', 'like', $prefixWithDate . '%')
+            ->orderBy('booking_number', 'desc')
+            ->first();
+
+        if (!$latestBooking) {
+            $sequence = 1;
+        } else {
+            // Extract the sequence number (last 3 digits)
+            $lastSequence = (int) substr($latestBooking->booking_number, -3);
+            $sequence = $lastSequence + 1;
+        }
+        
+        return $prefixWithDate . str_pad($sequence, 3, '0', STR_PAD_LEFT);
     }
 
     /**

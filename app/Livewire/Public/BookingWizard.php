@@ -467,13 +467,14 @@ class BookingWizard extends Component
             return;
         }
 
+        // Password is automatically hashed by the model cast
         $customer = Customer::create([
             'name' => $this->customerName,
             'email' => $this->customerEmail,
             'phone' => $this->customerPhone,
             'nik' => $this->customerNik,
             'address' => $this->customerAddress,
-            'password' => Hash::make($this->customerPassword),
+            'password' => $this->customerPassword,
         ]);
 
         // Dispatch event for new customer notification
@@ -534,6 +535,9 @@ class BookingWizard extends Component
             }
         }
 
+        // Mark profile as completed since all required documents are uploaded
+        $updates['profile_completed'] = true;
+
         if (!empty($updates)) {
             $this->customer->update($updates);
         }
@@ -550,7 +554,7 @@ class BookingWizard extends Component
         }
 
         // Generate booking number
-        $bookingNumber = 'BK' . date('Ymd') . str_pad(Booking::whereDate('created_at', today())->count() + 1, 3, '0', STR_PAD_LEFT);
+        $bookingNumber = Booking::generateBookingNumber();
 
         // Create the booking
         $this->booking = Booking::create([
